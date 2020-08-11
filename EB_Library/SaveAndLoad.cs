@@ -36,6 +36,7 @@ namespace ConsoleGamePlayer
                 {
                     //p_config = JsonSerializer.Deserialize<Config>(fs);
                 }
+                p_config = new Config();
                 p_player = new CharacterTemplate();
             }
             catch

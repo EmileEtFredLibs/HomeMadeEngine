@@ -4,5 +4,5 @@ using System.Text;
 
 namespace ConsoleGamePlayer.ConsoleInterface
 {
-    public enum InterfaceEnum { Testing=0, MainMenu=1, CombatMenu=2 }
+    public enum InterfaceEnum { Testing=0, MainMenu=1, CombatMenu=2, CombatActionMenu=3 }
 }

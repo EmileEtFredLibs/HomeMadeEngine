@@ -8,12 +8,25 @@ namespace ConsoleGamePlayer.ConsoleInterface
 {
     public class Interface
     {
+        //------------------------------------------------------------------------------------------------------------
+        // CONSTANTS
+        //____________________________________________________________________________________________________________
+        public const int MiddleLines = 10;
+        public const int BottomMenu = 2;
+
+        //------------------------------------------------------------------------------------------------------------
+        // COMBAT MENU
+        //____________________________________________________________________________________________________________
         public void CombatMenu(CharacterTemplate p_player, Config p_config)
         {
             Clear();
             __StatusBar__(p_player);
-            __ActionBar__(p_player, p_config);
+            __MiddlePart__();
+            __BottomMenu__(p_player, p_config);
         }
+
+        // STATUS BAR
+        //------------------------------------------------------------------------------------------------------------
         private void __StatusBar__(CharacterTemplate p_player)
         {
             WriteLine("--------------------------------------------------------------"); // 1,90,1
@@ -67,9 +80,44 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             return outty.ToString();
         }
+
+        // MIDDLE PART
+        //------------------------------------------------------------------------------------------------------------
+        private void __MiddlePart__()
+        {
+            for (int i = 0; i < MiddleLines; i++)
+            {
+                WriteLine("");
+            }
+            WriteLine("--------------------------------------------------------------");
+        }
+
+        // BOTTOM PART
+        //------------------------------------------------------------------------------------------------------------
+        private void __BottomMenu__(CharacterTemplate p_player, Config p_config)
+        {
+            p_config.ChangingMax(BottomMenu - 1);
+            string cur;
+            string[] Menus = { "Actions", "Defend", "Leave" };
+            for (int i = 0; i < BottomMenu; i++)
+            {
+                if (i == p_config.Position)
+                {
+                    cur = "> ";
+                    Console.BackgroundColor = ConsoleColor.Red;
+                }
+                else
+                {
+                    cur = "  ";
+                    Console.BackgroundColor = ConsoleColor.Black;
+                }
+                WriteLine("{0,0}{1,-30}", cur, Menus[i]);
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
         private void __ActionBar__(CharacterTemplate p_player, Config p_config)
         {
-            p_config.ChangingMax(p_player.Actions.Count-1);
+            p_config.ChangingMax(p_player.Actions.Count - 1);
             string cur;
             for (int i = 0; i < p_player.Actions.Count; i++)
             {
