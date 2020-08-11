@@ -21,7 +21,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             Clear();
             __StatusBar__(p_player);
-            __MiddlePart__();
+            __MiddlePart__(p_player);
             if (p_config.Menu == InterfaceEnum.CombatMenu)
                 __BottomMenu__(p_player, p_config);
             if (p_config.Menu == InterfaceEnum.CombatActionMenu)
@@ -86,11 +86,25 @@ namespace ConsoleGamePlayer.ConsoleInterface
 
         // MIDDLE PART
         //------------------------------------------------------------------------------------------------------------
-        private void __MiddlePart__()
+        private void __MiddlePart__(CharacterTemplate p_player)
         {
             for (int i = 0; i < MiddleLines; i++)
             {
-                WriteLine("");
+                StringBuilder str = new StringBuilder();
+                if (p_player.Position.Y == i) {
+                    for (int j = 0; j < p_player.Position.X; j++)
+                    {
+                        if (j < p_player.Position.X-1)
+                            str.Append("  ");
+                        else
+                            str.Append("X");
+                    }
+                }
+                else
+                {
+                    str.Append("");
+                }
+                WriteLine(str.ToString());
             }
             WriteLine("--------------------------------------------------------------");
         }

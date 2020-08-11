@@ -86,7 +86,7 @@ namespace HomeMadeEngine.Character
             double p_xPox, double p_yPos, double p_zPos) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, p_xPox, p_yPos, p_zPos, 0, 0, 0) { }
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
-            this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 0, 0, 0) { }
+            this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 0) { }
         public CharacterTemplate() : this(10, 10, 0, 0, false) { }
 
         //------------------------------------------------------------------------------------------------------------
