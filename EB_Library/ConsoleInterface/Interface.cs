@@ -12,7 +12,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         // CONSTANTS
         //____________________________________________________________________________________________________________
         public const int MiddleLines = 10;
-        public const int BottomMenu = 2;
+        public const int BottomMenu = 3;
 
         //------------------------------------------------------------------------------------------------------------
         // COMBAT MENU
@@ -22,7 +22,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
             Clear();
             __StatusBar__(p_player);
             __MiddlePart__();
-            __BottomMenu__(p_player, p_config);
+            if (p_config.Menu == InterfaceEnum.CombatMenu)
+                __BottomMenu__(p_player, p_config);
+            if (p_config.Menu == InterfaceEnum.CombatActionMenu)
+                __ActionBar__(p_player, p_config);
         }
 
         // STATUS BAR

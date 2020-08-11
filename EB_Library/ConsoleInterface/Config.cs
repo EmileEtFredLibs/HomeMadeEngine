@@ -31,7 +31,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private Config(int p_pos)
         {
             this.Position = p_pos;
-            this.Menu = InterfaceEnum.Testing;
+            this.Menu = InterfaceEnum.CombatMenu;
             this.Max = 10;
             this.Cursor = "> ";
         }

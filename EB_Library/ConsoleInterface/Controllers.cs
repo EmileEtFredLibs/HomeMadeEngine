@@ -43,14 +43,21 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 case ConsoleKey.Escape: return true;
                 case ConsoleKey.UpArrow: p_config.Down(); break;
                 case ConsoleKey.DownArrow: p_config.Up(); break;
-                case ConsoleKey.Enter: __MenuCenter__(p_config.Menu); break;
+                case ConsoleKey.Enter: __MenuCenter__(p_player, p_config); break;
                 // case ConsoleKey.__KEY__: __FUNCTION__(); break;
             }
             return false;
         }
-        private void __MenuCenter__(InterfaceEnum p_interf)
+        private void __MenuCenter__(CharacterTemplate p_player, Config p_config)
         {
-            // SWITCH CASE WHEN ENUM DONE
+            switch (p_config.Menu)
+            {
+                case InterfaceEnum.Testing: break;
+                case InterfaceEnum.MainMenu: break;
+                case InterfaceEnum.CombatMenu: __CombatMainMenu__(p_config); break;
+                case InterfaceEnum.CombatActionMenu: __CombatActionMenu__(p_player, p_config); break;
+                default: throw new ArgumentException("MenuCenter choice not handled");
+            }
         }
 
         //------------------------------------------------------------------------------------------------------------
