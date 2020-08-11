@@ -76,7 +76,7 @@ namespace HomeMadeEngine.Character
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos, 
             double p_xVect, double p_yVect, double p_zVect) :
             this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead, 
-                new List<StatsTemplate>(), new List<StatsTemplate>(), new List<ActionsTemplate>(), 
+                new List<StatsTemplate>(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
