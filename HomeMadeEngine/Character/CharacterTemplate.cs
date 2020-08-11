@@ -38,8 +38,9 @@ namespace HomeMadeEngine.Character
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, int p_cRessource, int p_ressource, bool p_isDead,
-            List<StatsTemplate> p_stat, List<StatsTemplate> p_equip, List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
+            int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, List<EquipementsTemplate>p_equip, 
+            List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect)
         {
             if (p_maxHp < 0)
@@ -59,7 +60,7 @@ namespace HomeMadeEngine.Character
             this.MaxRessource = p_ressource;
             this.IsDead = p_isDead;
             this.Stats = p_stat;
-            this.Equipement = new List<EquipementsTemplate>();
+            this.Equipement = p_equip;
             this.Actions = p_actions;
             this.Buffs = p_buffs;
             this.Debuffs = p_debuffs;
@@ -71,13 +72,18 @@ namespace HomeMadeEngine.Character
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, int p_cRessource, int p_ressource, bool p_isDead,
-            double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
-            this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead, new List<StatsTemplate>(), new List<StatsTemplate>(), new List<ActionsTemplate>(), 
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
+            int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos, 
+            double p_xVect, double p_yVect, double p_zVect) :
+            this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead, 
+                new List<StatsTemplate>(), new List<StatsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
-            this(p_cHp, p_maxHp, 0, 0, (SpellCost)2, p_cRessource, p_ressource, isDead, p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, double p_xPox, double p_yPos, double p_zPos) :
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
+            double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
+            this(p_cHp, p_maxHp, 0, 0, (SpellCost)2, p_cRessource, p_ressource, isDead, 
+                p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
+            double p_xPox, double p_yPos, double p_zPos) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, p_xPox, p_yPos, p_zPos, 0, 0, 0) { }
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 0, 0, 0) { }
