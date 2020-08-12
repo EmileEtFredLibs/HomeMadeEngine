@@ -15,7 +15,7 @@ namespace HomeMadeEngine
     {
         public string name;
         public int cost;
-        public Func<CharacterTemplate, CharacterTemplate, bool> action;
+        public Func<CharacterTemplate, CharacterTemplate[], bool> action;
     }
     public struct BuffsTemplate
     {

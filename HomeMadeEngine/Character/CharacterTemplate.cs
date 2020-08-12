@@ -128,11 +128,11 @@ namespace HomeMadeEngine.Character
 
         // ACTIONS
         //------------------------------------------------------------------------------------------------------------
-        public void UseAction(int p_index, CharacterTemplate p_target)
+        public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
             if (this.CurrentRessource < this.Actions[p_index].cost && (int)this.Spellcost > 1)
                 Console.WriteLine("Not enough mana (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost);
-            else if (!this.Actions[p_index].action(this, p_target))
+            else if (!this.Actions[p_index].action(this, p_target ))
             {
                 if ((int)this.Spellcost > 1)
                     this.CurrentRessource -= this.Actions[p_index].cost;
@@ -145,7 +145,7 @@ namespace HomeMadeEngine.Character
                 Console.WriteLine("Player use {0}", this.Actions[p_index].name);
             }
         }
-        public void LearnAction(string p_name, int p_cost, Func<CharacterTemplate, CharacterTemplate, bool> p_action)
+        public void LearnAction(string p_name, int p_cost, Func<CharacterTemplate, CharacterTemplate[], bool> p_action)
                 => this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, action = p_action });
         public void UnlearnAction(int p_index)
                 => this.Actions.Remove(this.Actions[p_index]);

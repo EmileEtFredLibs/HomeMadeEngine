@@ -7,16 +7,16 @@ namespace HomeMadeEngine.Character
 {
     public class ActionsLib
     {
-        public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate p_target)
+        public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
-            if (p_target.Debuffs.Any(a => a.name == Debuffs.Unhealable))
+            if (p_target[0].Debuffs.Any(a => a.name == Debuffs.Unhealable))
                 return false;
-            p_target.Heal(1);
+            p_target[0].Heal(1);
             return true;
         }
-        public static bool Attack1(CharacterTemplate p_caster, CharacterTemplate p_target)
+        public static bool Attack1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
-            p_target.Hurt(1);
+            p_target[0].Hurt(1);
             return true;
         }
     }

@@ -108,6 +108,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             WriteLine("--------------------------------------------------------------");
         }
+        private void __Position__(CharacterTemplate p_player)
+        {
+
+        }
 
         // BOTTOM PART
         //------------------------------------------------------------------------------------------------------------

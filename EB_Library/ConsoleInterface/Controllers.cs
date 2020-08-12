@@ -19,7 +19,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             p_player.ApplyDebuff(new DebuffsTemplate { name = Debuffs.Unhealable, timer = 2 });
             for (int i = 0; i < 7; i++)
             {
-                p_player.UseAction(0, p_player);
+                p_player.UseAction(0, new CharacterTemplate[] { p_player });
                 if (p_player.Debuffs.Count > 0)
                     WriteLine("Unhealable Debuff: {0}", p_player.Debuffs[0].timer);
                 p_player.UpdateTimers();
@@ -77,7 +77,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             if (p_player.Actions.Count >= p_config.Position)
             {
-                p_player.Actions[p_config.Position].action(p_player, p_player);
+                p_player.Actions[p_config.Position].action(p_player, new CharacterTemplate[] { p_player });
             }
             else
             {
