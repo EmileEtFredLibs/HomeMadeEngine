@@ -271,11 +271,18 @@ namespace HomeMadeEngine.Character
 
         // HP AND RESSOURCE CHANGER
         //------------------------------------------------------------------------------------------------------------
-        public void RegenerateRessources()
+        public void Defend()
         {
             if (this.Spellcost == SpellCost.Energy)
             {
-
+                if (this.CurrentRessource + this.CurrentRessource * 0.1 >= this.MaxRessource)
+                    this.CurrentRessource = this.MaxRessource;
+                else
+                    this.CurrentRessource += (int)(this.CurrentRessource * 0.1);
+            }
+            else if (this.Spellcost == SpellCost.Rage)
+            {
+                    this.CurrentRessource -= (int)(this.CurrentRessource * 0.1);
             }
         }
         /// <summary>
