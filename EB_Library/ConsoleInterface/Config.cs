@@ -24,6 +24,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         [DataMember]
         public int Max { get; private set; }
         public string Cursor{ get; }
+        public string Version{ get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
