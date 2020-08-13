@@ -84,12 +84,12 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // DAMAGE GROUPER (OFFENSE AND DEFENSE)
         //____________________________________________________________________________________________________________
-        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate p_char, bool p_type)
+        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate p_char, StatsType p_type)
         {
             List<StatsTemplate> charDamage = new List<StatsTemplate>();
             foreach(StatsTemplate stats in p_char.Stats)
             {
-                 DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                 DamageTypeAdapter(ref charDamage, stats, p_type);
             }
             foreach (BuffsTemplate buff in p_char.Buffs)
             {
@@ -97,7 +97,7 @@ namespace HomeMadeEngine.Character
                 {
                     foreach (StatsTemplate stats in buff.stat)
                     {
-                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                            DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
                 }
             }
@@ -107,13 +107,13 @@ namespace HomeMadeEngine.Character
                 {
                     foreach (StatsTemplate stats in debuff.stat)
                     {
-                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                            DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
                 }
             }
             return charDamage;
         }
-        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate[] p_char, bool p_type)
+        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate[] p_char, StatsType p_type)
         {
             List<StatsTemplate> charDamage = new List<StatsTemplate>();
             if (p_char.Length > 0)
@@ -122,7 +122,7 @@ namespace HomeMadeEngine.Character
                 {
                     foreach (StatsTemplate stats in character.Stats)
                     {
-                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                            DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
                     foreach (BuffsTemplate buff in character.Buffs)
                     {
@@ -130,7 +130,7 @@ namespace HomeMadeEngine.Character
                         {
                             foreach (StatsTemplate stats in buff.stat)
                             {
-                                    DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                                    DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
                         }
                     }
@@ -140,7 +140,7 @@ namespace HomeMadeEngine.Character
                         {
                             foreach (StatsTemplate stats in debuff.stat)
                             {
-                                    DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
+                                    DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
                         }
                     }
@@ -148,11 +148,11 @@ namespace HomeMadeEngine.Character
             }
             return charDamage;
         }
-        public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, bool p_atk)
+        public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, StatsType p_type)
         {
             if (p_damage.dmg != null)
             {
-                if (p_damage.atk == p_atk)
+                if (p_damage.type == p_type)
                 {
                     int index = p_listDmg.FindIndex((c) => c.type == p_damage.type);
                     if (index >= 0)
@@ -166,7 +166,6 @@ namespace HomeMadeEngine.Character
                         p_listDmg.Add(new StatsTemplate
                         {
                             name = names,
-                            atk = p_atk,
                             flat = flats,
                             multi = multis,
                             dmg = types,
@@ -178,7 +177,6 @@ namespace HomeMadeEngine.Character
                     {
                         p_listDmg.Add(new StatsTemplate
                         {
-                            atk = p_atk,
                             flat = p_damage.flat,
                             multi = p_damage.multi,
                             type = p_damage.type,

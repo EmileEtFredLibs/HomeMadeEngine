@@ -9,7 +9,6 @@ namespace HomeMadeEngine
     {
         public string name;
         public StatsType type;
-        public bool? atk;
         public DamageType? dmg;
         public double flat;
         public double multi;

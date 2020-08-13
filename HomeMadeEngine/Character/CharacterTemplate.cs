@@ -190,7 +190,6 @@ namespace HomeMadeEngine.Character
                 placeHolder.Add(new StatsTemplate
                 {
                     dmg = (DamageType)(System.Math.Floor((decimal)i / 2)),
-                    atk = (i % 2 == 0),
                     type = (StatsType)(i % 2),
                     name = StatNames[i],
                     flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,

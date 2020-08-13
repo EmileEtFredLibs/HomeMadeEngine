@@ -10,5 +10,5 @@ namespace HomeMadeEngine
     public enum EquipementSlot { MainHand=0, OffHand=1, Helmet=2, BodyArmor=3, Legs=4, Boots=5 }
     public enum DamageType { Unmidigatable=0, Physical=1, Magical=2, Psychological=3}
     public enum ItemRarity { Normal=0, Rare=1, Legendary=2, Unique=3}
-    public enum StatsType { Attack=0, Defense=1, Sneak=2 }
+    public enum StatsType { Attack=0, Defense=1, Ressource=2, Sneak }
 }

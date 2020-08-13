@@ -21,7 +21,7 @@ namespace HomeMadeEngine.Character
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            p_target[0].Hurt(AttackMethod(DamageTypeGrouper(p_caster, true), DamageTypeGrouper(p_target, false)));
+            p_target[0].Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatsType.Attack), DamageTypeGrouper(p_target, StatsType.Defense)));
             return true;
         }
         public static bool AttackMultiTarget(CharacterTemplate p_caster, CharacterTemplate[] p_target)
@@ -29,7 +29,7 @@ namespace HomeMadeEngine.Character
             if (p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target MINIMUM");
             foreach(CharacterTemplate target in p_target)
-                target.Hurt(AttackMethod(DamageTypeGrouper(p_caster, true), DamageTypeGrouper(target, false)));
+                target.Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatsType.Attack), DamageTypeGrouper(target, StatsType.Defense)));
             return true;
         }
         public static bool BerserkerRage(CharacterTemplate p_caster, CharacterTemplate[] p_target)
