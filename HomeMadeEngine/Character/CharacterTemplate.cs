@@ -10,7 +10,7 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // CONSTANTS
         //____________________________________________________________________________________________________________
-        public static double[] BaseGravity = new double[3] { 0, 0, 0 };
+        public static HmVector BaseGravity = new HmVector(){ X=0, Y=0, Z=0 };
 
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
@@ -67,16 +67,16 @@ namespace HomeMadeEngine.Character
             this.Position = new HmVector(p_xPox, p_yPos, p_zPos);
             this.Velocity = new HmVector(p_xVect, p_yVect, p_zVect);
             this.Acceleration = new HmVector();
-            this.Gravity = new HmVector(BaseGravity[0], BaseGravity[1], BaseGravity[2]);
+            this.Gravity = new HmVector(BaseGravity.X, BaseGravity.Y, BaseGravity.Z);
         }
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
-            int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos, 
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost,
+            int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
-            this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead, 
-                new List<StatsTemplate>(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
+            this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
+                __StatInitialiser__(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
@@ -88,6 +88,44 @@ namespace HomeMadeEngine.Character
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 0) { }
         public CharacterTemplate() : this(10, 10, 0, 0, false) { }
+
+        // DEFAULT BUILDERS
+        //------------------------------------------------------------------------------------------------------------
+        private static List<StatsTemplate> __StatInitialiser__()
+        {
+            return new List<StatsTemplate>() {
+                new StatsTemplate {
+                    name="Strength",
+                    flat=0,
+                    multi=0
+                },
+                new StatsTemplate {
+                    name="Dexterity",
+                    flat=0,
+                    multi=0
+                },
+                new StatsTemplate {
+                    name="Intelligence",
+                    flat=0,
+                    multi=0
+                },
+                new StatsTemplate {
+                    name="Constitution",
+                    flat=0,
+                    multi=0
+                },
+                new StatsTemplate {
+                    name="Wisdom",
+                    flat=0,
+                    multi=0
+                },
+                new StatsTemplate {
+                    name="Charisma",
+                    flat=0,
+                    multi=0
+                }
+            };
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
