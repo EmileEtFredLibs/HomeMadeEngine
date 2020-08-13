@@ -14,16 +14,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private void __TestPlayer__(CharacterTemplate p_player)
         {
-            p_player.Hurt(1);
-            WriteLine(p_player.CurrentHp);
-            p_player.ApplyDebuff(new DebuffsTemplate { name = Debuffs.Unhealable, timer = 2 });
-            for (int i = 0; i < 7; i++)
-            {
-                p_player.UseAction(0, new CharacterTemplate[] { p_player });
-                if (p_player.Debuffs.Count > 0)
-                    WriteLine("Unhealable Debuff: {0}", p_player.Debuffs[0].timer);
-                p_player.UpdateTimers();
-            }
+            
         }
         public bool TestingInterface(CharacterTemplate p_player, Config p_config)
         {
@@ -81,7 +72,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             else
             {
-                throw new ArgumentException("CombatActionMenu choice not handled");
+                throw new ArgumentException("CombatActionMenu action not handled");
             }
         }
 
