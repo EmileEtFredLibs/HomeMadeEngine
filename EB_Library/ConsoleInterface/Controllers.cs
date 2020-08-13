@@ -139,8 +139,8 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             switch (p_config.Position)
             {
-                case 0: p_config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
-                case 1: p_config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
+                case 0: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 1: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
                 case 2: p_config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }

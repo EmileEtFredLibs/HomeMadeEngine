@@ -13,7 +13,7 @@ namespace ConsoleGamePlayer
             new SaveAndLoad().Load(out CharacterTemplate player, out Config config);
             try
             {
-                config.Version = "v0.0.0.3b";
+                config.Version = "v0.0.0.3c";
                 new ConsoleGamePlayer().Setup(player, config);
             }
             finally
