@@ -6,6 +6,9 @@ namespace HomeMadeEngine.Character
 {
     public class ActionMethodLib
     {
+        //------------------------------------------------------------------------------------------------------------
+        // ATTACKS
+        //____________________________________________________________________________________________________________
         /// <summary>
         /// Calculate the total damage that get through the target's defenses.
         /// </summary>
@@ -44,14 +47,19 @@ namespace HomeMadeEngine.Character
             return (int)damageDone;
         }
 
+        //------------------------------------------------------------------------------------------------------------
+        // DEFENSE AGAINST AN ATTACK
+        //____________________________________________________________________________________________________________
         /// <summary>
-        /// Calculate de pourcentage of damage that get through an amount of armor.
+        /// Calculate de pourcentage of damage that get through an amount of armor
         /// </summary>
-        /// <param name="p_armor">Amount of armor.</param>
-        /// <returns>Pourcentage of damage that get through.</returns>
+        /// <param name="p_armor">Amount of armor</param>
+        /// <returns>Pourcentage of damage that get through</returns>
         public static double DefenseMethod(int p_armor) => 1.0 / (1.0 + ((double)p_armor / 10.0));
 
-
+        //------------------------------------------------------------------------------------------------------------
+        // DAMAGE GROUPER (OFFENSE AND DEFENSE)
+        //____________________________________________________________________________________________________________
         public static List<DamageTemplate> DamageTypeGrouper(CharacterTemplate p_char, bool p_type)
         {
             List<DamageTemplate> charDamage = new List<DamageTemplate>();

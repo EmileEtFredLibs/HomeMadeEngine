@@ -46,6 +46,30 @@ namespace HomeMadeEngine.Character
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Constructor for a character
+        /// </summary>
+        /// <param name="p_lvl">Level of the character</param>
+        /// <param name="p_exp">Experience accumulated for leveling up</param>
+        /// <param name="p_cHp">Current health point</param>
+        /// <param name="p_maxHp">Maximum health point</param>
+        /// <param name="p_shield">Temporary health that take damage before health</param>
+        /// <param name="p_shieldTimer">Time until the shield expirer</param>
+        /// <param name="p_spellCost">What will take the cost of the cast of an actions if it has a cost</param>
+        /// <param name="p_cRessource">Current action ressources</param>
+        /// <param name="p_ressource">Maximum action ressources</param>
+        /// <param name="p_isDead">Is the character dead?</param>
+        /// <param name="p_stat">List of stats of the character</param>
+        /// <param name="p_equip">List of equipement</param>
+        /// <param name="p_actions">List of actions the character can do</param>
+        /// <param name="p_buffs">List of buffs</param>
+        /// <param name="p_debuffs">List of debuffs</param>
+        /// <param name="p_xPox">X spacial positions</param>
+        /// <param name="p_yPos">Y spacial positions</param>
+        /// <param name="p_zPos">Z spacial positions</param>
+        /// <param name="p_xVect">X velocity</param>
+        /// <param name="p_yVect">Y velocity</param>
+        /// <param name="p_zVect">Z velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
             int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, List<EquipementsTemplate>p_equip, 
             List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
@@ -82,25 +106,82 @@ namespace HomeMadeEngine.Character
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Constructor for a character
+        /// </summary>
+        /// <param name="p_cHp">Current health point</param>
+        /// <param name="p_maxHp">Maximum health point</param>
+        /// <param name="p_shield">Temporary health that take damage before health</param>
+        /// <param name="p_shieldTimer">Time until the shield expirer</param>
+        /// <param name="p_spellCost">What will take the cost of the cast of an actions if it has a cost</param>
+        /// <param name="p_cRessource">Current action ressources</param>
+        /// <param name="p_ressource">Maximum action ressources</param>
+        /// <param name="p_isDead">Is the character dead?</param>
+        /// <param name="p_xPox">X spacial positions</param>
+        /// <param name="p_yPos">Y spacial positions</param>
+        /// <param name="p_zPos">Z spacial positions</param>
+        /// <param name="p_xVect">X velocity</param>
+        /// <param name="p_yVect">Y velocity</param>
+        /// <param name="p_zVect">Z velocity</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost,
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
                 __StatInitialiser__(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+        /// <summary>
+        /// Constructor for a character
+        /// </summary>
+        /// <param name="p_cHp">Current health point</param>
+        /// <param name="p_maxHp">Maximum health point</param>
+        /// <param name="p_cRessource">Current action ressources</param>
+        /// <param name="p_ressource">Maximum action ressources</param>
+        /// <param name="isDead">Is the character dead?</param>
+        /// <param name="p_xPox">X spacial positions</param>
+        /// <param name="p_yPos">Y spacial positions</param>
+        /// <param name="p_zPos">Z spacial positions</param>
+        /// <param name="p_xVect">X velocity</param>
+        /// <param name="p_yVect">Y velocity</param>
+        /// <param name="p_zVect">Z velocity</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
             this(p_cHp, p_maxHp, 0, 0, (SpellCost)2, p_cRessource, p_ressource, isDead, 
                 p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+        /// <summary>
+        /// Constructor for a character
+        /// </summary>
+        /// <param name="p_cHp">Current health point</param>
+        /// <param name="p_maxHp">Maximum health point</param>
+        /// <param name="p_cRessource">Current action ressources</param>
+        /// <param name="p_ressource">Maximum action ressources</param>
+        /// <param name="isDead">Is the character dead?</param>
+        /// <param name="p_xPox">X spacial positions</param>
+        /// <param name="p_yPos">Y spacial positions</param>
+        /// <param name="p_zPos">Z spacial positions</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
             double p_xPox, double p_yPos, double p_zPos) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, p_xPox, p_yPos, p_zPos, 0, 0, 0) { }
+        /// <summary>
+        /// Constructor for a character
+        /// </summary>
+        /// <param name="p_cHp">Current health point</param>
+        /// <param name="p_maxHp">Maximum health point</param>
+        /// <param name="p_cRessource">Current action ressources</param>
+        /// <param name="p_ressource">Maximum action ressources</param>
+        /// <param name="isDead">Is the character dead?</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 0) { }
+        /// <summary>
+        /// Constructor for a character with 10/10 hp and 0/0 mana
+        /// </summary>
         public CharacterTemplate() : this(10, 10, 0, 0, false) { }
 
         // DEFAULT BUILDERS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Create a base StatsTemplate if needed
+        /// </summary>
+        /// <returns>base StatsTemplate</returns>
         private static List<StatsTemplate> __StatInitialiser__()
         {
             List<StatsTemplate> placeHolder = new List<StatsTemplate>();
@@ -128,21 +209,59 @@ namespace HomeMadeEngine.Character
         //____________________________________________________________________________________________________________
         // GRAVITY
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Change the force of gravity
+        /// </summary>
+        /// <param name="p_vect">Vector X,Y,Z of force</param>
         public void ChangeGravity(HmVector p_vect) => this.Gravity = p_vect;
+        /// <summary>
+        /// Change the force of gravity
+        /// </summary>
+        /// <param name="p_x">X of the vector of force</param>
+        /// <param name="p_y">Y of the vector of force</param>
+        /// <param name="p_z">Z of the vector of force</param>
         public void ChangeGravity(double p_x, double p_y, double p_z) => this.Gravity = new HmVector(p_x, p_y, p_z);
-        public void ChangeGravity(double p_x, double p_y) => this.Gravity = new HmVector(p_x, p_y, 0);
-        public void ChangeGravity(double x) => this.Gravity = new HmVector(x, 0, 0);
+        /// <summary>
+        /// Change only the X and Y of the force of gravity
+        /// </summary>
+        /// <param name="p_x">X of the vector of force</param>
+        /// <param name="p_y">Y of the vector of force</param>
+        public void ChangeGravity(double p_x, double p_y) => this.Gravity = new HmVector(p_x, p_y, this.Gravity.Z);
+        /// <summary>
+        /// Change only the X and Y of the force of gravity
+        /// </summary>
+        /// <param name="x">X of the vector of force</param>
+        public void ChangeGravity(double x) => this.Gravity = new HmVector(x, this.Gravity.Y);
 
         // LEVEL AND EXPERIENCE
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add experience on the character
+        /// </summary>
+        /// <param name="p_exp">Experience to add</param>
+        /// <returns>Amount of level up</returns>
         public int AddExp(decimal p_exp) => AddExp(new decimal[] { p_exp });
+        /// <summary>
+        /// Add multiple source of experience on the character
+        /// </summary>
+        /// <param name="p_exp">Array of experience to add</param>
+        /// <returns>Amount of level up</returns>
         public int AddExp(decimal[] p_exp)
         {
             foreach(decimal exp in p_exp)
                 this.Experience += exp;
             return UpdateLevel();
         }
+        /// <summary>
+        /// Add an amount of level to the character
+        /// </summary>
+        /// <param name="p_lvl">Amount of level to add</param>
         public void LevelUp(int p_lvl) => this.Level += p_lvl;
+        /// <summary>
+        /// Level up the character to a specific level
+        /// </summary>
+        /// <param name="p_lvl">Level to levelup to</param>
+        /// <returns>Amount of level up</returns>
         public int LevelUpTo(int p_lvl)
         {
             if (this.Level < p_lvl)  
@@ -152,6 +271,10 @@ namespace HomeMadeEngine.Character
 
         // HP CHANGER
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Damage the character
+        /// </summary>
+        /// <param name="p_damage">Amount of damage taken</param>
         public void Hurt(int p_damage)
         {
             if (p_damage < 0)
@@ -164,6 +287,10 @@ namespace HomeMadeEngine.Character
             else
                 this.CurrentHp -= p_damage;
         }
+        /// <summary>
+        /// Restore health to the character
+        /// </summary>
+        /// <param name="p_heal">Amount of health restored</param>
         public void Heal(int p_heal)
         {
             if (p_heal < 0)
@@ -179,6 +306,11 @@ namespace HomeMadeEngine.Character
 
         // ACTIONS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Use an action of the character on one or more target
+        /// </summary>
+        /// <param name="p_index">Index of the action used</param>
+        /// <param name="p_target">Targets of that action</param>
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
             if (this.CurrentRessource < this.Actions[p_index].cost && (int)this.Spellcost > 1)
@@ -196,16 +328,34 @@ namespace HomeMadeEngine.Character
                 Console.WriteLine("Player use {0}", this.Actions[p_index].name);
             }
         }
+        /// <summary>
+        /// Add an action to the character
+        /// </summary>
+        /// <param name="p_name">Name of the action (can be different of the function name)</param>
+        /// <param name="p_cost">Cost of the action in ressources</param>
+        /// <param name="p_action">Static function uses when the action is used</param>
         public void LearnAction(string p_name, int p_cost, Func<CharacterTemplate, CharacterTemplate[], bool> p_action)
                 => this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, action = p_action });
+        /// <summary>
+        /// Delete an action of the list of actions
+        /// </summary>
+        /// <param name="p_index">Index of the action</param>
         public void UnlearnAction(int p_index)
                 => this.Actions.Remove(this.Actions[p_index]);
+        /// <summary>
+        /// Delete an action of the list of actions
+        /// </summary>
+        /// <param name="p_action">ActionsTemplate of the action</param>
         public void UnlearnAction(ActionsTemplate p_action)
         {
             foreach (ActionsTemplate action in this.Actions)
                 if (action.name == p_action.name)
                     this.Actions.Remove(action);
         }
+        /// <summary>
+        /// Delete an action of the list of actions
+        /// </summary>
+        /// <param name="p_action">Name of the action (can be different of the function name)</param>
         public void UnlearnAction(string p_action)
         {
             foreach (ActionsTemplate action in this.Actions)
@@ -215,28 +365,60 @@ namespace HomeMadeEngine.Character
 
         // BUFFS AND DEBUFFS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Add a buff to the character
+        /// </summary>
+        /// <param name="p_buff">BuffsTemplate of the buff</param>
         public void ApplyBuff(BuffsTemplate p_buff) => this.Buffs.Add(p_buff);
+        /// <summary>
+        /// Remove a buff from the buffs list
+        /// </summary>
+        /// <param name="p_index">Index of the buff</param>
         public void RemoveBuff(int p_index) => this.Buffs.Remove(this.Buffs[p_index]);
+        /// <summary>
+        /// Remove a buff from the buffs list
+        /// </summary>
+        /// <param name="p_buff">BuffsTemplate of the buff</param>
         public void RemoveBuff(BuffsTemplate p_buff)
         {
             foreach (BuffsTemplate buff in this.Buffs)
                 if (buff.name==p_buff.name)
                     this.Buffs.Remove(buff);
         }
+        /// <summary>
+        /// Remove a buff from the buffs list
+        /// </summary>
+        /// <param name="p_buff">Buff to remove</param>
         public void RemoveBuff(Buffs p_buff)
         {
             foreach (BuffsTemplate buff in this.Buffs)
                 if (buff.name == p_buff)
                     this.Buffs.Remove(buff);
         }
+        /// <summary>
+        /// Add a debuff to the character
+        /// </summary>
+        /// <param name="p_debuff">DebuffsTemplate of the buff</param>
         public void ApplyDebuff(DebuffsTemplate p_debuff) => this.Debuffs.Add(p_debuff);
+        /// <summary>
+        /// Remove a debuff from the buffs list
+        /// </summary>
+        /// <param name="p_index">Index the debuff</param>
         public void RemoveDebuff(int p_index) => this.Buffs.Remove(this.Buffs[p_index]);
+        /// <summary>
+        /// Remove a debuff from the buffs list
+        /// </summary>
+        /// <param name="p_debuff">DebuffsTemplate of the debuff</param>
         public void RemoveDebuff(DebuffsTemplate p_debuff)
         {
             foreach (DebuffsTemplate debuff in this.Debuffs)
                 if (debuff.name == p_debuff.name)
                     this.Debuffs.Remove(debuff);
         }
+        /// <summary>
+        /// Remove a debuff from the buffs list
+        /// </summary>
+        /// <param name="p_debuff">Debuff to remove</param>
         public void RemoveDebuff(Debuffs p_debuff)
         {
             foreach (DebuffsTemplate debuff in this.Debuffs)
@@ -246,6 +428,9 @@ namespace HomeMadeEngine.Character
 
         // UPDATERS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Update all timers and velocity in the character
+        /// </summary>
         public void UpdateTimers()
         {
             if (this.ShieldTimer > 0)
@@ -278,6 +463,10 @@ namespace HomeMadeEngine.Character
             }
             UpdateVelocity();
         }
+        /// <summary>
+        /// UpdateTimers X time
+        /// </summary>
+        /// <param name="turn">Amount of time</param>
         public void UpdateTimers(int turn)
         { 
             for(int i = 0; i < turn; i++)
@@ -285,11 +474,18 @@ namespace HomeMadeEngine.Character
                 UpdateTimers();
             }
         }
+        /// <summary>
+        /// Update position and velocity
+        /// </summary>
         private void UpdateVelocity()
         {
             this.Position.AddOnSelf(this.Velocity);
             this.Velocity.AddOnSelf(this.Acceleration);
         }
+        /// <summary>
+        /// Update the leve of the character
+        /// </summary>
+        /// <returns></returns>
         public int UpdateLevel()
         {
             int amountOfLevelUp = 0;
@@ -303,12 +499,30 @@ namespace HomeMadeEngine.Character
             }
             return amountOfLevelUp;
         }
+        /// <summary>
+        /// Reset the acceleration of the character
+        /// </summary>
         public void ResetAcc() => this.Acceleration = this.Gravity;
 
         // MOVEMENTS
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Move the character in X, Y and Z axes
+        /// </summary>
+        /// <param name="p_x">Amount move in X</param>
+        /// <param name="p_y">Amount move in Y</param>
+        /// <param name="p_z">Amount move in Z</param>
         public void Move(double p_x, double p_y, double p_z) => this.Position.AddOnSelf(p_x, p_y, p_z);
+        /// <summary>
+        /// Move the character in X and Y axes
+        /// </summary>
+        /// <param name="p_x">Amount move in X</param>
+        /// <param name="p_y">Amount move in Y</param>
         public void Move(double p_x, double p_y) => this.Position.AddOnSelf(p_x, p_y);
+        /// <summary>
+        /// Move the character in X axe
+        /// </summary>
+        /// <param name="p_x">Amount move in X</param>
         public void Move(double p_x) => this.Position.AddOnSelf(p_x);
     }
 }
