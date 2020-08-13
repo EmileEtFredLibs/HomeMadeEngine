@@ -66,6 +66,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         public bool MainMenu(CharacterTemplate p_player, Config p_config)
         {
+            new Interface().CombatMenu(p_player, p_config);
             return __Choice__(p_player, p_config);
         }
         private bool __Choice__(CharacterTemplate p_player, Config p_config)

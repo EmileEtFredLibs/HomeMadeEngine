@@ -5,7 +5,6 @@ using System.Text.Json;
 
 namespace ConsoleGamePlayer
 {
-    //banana
     public class SaveAndLoad
     {
         public const string SaveConfig = "Config.json";
@@ -29,7 +28,7 @@ namespace ConsoleGamePlayer
         }
         public void Load(out CharacterTemplate p_player, out Config p_config)
         {
-            p_config = new Config(InterfaceEnum.Testing);
+            p_config = new Config(InterfaceEnum.CombatMenu);
             p_player = new CharacterTemplate();
         }
     }

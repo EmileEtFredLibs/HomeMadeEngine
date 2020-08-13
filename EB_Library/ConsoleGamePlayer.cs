@@ -20,12 +20,12 @@ namespace ConsoleGamePlayer
             p_player.LearnAction("Cure 1", 1, ActionsLib.Cure1);
             p_player.LearnAction("Attack 1", 1, ActionsLib.AttackStandart);
             p_player.ApplyBuff(new BuffsTemplate { name = Buffs.DefenseUp, timer = 2 });
-            while (MainFunc(p_player, p_config)) ;
+            while (MainFunc(p_player, p_config));
         }
         public bool MainFunc(CharacterTemplate p_player, Config p_config)
         {
             Clear();
-            return !new Controllers().TestingInterface(p_player, p_config);           
+            return !new Controllers().MainMenu(p_player, p_config);           
         }
     }
 }

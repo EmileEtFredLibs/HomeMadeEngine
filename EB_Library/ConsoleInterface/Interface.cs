@@ -110,7 +110,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         private void __Position__(CharacterTemplate p_player)
         {
-
+            
         }
 
         // BOTTOM PART
