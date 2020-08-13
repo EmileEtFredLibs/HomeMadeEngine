@@ -111,7 +111,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             if (p_player.Actions.Count >= p_config.Position)
             {
-                p_player.Actions[p_config.Position].action(p_player, new CharacterTemplate[] { p_player });
+                p_player.UseAction(p_config.Position, new CharacterTemplate[] { p_player });
             }
             else
             {

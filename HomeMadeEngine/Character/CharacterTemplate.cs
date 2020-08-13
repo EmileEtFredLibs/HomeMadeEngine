@@ -285,7 +285,18 @@ namespace HomeMadeEngine.Character
                 this.IsDead = true;
             }
             else
-                this.CurrentHp -= p_damage;
+            {
+                if (this.Shield > 0 && this.Shield >= p_damage) 
+                {
+                    this.Shield -= p_damage; 
+                }
+                else if (this.Shield > 0 && this.Shield < p_damage)
+                {
+                    this.CurrentHp -= (p_damage - this.Shield);
+                }
+                else
+                    this.CurrentHp -= p_damage;
+            }
         }
         /// <summary>
         /// Restore health to the character
@@ -314,8 +325,10 @@ namespace HomeMadeEngine.Character
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
             if (this.CurrentRessource < this.Actions[p_index].cost && (int)this.Spellcost > 1)
-                Console.WriteLine("Not enough mana (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost);
-            else if (!this.Actions[p_index].action(this, p_target ))
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost, this.Spellcost);
+            else if (this.CurrentHp < this.Actions[p_index].cost && (int)this.Spellcost == 1)
+                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost);
+            else if (!this.Actions[p_index].action(this, p_target))
             {
                 if ((int)this.Spellcost > 1)
                     this.CurrentRessource -= this.Actions[p_index].cost;
@@ -325,8 +338,13 @@ namespace HomeMadeEngine.Character
             {
                 if ((int)this.Spellcost > 1)
                     this.CurrentRessource -= this.Actions[p_index].cost;
-                Console.WriteLine("Player use {0}", this.Actions[p_index].name);
+                else if ((int)this.Spellcost == 1)
+                {
+                    this.CurrentHp -= this.Actions[p_index].cost;
+                }
+                Console.WriteLine("You casted {0}", this.Actions[p_index].name);
             }
+            Console.ReadKey();
         }
         /// <summary>
         /// Add an action to the character

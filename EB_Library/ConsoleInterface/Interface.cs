@@ -39,7 +39,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             {
                 case SpellCost.Mana: Console.BackgroundColor = ConsoleColor.Blue; break;
                 case SpellCost.Rage: Console.BackgroundColor = ConsoleColor.DarkRed; break;
-                case SpellCost.Energy: Console.BackgroundColor = ConsoleColor.Yellow; break;
+                case SpellCost.Energy: Console.BackgroundColor = ConsoleColor.DarkYellow; break;
                 default: Console.BackgroundColor = ConsoleColor.Black; break;
             }
             if ((int)p_player.Spellcost > 1)
@@ -152,7 +152,14 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     cur = "  ";
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
-                WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, p_player.Actions[i].name, p_player.Spellcost, p_player.Actions[i].cost);
+                if (p_player.Spellcost > 0)
+                {
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, p_player.Actions[i].name, p_player.Spellcost, p_player.Actions[i].cost);
+                }
+                else
+                {
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, p_player.Actions[i].name, " ", " ");
+                }
             }
             Console.BackgroundColor = ConsoleColor.Black;
         }

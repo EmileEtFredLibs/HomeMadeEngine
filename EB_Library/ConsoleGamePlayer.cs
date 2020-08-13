@@ -17,9 +17,10 @@ namespace ConsoleGamePlayer
             {
                 [ConsoleKey.Escape] = 0
             };
-            p_player.LearnAction("Cure 1", 1, ActionsLib.Cure1);
-            p_player.LearnAction("Attack 1", 1, ActionsLib.AttackStandart);
+            p_player.LearnAction("Cure 1", 2, ActionsLib.Cure1);
+            p_player.LearnAction("Attack 1", 2, ActionsLib.AttackStandart);
             p_player.ApplyBuff(new BuffsTemplate { name = Buffs.DefenseUp, timer = 2 });
+            p_player.ApplyDebuff(new DebuffsTemplate { name = Debuffs.DefenseDown, timer = 2 });
             while (MainFunc(p_player, p_config));
         }
         public bool MainFunc(CharacterTemplate p_player, Config p_config)

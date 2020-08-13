@@ -29,7 +29,7 @@ namespace ConsoleGamePlayer
         public void Load(out CharacterTemplate p_player, out Config p_config)
         {
             p_config = new Config(InterfaceEnum.CombatMenu);
-            p_player = new CharacterTemplate();
+            p_player = new CharacterTemplate(50,90,12,2,HomeMadeEngine.SpellCost.Energy, 12,100,false,4,5,0,0,0,0);
         }
     }
 }
