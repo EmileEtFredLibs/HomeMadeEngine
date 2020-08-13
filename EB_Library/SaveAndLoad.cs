@@ -28,22 +28,8 @@ namespace ConsoleGamePlayer
         }
         public void Load(out CharacterTemplate p_player, out Config p_config)
         {
-            try
-            {
-                string jsonString = File.ReadAllText(SaveConfig);
-                p_config = JsonSerializer.Deserialize<Config>(jsonString);
-                using (FileStream fs = File.OpenRead(SaveConfig))
-                {
-                    //p_config = JsonSerializer.Deserialize<Config>(fs);
-                }
-                p_config = new Config();
-                p_player = new CharacterTemplate();
-            }
-            catch
-            {
-                p_config = new Config();
-                p_player = new CharacterTemplate();
-            }
+            p_config = new Config(InterfaceEnum.Testing);
+            p_player = new CharacterTemplate();
         }
     }
 }

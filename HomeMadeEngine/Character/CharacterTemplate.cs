@@ -10,11 +10,19 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // CONSTANTS
         //____________________________________________________________________________________________________________
-        public static HmVector BaseGravity = new HmVector(){ X=0, Y=0, Z=0 };
+        public static HmVector BaseGravity = new HmVector() { X = 0, Y = 0, Z = 0 };
+        public static string[] StatNames = new string[] {
+            "Unmidigatable Attack", "Unmidigatable Defense", 
+            "Physical Attack", "Physical Defense",
+            "Magical Attack", "Magical Defense", 
+            "Psychological Attack", "Psychological Defense"
+        };
 
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
+        public int Level { get; private set; }
+        public decimal Experience { get; private set; }
         public int CurrentHp { get; private set; }
         public int MaxHp { get; private set; }
         public int Shield { get; private set; }
@@ -38,7 +46,7 @@ namespace HomeMadeEngine.Character
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
+        public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
             int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, List<EquipementsTemplate>p_equip, 
             List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect)
@@ -51,6 +59,8 @@ namespace HomeMadeEngine.Character
                 throw new ArgumentException("CURRENT RESSOURCE CAN'T BE HIGHER THAN MAX RESSOURCE");
             if (p_ressource < 0)
                 throw new ArgumentException("RESSOURCES MUST BE POSITIF");
+            this.Level = p_lvl;
+            this.Experience = p_exp;
             this.CurrentHp = p_cHp;
             this.MaxHp = p_maxHp;
             this.Shield = p_shield;
@@ -75,7 +85,7 @@ namespace HomeMadeEngine.Character
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost,
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
-            this(p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
+            this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
                 __StatInitialiser__(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
@@ -93,38 +103,24 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         private static List<StatsTemplate> __StatInitialiser__()
         {
-            return new List<StatsTemplate>() {
-                new StatsTemplate {
-                    name="Strength",
-                    flat=0,
-                    multi=0
-                },
-                new StatsTemplate {
-                    name="Dexterity",
-                    flat=0,
-                    multi=0
-                },
-                new StatsTemplate {
-                    name="Intelligence",
-                    flat=0,
-                    multi=0
-                },
-                new StatsTemplate {
-                    name="Constitution",
-                    flat=0,
-                    multi=0
-                },
-                new StatsTemplate {
-                    name="Wisdom",
-                    flat=0,
-                    multi=0
-                },
-                new StatsTemplate {
-                    name="Charisma",
-                    flat=0,
-                    multi=0
-                }
-            };
+            List<StatsTemplate> placeHolder = new List<StatsTemplate>();
+            for (int i = 0; i < StatNames.Length; i++)
+            {
+                placeHolder.Add(new StatsTemplate
+                {
+                    name = StatNames[i],
+                    damage = new DamageTemplate
+                    {
+                        atk = (i % 2 == 0),
+                        type = (DamageType)(System.Math.Floor((decimal)i / 2)),
+                        flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
+                        multi = 1
+                    },
+                    flat = 0,
+                    multi = 0
+                }) ;
+            }
+            return placeHolder;
         }
 
         //------------------------------------------------------------------------------------------------------------
@@ -136,6 +132,23 @@ namespace HomeMadeEngine.Character
         public void ChangeGravity(double p_x, double p_y, double p_z) => this.Gravity = new HmVector(p_x, p_y, p_z);
         public void ChangeGravity(double p_x, double p_y) => this.Gravity = new HmVector(p_x, p_y, 0);
         public void ChangeGravity(double x) => this.Gravity = new HmVector(x, 0, 0);
+
+        // LEVEL AND EXPERIENCE
+        //------------------------------------------------------------------------------------------------------------
+        public int AddExp(decimal p_exp) => AddExp(new decimal[] { p_exp });
+        public int AddExp(decimal[] p_exp)
+        {
+            foreach(decimal exp in p_exp)
+                this.Experience += exp;
+            return UpdateLevel();
+        }
+        public void LevelUp(int p_lvl) => this.Level += p_lvl;
+        public int LevelUpTo(int p_lvl)
+        {
+            if (this.Level < p_lvl)  
+                this.Level += p_lvl - this.Level;
+            return p_lvl - this.Level;
+        }
 
         // HP CHANGER
         //------------------------------------------------------------------------------------------------------------
@@ -263,7 +276,7 @@ namespace HomeMadeEngine.Character
                 else
                     this.Debuffs.RemoveAt(i);
             }
-            VelocityUpdater();
+            UpdateVelocity();
         }
         public void UpdateTimers(int turn)
         { 
@@ -272,10 +285,23 @@ namespace HomeMadeEngine.Character
                 UpdateTimers();
             }
         }
-        private void VelocityUpdater()
+        private void UpdateVelocity()
         {
             this.Position.AddOnSelf(this.Velocity);
             this.Velocity.AddOnSelf(this.Acceleration);
+        }
+        public int UpdateLevel()
+        {
+            int amountOfLevelUp = 0;
+            for (; ; )
+            {
+                decimal expToLevelUp = (decimal)(4 + (7 * System.Math.Pow(1.5, this.Level)));
+                if (expToLevelUp > this.Experience) break;
+                this.Experience -= expToLevelUp;
+                this.Level++;
+                amountOfLevelUp++;
+            }
+            return amountOfLevelUp;
         }
         public void ResetAcc() => this.Acceleration = this.Gravity;
 

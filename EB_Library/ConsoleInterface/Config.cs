@@ -36,6 +36,13 @@ namespace ConsoleGamePlayer.ConsoleInterface
             this.Cursor = "> ";
         }
         public Config() : this(0) { }
+        public Config(InterfaceEnum interf)
+        {
+            this.Position = 0;
+            this.Menu = interf;
+            this.Max = 10;
+            this.Cursor = "> ";
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
