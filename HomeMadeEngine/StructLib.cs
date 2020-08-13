@@ -5,6 +5,7 @@ using System.Text;
 
 namespace HomeMadeEngine
 {
+    [Serializable]
     public struct StatsTemplate
     {
         public string name;
@@ -13,24 +14,28 @@ namespace HomeMadeEngine
         public double flat;
         public double multi;
     }
+    [Serializable]
     public struct ActionsTemplate
     {
         public string name;
         public int cost;
         public Func<CharacterTemplate, CharacterTemplate[], bool> action;
     }
+    [Serializable]
     public struct BuffsTemplate
     {
         public Buffs name;
         public int timer;
         public StatsTemplate[]? stat;
     }
+    [Serializable]
     public struct DebuffsTemplate
     {
         public Debuffs name;
         public int timer;
         public StatsTemplate[]? stat;
     }
+    [Serializable]
     public struct EquipementsTemplate
     {
         public string name;

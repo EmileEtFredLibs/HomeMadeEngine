@@ -10,7 +10,8 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            new SaveAndLoad().Load(out CharacterTemplate player, out Config config);
+            new SaveAndLoad().Load(out CharacterTemplate player);
+            Config config = new Config(InterfaceEnum.MainMenu);
             try
             {
                 config.Version = "v0.0.0.4a";
@@ -18,7 +19,7 @@ namespace ConsoleGamePlayer
             }
             finally
             {
-                //new SaveAndLoad().SaveAsync(player, config);
+                //new SaveAndLoad().Save(player);
             }
         }
     }

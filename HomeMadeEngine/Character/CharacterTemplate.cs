@@ -5,6 +5,7 @@ using HomeMadeEngine.Math;
 
 namespace HomeMadeEngine.Character
 {
+    [Serializable]
     public class CharacterTemplate
     {
         //------------------------------------------------------------------------------------------------------------
