@@ -61,7 +61,7 @@ namespace HomeMadeEngine.Character
         // APPLYING A DEBUFF
         //____________________________________________________________________________________________________________
         /// <summary>
-        /// General function to apply a buff
+        /// General function to apply a debuff
         /// </summary>
         /// <param name="p_character">Character on which the debuff is applied</param>
         /// <param name="p_debuff">Debuff that is applied</param>

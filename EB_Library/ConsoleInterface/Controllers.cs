@@ -125,6 +125,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             if (p_player.Actions.Count >= p_config.Position)
             {
                 p_player.UseAction(p_config.Position, new CharacterTemplate[] { p_player });
+                p_config.MenuChanging(InterfaceEnum.CombatMenu);
             }
             else
             {
