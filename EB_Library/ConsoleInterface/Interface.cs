@@ -13,6 +13,29 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         public const int MiddleLines = 10;
         public const int BottomMenu = 3;
+        public const int MainMiddleMax = 3;
+
+        //------------------------------------------------------------------------------------------------------------
+        // MAIN MENU
+        //____________________________________________________________________________________________________________
+        public void MainMenu(CharacterTemplate p_player, Config p_config)
+        {
+            Clear();
+            __MainUpBar__(p_config);
+            string[] menu;
+            if (p_player != null)
+                menu = new string[] { "Continue", "Restart", "Quit" };
+            else
+                menu = new string[] { "Restart", "Quit" };
+            __SelectionMenu__(p_config, menu);
+
+        }
+        private void __MainUpBar__(Config p_config)
+        {
+            WriteLine("--------------------------------------------------------------");
+            WriteLine("ConsoleGame Engine {0}", p_config.Version);
+            WriteLine("--------------------------------------------------------------");
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // COMBAT MENU
@@ -20,17 +43,17 @@ namespace ConsoleGamePlayer.ConsoleInterface
         public void CombatMenu(CharacterTemplate p_player, Config p_config)
         {
             Clear();
-            __StatusBar__(p_player);
-            __MiddlePart__(p_player);
+            __CombatStatusBar__(p_player);
+            //__CombatMiddlePart__(p_player);
             if (p_config.Menu == InterfaceEnum.CombatMenu)
-                __BottomMenu__(p_player, p_config);
+                __SelectionMenu__(p_config, new string[] { "Actions", "Defend", "Leave"});
             if (p_config.Menu == InterfaceEnum.CombatActionMenu)
-                __ActionBar__(p_player, p_config);
+                __CombatActionBar__(p_player, p_config);
         }
 
         // STATUS BAR
         //------------------------------------------------------------------------------------------------------------
-        private void __StatusBar__(CharacterTemplate p_player)
+        private void __CombatStatusBar__(CharacterTemplate p_player)
         {
             WriteLine("--------------------------------------------------------------"); // 1,90,1
             Console.BackgroundColor = ConsoleColor.Red;
@@ -49,16 +72,16 @@ namespace ConsoleGamePlayer.ConsoleInterface
             Console.BackgroundColor = ConsoleColor.Black;
             WriteLine("");
             if (p_player.Buffs.Count > 0)
-                WriteLine(__BuffsBar__(p_player, true));
+                WriteLine(__CombatBuffsBar__(p_player, true));
             else
                 WriteLine("");
             if (p_player.Debuffs.Count > 0)
-                WriteLine(__BuffsBar__(p_player, false));
+                WriteLine(__CombatBuffsBar__(p_player, false));
             else
                 WriteLine("");
             WriteLine("--------------------------------------------------------------");
         }
-        private string __BuffsBar__(CharacterTemplate p_player, bool p_buff)
+        private string __CombatBuffsBar__(CharacterTemplate p_player, bool p_buff)
         {
             StringBuilder outty = new StringBuilder();
             if (p_buff)
@@ -86,7 +109,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
 
         // MIDDLE PART
         //------------------------------------------------------------------------------------------------------------
-        private void __MiddlePart__(CharacterTemplate p_player)
+        private void __CombatMiddlePart__(CharacterTemplate p_player)
         {
             for (int i = 0; i < MiddleLines; i++)
             {
@@ -115,12 +138,11 @@ namespace ConsoleGamePlayer.ConsoleInterface
 
         // BOTTOM PART
         //------------------------------------------------------------------------------------------------------------
-        private void __BottomMenu__(CharacterTemplate p_player, Config p_config)
+        private void __SelectionMenu__(Config p_config, string[] Menus)
         {
-            p_config.ChangingMax(BottomMenu - 1);
             string cur;
-            string[] Menus = { "Actions", "Defend", "Leave" };
-            for (int i = 0; i < BottomMenu; i++)
+            p_config.ChangingMax(Menus.Length - 1);
+            for (int i = 0; i < Menus.Length; i++)
             {
                 if (i == p_config.Position)
                 {
@@ -136,7 +158,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        private void __ActionBar__(CharacterTemplate p_player, Config p_config)
+        private void __CombatActionBar__(CharacterTemplate p_player, Config p_config)
         {
             p_config.ChangingMax(p_player.Actions.Count - 1);
             string cur;

@@ -10,7 +10,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
     public class Controllers
     {
         //------------------------------------------------------------------------------------------------------------
-        // MAIN MENU
+        // TEST FUNCTION
         //____________________________________________________________________________________________________________
         private void __TestPlayer__(CharacterTemplate p_player, Config p_config)
         {
@@ -59,19 +59,21 @@ namespace ConsoleGamePlayer.ConsoleInterface
             p_player.Actions[1].action(p_player, new CharacterTemplate[] { target });
             WriteLine("{0}/{1}",target.CurrentHp, target.MaxHp);
         }
-        public bool TestingInterface(CharacterTemplate p_player, Config p_config)
+        private void __TestMenu__(CharacterTemplate p_player, Config p_config)
         {
-            __TestPlayer__(p_player, p_config);
-            return __Choice__(p_player, p_config);
+            new Interface().MainMenu(p_player, p_config);
         }
+
+        //------------------------------------------------------------------------------------------------------------
+        // MAIN MENU
+        //____________________________________________________________________________________________________________
         public bool MainMenu(CharacterTemplate p_player, Config p_config)
         {
-            __MenuCenter__(p_player, p_config);
+            __InterfaceCenter__(p_player, p_config);
             return __Choice__(p_player, p_config);
         }
         private bool __Choice__(CharacterTemplate p_player, Config p_config)
         {
-            p_config.ResetMax();
             switch (ReadKey().Key)
             {
                 case ConsoleKey.Escape: return true;
@@ -82,11 +84,21 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             return false;
         }
+        private void __InterfaceCenter__(CharacterTemplate p_player, Config p_config)
+        {
+            switch (p_config.Menu)
+            {
+                case InterfaceEnum.Testing: __TestMenu__(p_player, p_config); break;
+                case InterfaceEnum.MainMenu: new Interface().MainMenu(p_player, p_config); break;
+                case InterfaceEnum.CombatMenu: new Interface().CombatMenu(p_player, p_config); break;
+                case InterfaceEnum.CombatActionMenu: new Interface().CombatMenu(p_player, p_config); break;
+            }
+        }
         private void __MenuCenter__(CharacterTemplate p_player, Config p_config)
         {
             switch (p_config.Menu)
             {
-                case InterfaceEnum.Testing: __TestPlayer__(p_player, p_config); break;
+                case InterfaceEnum.Testing: __TestMenu__(p_player, p_config); break;
                 case InterfaceEnum.MainMenu: break;
                 case InterfaceEnum.CombatMenu: __CombatMainMenu__(p_player, p_config); break;
                 case InterfaceEnum.CombatActionMenu: __CombatActionMenu__(p_player, p_config); break;

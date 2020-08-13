@@ -397,22 +397,12 @@ namespace HomeMadeEngine.Character
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void RemoveBuff(BuffsTemplate p_buff)
-        {
-            foreach (BuffsTemplate buff in this.Buffs)
-                if (buff.name==p_buff.name)
-                    this.Buffs.Remove(buff);
-        }
+        public void RemoveBuff(BuffsTemplate p_buff)=>Buffs.RemoveAll((b) => b.name == p_buff.name);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">Buff to remove</param>
-        public void RemoveBuff(Buffs p_buff)
-        {
-            foreach (BuffsTemplate buff in this.Buffs)
-                if (buff.name == p_buff)
-                    this.Buffs.Remove(buff);
-        }
+        public void RemoveBuff(Buffs p_buff) => Buffs.RemoveAll((b) => b.name == p_buff);
         /// <summary>
         /// Add a debuff to the character
         /// </summary>
@@ -427,22 +417,12 @@ namespace HomeMadeEngine.Character
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">DebuffsTemplate of the debuff</param>
-        public void RemoveDebuff(DebuffsTemplate p_debuff)
-        {
-            foreach (DebuffsTemplate debuff in this.Debuffs)
-                if (debuff.name == p_debuff.name)
-                    this.Debuffs.Remove(debuff);
-        }
+        public void RemoveDebuff(DebuffsTemplate p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff.name);
         /// <summary>
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">Debuff to remove</param>
-        public void RemoveDebuff(Debuffs p_debuff)
-        {
-            foreach (DebuffsTemplate debuff in this.Debuffs)
-                if (debuff.name == p_debuff)
-                    this.Debuffs.Remove(debuff);
-        }
+        public void RemoveDebuff(Debuffs p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff);
 
         // UPDATERS
         //------------------------------------------------------------------------------------------------------------
