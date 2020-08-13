@@ -364,22 +364,12 @@ namespace HomeMadeEngine.Character
         /// Delete an action of the list of actions
         /// </summary>
         /// <param name="p_action">ActionsTemplate of the action</param>
-        public void UnlearnAction(ActionsTemplate p_action)
-        {
-            foreach (ActionsTemplate action in this.Actions)
-                if (action.name == p_action.name)
-                    this.Actions.Remove(action);
-        }
+        public void UnlearnAction(ActionsTemplate p_action) => this.Actions.RemoveAll(a => a.name == p_action.name);
         /// <summary>
         /// Delete an action of the list of actions
         /// </summary>
         /// <param name="p_action">Name of the action (can be different of the function name)</param>
-        public void UnlearnAction(string p_action)
-        {
-            foreach (ActionsTemplate action in this.Actions)
-                if (action.name == p_action)
-                    this.Actions.Remove(action);
-        }
+        public void UnlearnAction(string p_action) => this.Actions.RemoveAll(a => a.name == p_action);
 
         // BUFFS AND DEBUFFS
         //------------------------------------------------------------------------------------------------------------
