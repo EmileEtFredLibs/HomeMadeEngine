@@ -76,10 +76,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             switch (ReadKey().Key)
             {
-                case ConsoleKey.Escape: return true;
+                //case ConsoleKey.Escape: return true;
                 case ConsoleKey.UpArrow: p_config.Down(); break;
                 case ConsoleKey.DownArrow: p_config.Up(); break;
-                case ConsoleKey.Enter: __MenuCenter__(p_player, p_config); break;
+                case ConsoleKey.Enter: return __MenuCenter__(p_player, p_config); 
                 // case ConsoleKey.__KEY__: __FUNCTION__(); break;
             }
             return false;
@@ -94,16 +94,17 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 case InterfaceEnum.CombatActionMenu: new Interface().CombatMenu(p_player, p_config); break;
             }
         }
-        private void __MenuCenter__(CharacterTemplate p_player, Config p_config)
+        private bool __MenuCenter__(CharacterTemplate p_player, Config p_config)
         {
             switch (p_config.Menu)
             {
                 case InterfaceEnum.Testing: __TestMenu__(p_player, p_config); break;
-                case InterfaceEnum.MainMenu: __MainMenuSwaper__(p_player, p_config); break;
+                case InterfaceEnum.MainMenu: return __MainMenuSwaper__(p_player, p_config); 
                 case InterfaceEnum.CombatMenu: __CombatMainMenu__(p_player, p_config); break;
                 case InterfaceEnum.CombatActionMenu: __CombatActionMenu__(p_player, p_config); break;
                 default: throw new ArgumentException("MenuCenter choice not handled");
             }
+            return false;
         }
 
         //------------------------------------------------------------------------------------------------------------
@@ -114,7 +115,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             switch (p_config.Position)
             {
                 case 0: p_config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
-                case 1: p_config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
+                case 1:  break;
                 case 2: p_config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
@@ -132,19 +133,21 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             p_config.MenuChanging(InterfaceEnum.CombatMenu);
         }
+
         //------------------------------------------------------------------------------------------------------------
         // MAIN MENU CONTROLLER
         //____________________________________________________________________________________________________________
-        private void __MainMenuSwaper__(CharacterTemplate p_player, Config p_config)
+        private bool __MainMenuSwaper__(CharacterTemplate p_player, Config p_config)
         {
             switch (p_config.Position)
             {
                 case 0: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
                 case 1: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
-                case 2: p_config.MenuChanging(InterfaceEnum.MainMenu); break;
+                case 2: return true;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
             new Interface().CombatMenu(p_player, p_config);
+            return false;
         }
     }
 }

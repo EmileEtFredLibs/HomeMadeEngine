@@ -269,8 +269,15 @@ namespace HomeMadeEngine.Character
             return p_lvl - this.Level;
         }
 
-        // HP CHANGER
+        // HP AND RESSOURCE CHANGER
         //------------------------------------------------------------------------------------------------------------
+        public void RegenerateRessources()
+        {
+            if (this.Spellcost == SpellCost.Energy)
+            {
+
+            }
+        }
         /// <summary>
         /// Damage the character
         /// </summary>
