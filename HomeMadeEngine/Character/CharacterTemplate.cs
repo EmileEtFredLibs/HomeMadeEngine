@@ -189,16 +189,12 @@ namespace HomeMadeEngine.Character
             {
                 placeHolder.Add(new StatsTemplate
                 {
+                    dmg = (DamageType)(System.Math.Floor((decimal)i / 2)),
+                    atk = (i % 2 == 0),
+                    type = (StatsType)(i % 2),
                     name = StatNames[i],
-                    damage = new DamageTemplate
-                    {
-                        atk = (i % 2 == 0),
-                        type = (DamageType)(System.Math.Floor((decimal)i / 2)),
-                        flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
-                        multi = 1
-                    },
-                    flat = 0,
-                    multi = 0
+                    flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
+                    multi = 1
                 }) ;
             }
             return placeHolder;

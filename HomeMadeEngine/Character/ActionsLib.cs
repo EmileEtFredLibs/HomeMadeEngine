@@ -44,7 +44,9 @@ namespace HomeMadeEngine.Character
             {
                 p_caster.RemoveDebuff(Debuffs.DefenseDown);
             }
-            Buff(p_caster, Buffs.DamageUp, 5, null);
+            Buff(p_caster, Buffs.DamageUp, 5, new StatsTemplate[] { new StatsTemplate{
+                
+            }});
             Debuff(p_caster, Debuffs.DefenseDown, 5, null);
             return true;
         }

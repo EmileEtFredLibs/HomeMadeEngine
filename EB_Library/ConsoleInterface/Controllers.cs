@@ -14,50 +14,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private void __TestPlayer__(CharacterTemplate p_player, Config p_config)
         {
-            CharacterTemplate target = new CharacterTemplate();
-            p_player.ApplyBuff(new BuffsTemplate
-            {
-                name = Buffs.DamageUp,
-                stat = new StatsTemplate[] {
-                    new StatsTemplate
-                    {
-                        name="Physical",
-                        damage = new DamageTemplate
-                        {
-                            atk=true,
-                            type=DamageType.Physical,
-                            flat=20,
-                            multi=1
-                        },
-                        flat=0,
-                        multi=0
-                    }
-                },
-                timer = 4
-            });
-            target.ApplyBuff(new BuffsTemplate
-            {
-                name = Buffs.DamageUp,
-                stat = new StatsTemplate[] {
-                    new StatsTemplate
-                    {
-                        name="Physical",
-                        damage = new DamageTemplate
-                        {
-                            atk=false,
-                            type=DamageType.Physical,
-                            flat=20,
-                            multi=1
-                        },
-                        flat=0,
-                        multi=0
-                    }
-                },
-                timer = 4
-            });
-            WriteLine("{0}/{1}", target.CurrentHp, target.MaxHp);
-            p_player.Actions[1].action(p_player, new CharacterTemplate[] { target });
-            WriteLine("{0}/{1}",target.CurrentHp, target.MaxHp);
+            
         }
         private void __TestMenu__(CharacterTemplate p_player, Config p_config)
         {

@@ -5,17 +5,12 @@ using System.Text;
 
 namespace HomeMadeEngine
 {
-    public struct DamageTemplate
-    {
-        public bool atk;
-        public DamageType type;
-        public double flat;
-        public double multi;
-    }
     public struct StatsTemplate
     {
         public string name;
-        public DamageTemplate? damage;
+        public StatsType type;
+        public bool? atk;
+        public DamageType? dmg;
         public double flat;
         public double multi;
     }
@@ -40,8 +35,8 @@ namespace HomeMadeEngine
     public struct EquipementsTemplate
     {
         public string name;
-        public EquipementSlot slot;
+        public EquipementSlot? slot;
         public ItemRarity rarity;
-        public StatsTemplate[] stats;
+        public StatsTemplate[]? stats;
     }
 }

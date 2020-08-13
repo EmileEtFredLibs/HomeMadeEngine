@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO.Pipes;
 using System.Text;
 
 namespace HomeMadeEngine.Character
@@ -15,12 +16,12 @@ namespace HomeMadeEngine.Character
         /// <param name="p_attacker">Array of the damage type</param>
         /// <param name="p_defender">Array of the armor type</param>
         /// <returns> Total damage that got through. </returns>
-        public static int AttackMethod(List<DamageTemplate> p_attacker, List<DamageTemplate> p_defender)
+        public static int AttackMethod(List<StatsTemplate> p_attacker, List<StatsTemplate> p_defender)
         {
             double damageDone = 0;
-            foreach (DamageTemplate atkStat in p_attacker)
+            foreach (StatsTemplate atkStat in p_attacker)
             {
-                if (atkStat.type == DamageType.Unmidigatable)
+                if (atkStat.dmg == DamageType.Unmidigatable)
                 {
                     Console.WriteLine("{0} * {1} = {2} {3}", 
                         atkStat.flat, atkStat.multi , (int)(atkStat.flat * atkStat.multi), atkStat.type);
@@ -29,7 +30,7 @@ namespace HomeMadeEngine.Character
                 else
                 {
                     double damageRatio = 0;
-                    foreach (DamageTemplate defStat in p_defender)
+                    foreach (StatsTemplate defStat in p_defender)
                     {
                         if (atkStat.type == defStat.type)
                         {
@@ -56,7 +57,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_buff">Buff that is applied</param>
         /// <param name="p_timer">Number of turn that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
-        public static void Buff(CharacterTemplate p_character, Buffs p_buff, int p_timer, StatsTemplate[]? p_stats)=> p_character.ApplyBuff(new BuffsTemplate { name= p_buff, timer = p_timer, stat = p_stats });
+        public static void Buff(CharacterTemplate p_character, Buffs p_buff, int p_timer, StatsTemplate[]? p_stats)
+            => p_character.ApplyBuff(new BuffsTemplate { name= p_buff, timer = p_timer, stat = p_stats });
         //------------------------------------------------------------------------------------------------------------
         // APPLYING A DEBUFF
         //____________________________________________________________________________________________________________
@@ -67,7 +69,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_debuff">Debuff that is applied</param>
         /// <param name="p_timer">Number of turn that the debuff will last</param>
         /// <param name="p_stats">Effects of the debuff</param>
-        public static void Debuff(CharacterTemplate p_character, Debuffs p_debuff, int p_timer, StatsTemplate[]? p_stats) => p_character.ApplyDebuff(new DebuffsTemplate { name = p_debuff, timer = p_timer, stat = p_stats });
+        public static void Debuff(CharacterTemplate p_character, Debuffs p_debuff, int p_timer, StatsTemplate[]? p_stats) 
+            => p_character.ApplyDebuff(new DebuffsTemplate { name = p_debuff, timer = p_timer, stat = p_stats });
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
@@ -81,13 +84,12 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // DAMAGE GROUPER (OFFENSE AND DEFENSE)
         //____________________________________________________________________________________________________________
-        public static List<DamageTemplate> DamageTypeGrouper(CharacterTemplate p_char, bool p_type)
+        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate p_char, bool p_type)
         {
-            List<DamageTemplate> charDamage = new List<DamageTemplate>();
+            List<StatsTemplate> charDamage = new List<StatsTemplate>();
             foreach(StatsTemplate stats in p_char.Stats)
             {
-                if (stats.damage != null)
-                    DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                 DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
             }
             foreach (BuffsTemplate buff in p_char.Buffs)
             {
@@ -95,8 +97,7 @@ namespace HomeMadeEngine.Character
                 {
                     foreach (StatsTemplate stats in buff.stat)
                     {
-                        if (stats.damage != null)
-                            DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
                     }
                 }
             }
@@ -106,24 +107,22 @@ namespace HomeMadeEngine.Character
                 {
                     foreach (StatsTemplate stats in debuff.stat)
                     {
-                        if (stats.damage != null)
-                            DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
                     }
                 }
             }
             return charDamage;
         }
-        public static List<DamageTemplate> DamageTypeGrouper(CharacterTemplate[] p_char, bool p_type)
+        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate[] p_char, bool p_type)
         {
-            List<DamageTemplate> charDamage = new List<DamageTemplate>();
+            List<StatsTemplate> charDamage = new List<StatsTemplate>();
             if (p_char.Length > 0)
             {
                 foreach (CharacterTemplate character in p_char)
                 {
                     foreach (StatsTemplate stats in character.Stats)
                     {
-                        if (stats.damage != null)
-                            DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                            DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
                     }
                     foreach (BuffsTemplate buff in character.Buffs)
                     {
@@ -131,8 +130,7 @@ namespace HomeMadeEngine.Character
                         {
                             foreach (StatsTemplate stats in buff.stat)
                             {
-                                if (stats.damage != null)
-                                    DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                                    DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
                             }
                         }
                     }
@@ -142,8 +140,7 @@ namespace HomeMadeEngine.Character
                         {
                             foreach (StatsTemplate stats in debuff.stat)
                             {
-                                if (stats.damage!=null)
-                                    DamageTypeAdapter(ref charDamage, (DamageTemplate)stats.damage, p_type);
+                                    DamageTypeAdapter(ref charDamage, (StatsTemplate)stats, p_type);
                             }
                         }
                     }
@@ -151,34 +148,44 @@ namespace HomeMadeEngine.Character
             }
             return charDamage;
         }
-        public static void DamageTypeAdapter(ref List<DamageTemplate> p_listDmg, DamageTemplate p_damage, bool p_atk)
+        public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, bool p_atk)
         {
-            if (p_damage.atk == p_atk)
+            if (p_damage.dmg != null)
             {
-                int index = p_listDmg.FindIndex((c) => c.type == p_damage.type);
-                if (index >= 0)
+                if (p_damage.atk == p_atk)
                 {
-                    double flats = p_listDmg[index].flat + p_damage.flat;
-                    double multis = p_listDmg[index].multi * p_damage.multi;
-                    DamageType types = p_damage.type;
-                    p_listDmg.RemoveAt(index);
-                    p_listDmg.Add(new DamageTemplate
+                    int index = p_listDmg.FindIndex((c) => c.type == p_damage.type);
+                    if (index >= 0)
                     {
-                        atk = p_atk,
-                        flat = flats,
-                        multi = multis,
-                        type = types
-                    });
-                }
-                else
-                {
-                    p_listDmg.Add(new DamageTemplate
+                        string names = p_listDmg[index].name;
+                        double flats = p_listDmg[index].flat + p_damage.flat;
+                        double multis = p_listDmg[index].multi * p_damage.multi;
+                        DamageType? types = p_damage.dmg;
+                        StatsType stats = p_damage.type;
+                        p_listDmg.RemoveAt(index);
+                        p_listDmg.Add(new StatsTemplate
+                        {
+                            name = names,
+                            atk = p_atk,
+                            flat = flats,
+                            multi = multis,
+                            dmg = types,
+                            type= stats
+
+                        });
+                    }
+                    else
                     {
-                        atk = p_atk,
-                        flat = p_damage.flat,
-                        multi = p_damage.multi,
-                        type = p_damage.type
-                    });
+                        p_listDmg.Add(new StatsTemplate
+                        {
+                            atk = p_atk,
+                            flat = p_damage.flat,
+                            multi = p_damage.multi,
+                            type = p_damage.type,
+                            dmg = p_damage.dmg,
+                            name = p_damage.name
+                        });
+                    }
                 }
             }
         }
