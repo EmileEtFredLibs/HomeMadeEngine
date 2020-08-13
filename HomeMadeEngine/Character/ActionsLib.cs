@@ -32,5 +32,21 @@ namespace HomeMadeEngine.Character
                 target.Hurt(AttackMethod(DamageTypeGrouper(p_caster, true), DamageTypeGrouper(target, false)));
             return true;
         }
+        public static bool BerserkerRage(CharacterTemplate p_caster, CharacterTemplate[] p_target)
+        {
+            if (p_target.Length > 1 || p_target.Length == 0)
+                throw new ArgumentException("Requires 1 target ONLY");
+            if (p_target[0].Buffs.Any(a => a.name == Buffs.DamageUp))
+            {
+                p_caster.RemoveBuff(Buffs.DamageUp);
+            }
+            if (p_target[0].Debuffs.Any(a => a.name == Debuffs.DefenseDown))
+            {
+                p_caster.RemoveDebuff(Debuffs.DefenseDown);
+            }
+            Buff(p_caster, Buffs.DamageUp, 5, null);
+            Debuff(p_caster, Debuffs.DefenseDown, 5, null);
+            return true;
+        }
     }
 }

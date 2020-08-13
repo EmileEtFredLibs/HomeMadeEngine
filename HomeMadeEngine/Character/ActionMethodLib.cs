@@ -46,7 +46,28 @@ namespace HomeMadeEngine.Character
             Console.WriteLine(damageDone);
             return (int)damageDone;
         }
-
+        //------------------------------------------------------------------------------------------------------------
+        // APPLYING A BUFF
+        //____________________________________________________________________________________________________________
+        /// <summary>
+        /// General function to apply a buff
+        /// </summary>
+        /// <param name="p_character">Character on which the buff is applied</param>
+        /// <param name="p_buff">Buff that is applied</param>
+        /// <param name="p_timer">Number of turn that the buff will last</param>
+        /// <param name="p_stats">Effects of the buff</param>
+        public static void Buff(CharacterTemplate p_character, Buffs p_buff, int p_timer, StatsTemplate[]? p_stats)=> p_character.ApplyBuff(new BuffsTemplate { name= p_buff, timer = p_timer, stat = p_stats });
+        //------------------------------------------------------------------------------------------------------------
+        // APPLYING A DEBUFF
+        //____________________________________________________________________________________________________________
+        /// <summary>
+        /// General function to apply a buff
+        /// </summary>
+        /// <param name="p_character">Character on which the debuff is applied</param>
+        /// <param name="p_debuff">Debuff that is applied</param>
+        /// <param name="p_timer">Number of turn that the debuff will last</param>
+        /// <param name="p_stats">Effects of the debuff</param>
+        public static void Debuff(CharacterTemplate p_character, Debuffs p_debuff, int p_timer, StatsTemplate[]? p_stats) => p_character.ApplyDebuff(new DebuffsTemplate { name = p_debuff, timer = p_timer, stat = p_stats });
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________

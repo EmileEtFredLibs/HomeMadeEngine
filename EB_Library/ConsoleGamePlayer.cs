@@ -19,6 +19,7 @@ namespace ConsoleGamePlayer
             };
             p_player.LearnAction("Cure 1", 2, ActionsLib.Cure1);
             p_player.LearnAction("Attack 1", 2, ActionsLib.AttackStandart);
+            p_player.LearnAction("berserker Rage 1", 2, ActionsLib.BerserkerRage);
             p_player.ApplyBuff(new BuffsTemplate { name = Buffs.DefenseUp, timer = 2 });
             p_player.ApplyDebuff(new DebuffsTemplate { name = Debuffs.DefenseDown, timer = 2 });
             while (MainFunc(p_player, p_config));
