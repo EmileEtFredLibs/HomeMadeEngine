@@ -5,7 +5,6 @@ using System.Text;
 
 namespace HomeMadeEngine.Character
 {
-    [Serializable]
     public class ActionMethodLib
     {
         //------------------------------------------------------------------------------------------------------------

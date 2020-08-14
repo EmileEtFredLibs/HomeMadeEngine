@@ -6,7 +6,7 @@ using static HomeMadeEngine.Character.ActionMethodLib;
 
 namespace HomeMadeEngine.Character
 {
-    [Serializable]
+    
     public class ActionsLib
     {
         public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
