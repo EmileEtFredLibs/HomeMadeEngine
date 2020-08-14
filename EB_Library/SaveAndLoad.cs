@@ -1,6 +1,8 @@
 ﻿using ConsoleGamePlayer.ConsoleInterface;
 using HomeMadeEngine.Character;
 using System.IO;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text.Json;
 
 namespace ConsoleGamePlayer
@@ -8,7 +10,7 @@ namespace ConsoleGamePlayer
     public class SaveAndLoad
     {
         public const string SaveConfig = "Config.json";
-        public const string SavePlayer = "Player.json";
+        public const string SavePlayer = "Player.txt";
         public async void SaveAsync(CharacterTemplate p_player, Config p_config)
         {
             string jsonConfig = JsonSerializer.Serialize(p_config);
@@ -26,10 +28,25 @@ namespace ConsoleGamePlayer
             }
             return;
         }
-        public void Load(out CharacterTemplate p_player, out Config p_config)
+        public void Save(CharacterTemplate p_player)
         {
-            p_config = new Config(InterfaceEnum.CombatMenu);
-            p_player = new CharacterTemplate(50,90,12,2,HomeMadeEngine.SpellCost.Energy, 12,100,false,4,5,0,0,0,0);
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(SavePlayer, FileMode.Create, FileAccess.Write))
+                formatter.Serialize(stream, p_player);
+        }
+        public void Load(out CharacterTemplate p_player)
+        {
+            BinaryFormatter formatter = new BinaryFormatter();
+            try
+            {
+                using (FileStream stream = new FileStream(SavePlayer, FileMode.Open, FileAccess.Read))
+                    p_player = (CharacterTemplate)formatter.Deserialize(stream);
+            }
+            catch
+            {
+                p_player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.SpellCost.Energy, 12, 100, false, 4, 5, 0, 0, 0, 0);
+            }
+            
         }
     }
 }

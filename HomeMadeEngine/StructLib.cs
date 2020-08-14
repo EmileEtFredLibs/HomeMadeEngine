@@ -5,43 +5,42 @@ using System.Text;
 
 namespace HomeMadeEngine
 {
-    public struct DamageTemplate
-    {
-        public bool atk;
-        public DamageType type;
-        public double flat;
-        public double multi;
-    }
+    [Serializable]
     public struct StatsTemplate
     {
         public string name;
-        public DamageTemplate? damage;
+        public StatsType type;
+        public DamageType? dmg;
         public double flat;
         public double multi;
     }
+    [Serializable]
     public struct ActionsTemplate
     {
         public string name;
         public int cost;
         public Func<CharacterTemplate, CharacterTemplate[], bool> action;
     }
+    [Serializable]
     public struct BuffsTemplate
     {
         public Buffs name;
         public int timer;
         public StatsTemplate[]? stat;
     }
+    [Serializable]
     public struct DebuffsTemplate
     {
         public Debuffs name;
         public int timer;
         public StatsTemplate[]? stat;
     }
+    [Serializable]
     public struct EquipementsTemplate
     {
         public string name;
-        public EquipementSlot slot;
+        public EquipementSlot? slot;
         public ItemRarity rarity;
-        public StatsTemplate[] stats;
+        public StatsTemplate[]? stats;
     }
 }

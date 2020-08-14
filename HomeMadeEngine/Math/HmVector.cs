@@ -4,6 +4,7 @@ using static System.Math;
 
 namespace HomeMadeEngine.Math
 {
+    [Serializable]
     public class HmVector
     {
         //------------------------------------------------------------------------------------------------------------

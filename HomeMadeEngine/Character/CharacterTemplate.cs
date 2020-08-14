@@ -5,6 +5,7 @@ using HomeMadeEngine.Math;
 
 namespace HomeMadeEngine.Character
 {
+    [Serializable]
     public class CharacterTemplate
     {
         //------------------------------------------------------------------------------------------------------------
@@ -189,16 +190,11 @@ namespace HomeMadeEngine.Character
             {
                 placeHolder.Add(new StatsTemplate
                 {
+                    dmg = (DamageType)(System.Math.Floor((decimal)i / 2)),
+                    type = (StatsType)(i % 2),
                     name = StatNames[i],
-                    damage = new DamageTemplate
-                    {
-                        atk = (i % 2 == 0),
-                        type = (DamageType)(System.Math.Floor((decimal)i / 2)),
-                        flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
-                        multi = 1
-                    },
-                    flat = 0,
-                    multi = 0
+                    flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
+                    multi = 1
                 }) ;
             }
             return placeHolder;
@@ -269,8 +265,22 @@ namespace HomeMadeEngine.Character
             return p_lvl - this.Level;
         }
 
-        // HP CHANGER
+        // HP AND RESSOURCE CHANGER
         //------------------------------------------------------------------------------------------------------------
+        public void Defend()
+        {
+            if (this.Spellcost == SpellCost.Energy)
+            {
+                if (this.CurrentRessource + this.CurrentRessource * 0.1 >= this.MaxRessource)
+                    this.CurrentRessource = this.MaxRessource;
+                else
+                    this.CurrentRessource += (int)(this.CurrentRessource * 0.1);
+            }
+            else if (this.Spellcost == SpellCost.Rage)
+            {
+                    this.CurrentRessource -= (int)(this.CurrentRessource * 0.1);
+            }
+        }
         /// <summary>
         /// Damage the character
         /// </summary>
