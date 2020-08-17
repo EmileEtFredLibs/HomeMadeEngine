@@ -34,8 +34,8 @@ namespace ConsoleGamePlayer.ConsoleInterface
             switch (ReadKey().Key)
             {
                 //case ConsoleKey.Escape: return true;
-                case ConsoleKey.UpArrow: ConsoleGamePlayer.config.Down(); break;
-                case ConsoleKey.DownArrow: ConsoleGamePlayer.config.Up(); break;
+                case ConsoleKey.UpArrow: Save.Config.Down(); break;
+                case ConsoleKey.DownArrow: Save.Config.Up(); break;
                 case ConsoleKey.Enter: return __MenuCenter__(); 
                 // case ConsoleKey.__KEY__: __FUNCTION__(); break;
             }
@@ -43,7 +43,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         private void __InterfaceCenter__()
         {
-            switch (ConsoleGamePlayer.config.Menu)
+            switch (Save.Config.Menu)
             {
                 case InterfaceEnum.Testing: __TestMenu__(); break;
                 case InterfaceEnum.MainMenu: new Interface().MainMenu(); break;
@@ -53,7 +53,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         private bool __MenuCenter__()
         {
-            switch (ConsoleGamePlayer.config.Menu)
+            switch (Save.Config.Menu)
             {
                 case InterfaceEnum.Testing: __TestMenu__(); break;
                 case InterfaceEnum.MainMenu: return __MainMenuSwaper__(); 
@@ -69,28 +69,28 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private void __CombatMainMenu__()
         {
-            switch (ConsoleGamePlayer.config.Position)
+            switch (Save.Config.Position)
             {
-                case 0: ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
-                case 1: ConsoleGamePlayer.player.Defend(); break;
+                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
+                case 1: Save.Player.Defend(); break;
                 case 2: break;
-                case 3: ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.MainMenu); break;
+                case 3: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
             new Interface().CombatMenu();
         }
         private void __CombatActionMenu__()
         {
-            if (ConsoleGamePlayer.player.Actions.Count >= ConsoleGamePlayer.config.Position)
+            if (Save.Player.Actions.Count >= Save.Config.Position)
             {
-                ConsoleGamePlayer.player.UseAction(ConsoleGamePlayer.config.Position, new CharacterTemplate[] { ConsoleGamePlayer.player });
-                ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.CombatMenu);
+                Save.Player.UseAction(Save.Config.Position, new CharacterTemplate[] { Save.Player });
+                Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             }
             else
             {
                 throw new ArgumentException("CombatActionMenu action not handled");
             }
-            ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.CombatMenu);
+            Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
         }
 
         //------------------------------------------------------------------------------------------------------------
@@ -98,10 +98,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private bool __MainMenuSwaper__()
         {
-            switch (ConsoleGamePlayer.config.Position)
+            switch (Save.Config.Position)
             {
-                case 0: ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.CombatMenu); break;
-                case 1: ConsoleGamePlayer.config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 1: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
                 case 2: return true;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }

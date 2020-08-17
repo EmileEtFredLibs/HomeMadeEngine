@@ -7,9 +7,11 @@ using System.Text.Json;
 
 namespace ConsoleGamePlayer
 {
-    public class SaveAndLoad
+    public class Save
     {
         public const string SaveConfig = "Config.json";
+        public static CharacterTemplate Player = new CharacterTemplate();
+        public static Config Config = new Config(InterfaceEnum.MainMenu);
         public const string SavePlayer = "Player.txt";
         public async void SaveAsync(CharacterTemplate p_player, Config p_config)
         {
@@ -28,23 +30,23 @@ namespace ConsoleGamePlayer
             }
             return;
         }
-        public void Save(CharacterTemplate p_player)
+        public void SaveData()
         {
             BinaryFormatter formatter = new BinaryFormatter();
             using (FileStream stream = new FileStream(SavePlayer, FileMode.Create, FileAccess.Write))
-                formatter.Serialize(stream, p_player);
+                formatter.Serialize(stream, Player);
         }
-        public void Load(out CharacterTemplate p_player)
+        public void Load()
         {
             BinaryFormatter formatter = new BinaryFormatter();
             try
             {
                 using (FileStream stream = new FileStream(SavePlayer, FileMode.Open, FileAccess.Read))
-                    p_player = (CharacterTemplate)formatter.Deserialize(stream);
+                    Player = (CharacterTemplate)formatter.Deserialize(stream);
             }
             catch
             {
-                p_player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.SpellCost.Energy, 12, 100, false, 4, 5, 0, 0, 0, 0);
+                Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.SpellCost.Energy, 12, 100, false, 4, 5, 0, 0, 0, 0);
             }
             
         }
