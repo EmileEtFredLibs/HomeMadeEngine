@@ -1,10 +1,9 @@
 ﻿using ConsoleGamePlayer.ConsoleInterface;
 using HomeMadeEngine.Character;
+using Newtonsoft.Json;
 using System;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
-using System.Text.Json;
-using System.Text.Json.Serialization;
 
 namespace ConsoleGamePlayer.Serialization
 {
@@ -63,19 +62,22 @@ namespace ConsoleGamePlayer.Serialization
             int nbSave = 0;
             try
             {
-                string jsonString;
-                jsonString = JsonSerializer.Serialize(Player);
-                File.WriteAllText(SavePlayerJson, jsonString);
-                using (FileStream stream = File.Create(SavePlayerJson))
+                JsonConvert.DefaultSettings = () =>
                 {
-                    JsonSerializer.SerializeAsync(stream, Player);
-                }
-                jsonString = JsonSerializer.Serialize(Config);
-                File.WriteAllText(SaveConfigJson, jsonString);
-                using (FileStream stream = File.Create(SaveConfigJson))
+                    var settings = new JsonSerializerSettings();
+                    settings.Converters.Add(new CharacterTemplateConverterJson());
+                    return settings;
+                };
+                string jsonString = JsonConvert.SerializeObject(Player);
+                JsonSerializer serializer = new JsonSerializer();
+                serializer.Converters.Add(new CharacterTemplateConverterJson());
+                serializer.NullValueHandling = NullValueHandling.Include;
+                using (StreamWriter stream = new StreamWriter(SavePlayerJson))
+                using (JsonWriter writer = new JsonTextWriter(stream))
                 {
-                    JsonSerializer.SerializeAsync(stream, Config);
+                    serializer.Serialize(writer, jsonString);
                 }
+
             }
             catch
             {
@@ -131,9 +133,10 @@ namespace ConsoleGamePlayer.Serialization
             try
             {
                 string jsonString = File.ReadAllText(SavePlayerJson);
-                Player = JsonSerializer.Deserialize<CharacterTemplate>(jsonString);
-                jsonString = File.ReadAllText(SaveConfigJson);
-                Config = JsonSerializer.Deserialize<Config>(jsonString);
+                Player = JsonConvert.DeserializeObject<CharacterTemplate>(jsonString);
+                //jsonString = File.ReadAllText(SaveConfigJson);
+                //Config = JsonSerializer.Deserialize<Config>(jsonString);
+                Config = new Config();
             }
             catch
             {

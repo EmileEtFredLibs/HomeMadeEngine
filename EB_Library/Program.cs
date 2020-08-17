@@ -11,17 +11,17 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            //new Save().LoadBin();
-            new Save().LoadJson();
+            new Save().LoadBin();
+            //new Save().LoadJson();
             try
             {
-                Save.Config.Version = "v0.0.0.6";
+                Save.Config.Version = "v0.0.0.6a";
                 new ConsoleGamePlayer().Setup();
             }
             finally
             {
                 new Save().SaveBin();
-                new Save().SaveJson();
+                //new Save().SaveJson();
             }
         }
     }
