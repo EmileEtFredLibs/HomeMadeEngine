@@ -29,7 +29,8 @@ namespace HomeMadeEngine.Character
         {
             var randValue = new Random();
             int maxLvlOneHealthRegain = 10;
-            int healingValue = randValue.Next(maxLvlOneHealthRegain+1);
+            int minLvlOneHealthRegain = 1;
+            int healingValue = randValue.Next(minLvlOneHealthRegain, maxLvlOneHealthRegain+1);
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
