@@ -18,7 +18,7 @@ namespace ConsoleGamePlayer
             }
             finally
             {
-                new Save().SaveData();
+                //new Save().SaveData();
             }
         }
     }
