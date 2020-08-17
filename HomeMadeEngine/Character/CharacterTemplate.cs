@@ -77,13 +77,13 @@ namespace HomeMadeEngine.Character
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect)
         {
             if (p_maxHp < 0)
-                throw new ArgumentException("HP MUST BE POSITIF");
+                throw new ArgumentException("HP MUST BE POSITIVE");
             if (p_cHp > p_maxHp)
                 throw new ArgumentException("CURRENT HP CAN'T BE HIGHER THAN MAX HP");
             if (p_cHp > p_maxHp)
                 throw new ArgumentException("CURRENT RESSOURCE CAN'T BE HIGHER THAN MAX RESSOURCE");
             if (p_ressource < 0)
-                throw new ArgumentException("RESSOURCES MUST BE POSITIF");
+                throw new ArgumentException("RESSOURCES MUST BE POSITIVE");
             this.Level = p_lvl;
             this.Experience = p_exp;
             this.CurrentHp = p_cHp;
@@ -288,7 +288,7 @@ namespace HomeMadeEngine.Character
         public void Hurt(int p_damage)
         {
             if (p_damage < 0)
-                throw new ArgumentException("DAMAGE MUST BE POSITIF");
+                throw new ArgumentException("DAMAGE MUST BE POSITIVE");
             if (this.CurrentHp < p_damage)
             {
                 this.CurrentHp = 0;

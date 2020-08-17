@@ -46,7 +46,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             __CombatStatusBar__(p_player);
             //__CombatMiddlePart__(p_player);
             if (p_config.Menu == InterfaceEnum.CombatMenu)
-                __SelectionMenu__(p_config, new string[] { "Actions", "Defend", "Leave"});
+                __SelectionMenu__(p_config, new string[] { "Actions", "Defend", "Inventory", "Leave"});
             if (p_config.Menu == InterfaceEnum.CombatActionMenu)
                 __CombatActionBar__(p_player, p_config);
         }
