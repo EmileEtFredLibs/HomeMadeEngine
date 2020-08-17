@@ -160,9 +160,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         private void __CombatActionBar__()
         {
-            Save.Config.ChangingMax(Save.Player.Actions.Count - 1);
+            Save.Config.ChangingMax(Save.Player.Actions.Count);
             string cur;
-            for (int i = 0; i < Save.Player.Actions.Count; i++)
+            for (int i = 0; i <= Save.Player.Actions.Count; i++)
             {
                 if (i == Save.Config.Position)
                 {
@@ -174,15 +174,20 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     cur = "  ";
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
-                if (Save.Player.Spellcost > 0)
+                if (i == Save.Player.Actions.Count)
+                {
+                    WriteLine("{0}Return",cur);
+                }
+                else if (Save.Player.Spellcost > 0)
                 {
                     WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].name, Save.Player.Spellcost, Save.Player.Actions[i].cost);
                 }
-                else
+                else 
                 {
                     WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].name, " ", " ");
                 }
             }
+            
             Console.BackgroundColor = ConsoleColor.Black;
         }
     }

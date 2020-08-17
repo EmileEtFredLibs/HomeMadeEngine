@@ -13,7 +13,7 @@ namespace ConsoleGamePlayer
             new Save().LoadBin();
             try
             {
-                Save.Config.Version = "v0.0.0.5b";
+                Save.Config.Version = "v0.0.0.6";
                 new ConsoleGamePlayer().Setup();
             }
             finally

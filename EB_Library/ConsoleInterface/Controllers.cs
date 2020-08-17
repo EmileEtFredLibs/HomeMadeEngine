@@ -33,9 +33,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             switch (ReadKey().Key)
             {
-                //case ConsoleKey.Escape: return true;
-                case ConsoleKey.UpArrow: Save.Config.Down(); break;
-                case ConsoleKey.DownArrow: Save.Config.Up(); break;
+                case ConsoleKey.Escape: Save.Config.SetPos(Save.Config.Max); return __MenuCenter__();
+                case ConsoleKey.UpArrow: Save.Config.Up(); break;
+                case ConsoleKey.DownArrow: Save.Config.Down(); break;
                 case ConsoleKey.Enter: return __MenuCenter__(); 
                 // case ConsoleKey.__KEY__: __FUNCTION__(); break;
             }
@@ -81,9 +81,13 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
         private void __CombatActionMenu__()
         {
-            if (Save.Player.Actions.Count >= Save.Config.Position)
+            if (Save.Player.Actions.Count > Save.Config.Position)
             {
                 Save.Player.UseAction(Save.Config.Position, new CharacterTemplate[] { Save.Player });
+                Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
+            }
+            else if (Save.Config.Position == Save.Player.Actions.Count)
+            {
                 Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             }
             else
