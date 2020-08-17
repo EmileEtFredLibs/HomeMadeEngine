@@ -11,8 +11,10 @@ namespace ConsoleGamePlayer
     public class Save
     {
         public const string SaveConfig = "Config.txt";
+#pragma warning disable CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public static CharacterTemplate Player;
         public static Config Config;
+#pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
         public const string SavePlayer = "Player.txt";
         //public async void SaveAsync(CharacterTemplate p_player, Config p_config)
         //{
@@ -36,8 +38,6 @@ namespace ConsoleGamePlayer
             int nbSave = 0;
             try 
             {
-                if (Config == null)
-                    Console.WriteLine("WTF");
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 FileStream stream = new FileStream(SavePlayer, FileMode.Create, FileAccess.Write);
                 BinaryFormatter formatter = new BinaryFormatter();
