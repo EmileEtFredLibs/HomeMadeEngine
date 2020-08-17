@@ -9,19 +9,27 @@ namespace HomeMadeEngine.Character
     
     public class ActionsLib
     {
-        public static List<Func<CharacterTemplate, CharacterTemplate[], bool>> Action = new List<Func<CharacterTemplate, CharacterTemplate[], bool>>(){                
-                ActionsLib.Cure1,
-                ActionsLib.StandardAttack,
-                ActionsLib.AttackMultiTarget,
-                ActionsLib.BerserkerRage
-            };
+        //------------------------------------------------------------------------------------------------------------
+        // RANDOM NUMBERS
+        //____________________________________________________________________________________________________________
+        
+        /// <summary>
+        /// Cure Lvl.1
+        /// </summary>
+        /// <param name="p_caster"></param>
+        /// <param name="p_target"></param>
+        /// <returns>Cures the character for 1-10 hp</returns>
         public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
+            var randValue = new Random();
+            int maxLvlOneHealthRegain = 10;
+            int healingValue = randValue.Next(maxLvlOneHealthRegain+1);
+            
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
             if (p_target[0].Debuffs.Any(a => a.name == Debuffs.Unhealable))
                 return false;
-            p_target[0].Heal(1);
+            p_target[0].Heal(healingValue);
             return true;
         }
         public static bool StandardAttack(CharacterTemplate p_caster, CharacterTemplate[] p_target)
