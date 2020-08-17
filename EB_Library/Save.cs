@@ -36,12 +36,12 @@ namespace ConsoleGamePlayer
                 FileStream stream = new FileStream(SavePlayer, FileMode.Create, FileAccess.Write);
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(stream, Player);
-                Console.WriteLine("SAVE PLAYER SUCCESFUL");
+                Console.WriteLine("SAVE PLAYER SUCCESSFULL");
                 nbSave++;
                 stream.Close();
                 stream = new FileStream(SaveConfig, FileMode.Create, FileAccess.Write);
                 formatter.Serialize(stream, Config);
-                Console.WriteLine("SAVE CONFIG SUCCESFUL");
+                Console.WriteLine("SAVE CONFIG SUCCESSFULL");
                 stream.Close();
                 Console.BackgroundColor = ConsoleColor.Black;
             }
