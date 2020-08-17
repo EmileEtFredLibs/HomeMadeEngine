@@ -18,7 +18,7 @@ namespace HomeMadeEngine.Character
             p_target[0].Heal(1);
             return true;
         }
-        public static bool AttackStandart(CharacterTemplate p_caster, CharacterTemplate[] p_target)
+        public static bool StandardAttack(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");

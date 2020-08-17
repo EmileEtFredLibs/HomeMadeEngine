@@ -387,7 +387,13 @@ namespace HomeMadeEngine.Character
         /// Add a buff to the character
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void ApplyBuff(BuffsTemplate p_buff) => this.Buffs.Add(p_buff);
+        public void ApplyBuff(BuffsTemplate p_buff) {
+            if (Buffs.Contains(p_buff))
+            {
+                this.Buffs.Remove(p_buff);
+            }
+            this.Buffs.Add(p_buff);
+        } 
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
@@ -407,12 +413,19 @@ namespace HomeMadeEngine.Character
         /// Add a debuff to the character
         /// </summary>
         /// <param name="p_debuff">DebuffsTemplate of the buff</param>
-        public void ApplyDebuff(DebuffsTemplate p_debuff) => this.Debuffs.Add(p_debuff);
+        public void ApplyDebuff(DebuffsTemplate p_debuff)
+        {
+            if (Debuffs.Contains(p_debuff))
+            {
+                this.Debuffs.Remove(p_debuff);
+            }
+            this.Debuffs.Add(p_debuff);
+        }
         /// <summary>
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_index">Index the debuff</param>
-        public void RemoveDebuff(int p_index) => this.Buffs.Remove(this.Buffs[p_index]);
+        public void RemoveDebuff(int p_index) => this.Debuffs.Remove(this.Debuffs[p_index]);
         /// <summary>
         /// Remove a debuff from the buffs list
         /// </summary>
@@ -445,7 +458,7 @@ namespace HomeMadeEngine.Character
                     this.Buffs.Add(buff);
                 }
                 else
-                    this.Debuffs.RemoveAt(i);
+                    this.Buffs.RemoveAt(i);
             }
             for (int i = 0; i < Debuffs.Count; i++)
             {
