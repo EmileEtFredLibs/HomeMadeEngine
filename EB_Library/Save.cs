@@ -42,12 +42,12 @@ namespace ConsoleGamePlayer
                 FileStream stream = new FileStream(SavePlayer, FileMode.Create, FileAccess.Write);
                 BinaryFormatter formatter = new BinaryFormatter();
                 formatter.Serialize(stream, Player);
-                Console.WriteLine("SAVE PLAYER SUCCESFUL");
+                Console.WriteLine("SAVE PLAYER SUCCESSFUL");
                 nbSave++;
                 stream.Close();
                 stream = new FileStream(SaveConfig, FileMode.Create, FileAccess.Write);
                 formatter.Serialize(stream, Config);
-                Console.WriteLine("SAVE CONFIG SUCCESFUL");
+                Console.WriteLine("SAVE CONFIG SUCCESSFUL");
                 stream.Close();
                 Console.BackgroundColor = ConsoleColor.Black;
             }
@@ -70,12 +70,12 @@ namespace ConsoleGamePlayer
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 FileStream stream = new FileStream(SavePlayer, FileMode.Open, FileAccess.Read);
                 Player = (CharacterTemplate)formatter.Deserialize(stream);
-                Console.WriteLine("LOAD PLAYER SUCCESFUL");
+                Console.WriteLine("LOAD PLAYER SUCCESSFUL");
                 stream.Close();
                 stream = new FileStream(SaveConfig, FileMode.Open, FileAccess.Read);
                 Config = (Config)formatter.Deserialize(stream);
                 stream.Close();
-                Console.WriteLine("LOAD CONFIG SUCCESFUL");
+                Console.WriteLine("LOAD CONFIG SUCCESSFUL");
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ReadKey();
             }
