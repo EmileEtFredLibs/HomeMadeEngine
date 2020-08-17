@@ -12,53 +12,53 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         // TEST FUNCTION
         //____________________________________________________________________________________________________________
-        private void __TestPlayer__(CharacterTemplate p_player, Config p_config)
+        private void __TestPlayer__()
         {
             
         }
-        private void __TestMenu__(CharacterTemplate p_player, Config p_config)
+        private void __TestMenu__()
         {
-            new Interface().MainMenu(p_player, p_config);
+            new Interface().MainMenu();
         }
 
         //------------------------------------------------------------------------------------------------------------
         // MAIN MENU
         //____________________________________________________________________________________________________________
-        public bool MainMenu(CharacterTemplate p_player, Config p_config)
+        public bool MainMenu()
         {
-            __InterfaceCenter__(p_player, p_config);
-            return __MenuChoice__(p_player, p_config);
+            __InterfaceCenter__();
+            return __MenuChoice__();
         }
-        private bool __MenuChoice__(CharacterTemplate p_player, Config p_config)
+        private bool __MenuChoice__()
         {
             switch (ReadKey().Key)
             {
                 //case ConsoleKey.Escape: return true;
-                case ConsoleKey.UpArrow: p_config.Down(); break;
-                case ConsoleKey.DownArrow: p_config.Up(); break;
-                case ConsoleKey.Enter: return __MenuCenter__(p_player, p_config); 
+                case ConsoleKey.UpArrow: Save.Config.Down(); break;
+                case ConsoleKey.DownArrow: Save.Config.Up(); break;
+                case ConsoleKey.Enter: return __MenuCenter__(); 
                 // case ConsoleKey.__KEY__: __FUNCTION__(); break;
             }
             return false;
         }
-        private void __InterfaceCenter__(CharacterTemplate p_player, Config p_config)
+        private void __InterfaceCenter__()
         {
-            switch (p_config.Menu)
+            switch (Save.Config.Menu)
             {
-                case InterfaceEnum.Testing: __TestMenu__(p_player, p_config); break;
-                case InterfaceEnum.MainMenu: new Interface().MainMenu(p_player, p_config); break;
-                case InterfaceEnum.CombatMenu: new Interface().CombatMenu(p_player, p_config); break;
-                case InterfaceEnum.CombatActionMenu: new Interface().CombatMenu(p_player, p_config); break;
+                case InterfaceEnum.Testing: __TestMenu__(); break;
+                case InterfaceEnum.MainMenu: new Interface().MainMenu(); break;
+                case InterfaceEnum.CombatMenu: new Interface().CombatMenu(); break;
+                case InterfaceEnum.CombatActionMenu: new Interface().CombatMenu(); break;
             }
         }
-        private bool __MenuCenter__(CharacterTemplate p_player, Config p_config)
+        private bool __MenuCenter__()
         {
-            switch (p_config.Menu)
+            switch (Save.Config.Menu)
             {
-                case InterfaceEnum.Testing: __TestMenu__(p_player, p_config); break;
-                case InterfaceEnum.MainMenu: return __MainMenuSwaper__(p_player, p_config); 
-                case InterfaceEnum.CombatMenu: __CombatMainMenu__(p_player, p_config); break;
-                case InterfaceEnum.CombatActionMenu: __CombatActionMenu__(p_player, p_config); break;
+                case InterfaceEnum.Testing: __TestMenu__(); break;
+                case InterfaceEnum.MainMenu: return __MainMenuSwaper__(); 
+                case InterfaceEnum.CombatMenu: __CombatMainMenu__(); break;
+                case InterfaceEnum.CombatActionMenu: __CombatActionMenu__(); break;
                 default: throw new ArgumentException("MenuCenter choice not handled");
             }
             return false;
@@ -67,45 +67,45 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         // COMBAT CONTROLLER
         //____________________________________________________________________________________________________________
-        private void __CombatMainMenu__(CharacterTemplate p_player, Config p_config)
+        private void __CombatMainMenu__()
         {
-            switch (p_config.Position)
+            switch (Save.Config.Position)
             {
-                case 0: p_config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
-                case 1: p_player.Defend(); break;
+                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
+                case 1: Save.Player.Defend(); break;
                 case 2: break;
-                case 3: p_config.MenuChanging(InterfaceEnum.MainMenu); break;
+                case 3: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
-            new Interface().CombatMenu(p_player, p_config);
+            new Interface().CombatMenu();
         }
-        private void __CombatActionMenu__(CharacterTemplate p_player, Config p_config)
+        private void __CombatActionMenu__()
         {
-            if (p_player.Actions.Count >= p_config.Position)
+            if (Save.Player.Actions.Count >= Save.Config.Position)
             {
-                p_player.UseAction(p_config.Position, new CharacterTemplate[] { p_player });
-                p_config.MenuChanging(InterfaceEnum.CombatMenu);
+                Save.Player.UseAction(Save.Config.Position, new CharacterTemplate[] { Save.Player });
+                Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             }
             else
             {
                 throw new ArgumentException("CombatActionMenu action not handled");
             }
-            p_config.MenuChanging(InterfaceEnum.CombatMenu);
+            Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
         }
 
         //------------------------------------------------------------------------------------------------------------
         // MAIN MENU CONTROLLER
         //____________________________________________________________________________________________________________
-        private bool __MainMenuSwaper__(CharacterTemplate p_player, Config p_config)
+        private bool __MainMenuSwaper__()
         {
-            switch (p_config.Position)
+            switch (Save.Config.Position)
             {
-                case 0: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
-                case 1: p_config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 1: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
                 case 2: return true;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
-            new Interface().CombatMenu(p_player, p_config);
+            new Interface().CombatMenu();
             return false;
         }
     }
