@@ -25,6 +25,7 @@ namespace ConsoleGamePlayer
             Save.Player.ApplyBuff(new BuffsTemplate { name = Buffs.DefenseUp, timer = 2 });
             Save.Player.ApplyDebuff(new DebuffsTemplate { name = Debuffs.DefenseDown, timer = 2 });
             Save.Player.RemoveBuff(Buffs.DamageUp);
+            Save.Config.ResetPos();
             while (MainFunc());
         }
         public bool MainFunc()
