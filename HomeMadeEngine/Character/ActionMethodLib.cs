@@ -11,7 +11,7 @@ namespace HomeMadeEngine.Character
         // ATTACKS
         //____________________________________________________________________________________________________________
         /// <summary>
-        /// Calculate the total damage that get through the target's defenses.
+        /// Calculate the total damage that gets through the target's defenses.
         /// </summary>
         /// <param name="p_attacker">Array of the damage type</param>
         /// <param name="p_defender">Array of the armor type</param>
@@ -55,7 +55,7 @@ namespace HomeMadeEngine.Character
         /// </summary>
         /// <param name="p_character">Character on which the buff is applied</param>
         /// <param name="p_buff">Buff that is applied</param>
-        /// <param name="p_timer">Number of turn that the buff will last</param>
+        /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
         public static void Buff(CharacterTemplate p_character, Buffs p_buff, int p_timer, StatsTemplate[]? p_stats)
             => p_character.ApplyBuff(new BuffsTemplate { name= p_buff, timer = p_timer, stat = p_stats });
@@ -67,7 +67,7 @@ namespace HomeMadeEngine.Character
         /// </summary>
         /// <param name="p_character">Character on which the debuff is applied</param>
         /// <param name="p_debuff">Debuff that is applied</param>
-        /// <param name="p_timer">Number of turn that the debuff will last</param>
+        /// <param name="p_timer">Number of turns that the debuff will last</param>
         /// <param name="p_stats">Effects of the debuff</param>
         public static void Debuff(CharacterTemplate p_character, Debuffs p_debuff, int p_timer, StatsTemplate[]? p_stats) 
             => p_character.ApplyDebuff(new DebuffsTemplate { name = p_debuff, timer = p_timer, stat = p_stats });
@@ -75,10 +75,10 @@ namespace HomeMadeEngine.Character
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
         /// <summary>
-        /// Calculate de pourcentage of damage that get through an amount of armor
+        /// Calculate the percentage of damage that get through an amount of armor
         /// </summary>
         /// <param name="p_armor">Amount of armor</param>
-        /// <returns>Pourcentage of damage that get through</returns>
+        /// <returns>Percentage of damage that get through</returns>
         public static double DefenseMethod(int p_armor) => 1.0 / (1.0 + ((double)p_armor / 10.0));
 
         //------------------------------------------------------------------------------------------------------------
@@ -187,5 +187,6 @@ namespace HomeMadeEngine.Character
                 }
             }
         }
+        
     }
 }

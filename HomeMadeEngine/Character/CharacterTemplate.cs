@@ -315,7 +315,7 @@ namespace HomeMadeEngine.Character
         public void Heal(int p_heal)
         {
             if (p_heal < 0)
-                throw new ArgumentException("HEAL MUST BE POSITIF");
+                throw new ArgumentException("HEAL MUST BE POSITIVE");
             if (!IsDead)
             {
                 if (this.CurrentHp + p_heal > this.MaxHp)
