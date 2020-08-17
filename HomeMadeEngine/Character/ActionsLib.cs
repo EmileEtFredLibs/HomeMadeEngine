@@ -9,6 +9,12 @@ namespace HomeMadeEngine.Character
     
     public class ActionsLib
     {
+        public static List<Func<CharacterTemplate, CharacterTemplate[], bool>> Action = new List<Func<CharacterTemplate, CharacterTemplate[], bool>>(){                
+                ActionsLib.Cure1,
+                ActionsLib.StandardAttack,
+                ActionsLib.AttackMultiTarget,
+                ActionsLib.BerserkerRage
+            };
         public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
             if (p_target.Length > 1 || p_target.Length == 0)

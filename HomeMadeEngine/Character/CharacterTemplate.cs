@@ -338,7 +338,7 @@ namespace HomeMadeEngine.Character
                 Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost, this.Spellcost);
             else if (this.CurrentHp < this.Actions[p_index].cost && (int)this.Spellcost == 1)
                 Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost);
-            else if (!this.Actions[p_index].action(this, p_target))
+            else if (!ActionsLib.Action[this.Actions[p_index].index](this, p_target))
             {
                 if ((int)this.Spellcost > 1)
                     this.CurrentRessource -= this.Actions[p_index].cost;
@@ -362,8 +362,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_name">Name of the action (can be different of the function name)</param>
         /// <param name="p_cost">Cost of the action in ressources</param>
         /// <param name="p_action">Static function uses when the action is used</param>
-        public void LearnAction(string p_name, int p_cost, Func<CharacterTemplate, CharacterTemplate[], bool> p_action)
-                => this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, action = p_action });
+        public void LearnAction(string p_name, int p_cost, int p_index)
+                => this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, index = p_index });
         /// <summary>
         /// Delete an action of the list of actions
         /// </summary>

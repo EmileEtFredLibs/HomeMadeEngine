@@ -14,12 +14,12 @@ namespace ConsoleGamePlayer
             Config config = new Config(InterfaceEnum.MainMenu);
             try
             {
-                config.Version = "v0.0.0.4a";
+                config.Version = "v0.0.0.5";
                 new ConsoleGamePlayer().Setup(player, config);
             }
             finally
             {
-                //new SaveAndLoad().Save(player);
+                new SaveAndLoad().Save(player);
             }
         }
     }

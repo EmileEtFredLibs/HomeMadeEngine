@@ -19,7 +19,7 @@ namespace HomeMadeEngine
     {
         public string name;
         public int cost;
-        public Func<CharacterTemplate, CharacterTemplate[], bool> action;
+        public int index;
     }
     [Serializable]
     public struct BuffsTemplate

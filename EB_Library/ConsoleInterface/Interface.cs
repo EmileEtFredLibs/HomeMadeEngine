@@ -18,90 +18,90 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         // MAIN MENU
         //____________________________________________________________________________________________________________
-        public void MainMenu(CharacterTemplate p_player, Config p_config)
+        public void MainMenu()
         {
             Clear();
-            __MainUpBar__(p_config);
+            __MainUpBar__();
             string[] menu;
-            if (p_player != null)
+            if (ConsoleGamePlayer.player != null)
                 menu = new string[] { "Continue", "Restart", "Quit" };
             else
                 menu = new string[] { "Restart", "Quit" };
-            __SelectionMenu__(p_config, menu);
+            __SelectionMenu__(menu);
 
         }
-        private void __MainUpBar__(Config p_config)
+        private void __MainUpBar__()
         {
             WriteLine("--------------------------------------------------------------");
-            WriteLine("ConsoleGame Engine {0}", p_config.Version);
+            WriteLine("ConsoleGame Engine {0}", ConsoleGamePlayer.config.Version);
             WriteLine("--------------------------------------------------------------");
         }
 
         //------------------------------------------------------------------------------------------------------------
         // COMBAT MENU
         //____________________________________________________________________________________________________________
-        public void CombatMenu(CharacterTemplate p_player, Config p_config)
+        public void CombatMenu()
         {
             Clear();
-            __CombatStatusBar__(p_player);
-            //__CombatMiddlePart__(p_player);
-            if (p_config.Menu == InterfaceEnum.CombatMenu)
-                __SelectionMenu__(p_config, new string[] { "Actions", "Defend", "Inventory", "Leave"});
-            if (p_config.Menu == InterfaceEnum.CombatActionMenu)
-                __CombatActionBar__(p_player, p_config);
+            __CombatStatusBar__();
+            //__CombatMiddlePart__(ConsoleGamePlayer.player);
+            if (ConsoleGamePlayer.config.Menu == InterfaceEnum.CombatMenu)
+                __SelectionMenu__(new string[] { "Actions", "Defend", "Inventory", "Leave"});
+            if (ConsoleGamePlayer.config.Menu == InterfaceEnum.CombatActionMenu)
+                __CombatActionBar__();
         }
 
         // STATUS BAR
         //------------------------------------------------------------------------------------------------------------
-        private void __CombatStatusBar__(CharacterTemplate p_player)
+        private void __CombatStatusBar__()
         {
             WriteLine("--------------------------------------------------------------"); // 1,90,1
             Console.BackgroundColor = ConsoleColor.Red;
-            WriteLine(" {0}/{1} Health", p_player.CurrentHp, p_player.MaxHp);
-            switch (p_player.Spellcost)
+            WriteLine(" {0}/{1} Health", ConsoleGamePlayer.player.CurrentHp, ConsoleGamePlayer.player.MaxHp);
+            switch (ConsoleGamePlayer.player.Spellcost)
             {
                 case SpellCost.Mana: Console.BackgroundColor = ConsoleColor.Blue; break;
                 case SpellCost.Rage: Console.BackgroundColor = ConsoleColor.DarkRed; break;
                 case SpellCost.Energy: Console.BackgroundColor = ConsoleColor.DarkYellow; break;
                 default: Console.BackgroundColor = ConsoleColor.Black; break;
             }
-            if ((int)p_player.Spellcost > 1)
-                WriteLine(" {0}/{1} {2}", p_player.CurrentRessource, p_player.MaxRessource, p_player.Spellcost);
+            if ((int)ConsoleGamePlayer.player.Spellcost > 1)
+                WriteLine(" {0}/{1} {2}", ConsoleGamePlayer.player.CurrentRessource, ConsoleGamePlayer.player.MaxRessource, ConsoleGamePlayer.player.Spellcost);
             else
                 WriteLine("");
             Console.BackgroundColor = ConsoleColor.Black;
             WriteLine("");
-            if (p_player.Buffs.Count > 0)
-                WriteLine(__CombatBuffsBar__(p_player, true));
+            if (ConsoleGamePlayer.player.Buffs.Count > 0)
+                WriteLine(__CombatBuffsBar__(true));
             else
                 WriteLine("");
-            if (p_player.Debuffs.Count > 0)
-                WriteLine(__CombatBuffsBar__(p_player, false));
+            if (ConsoleGamePlayer.player.Debuffs.Count > 0)
+                WriteLine(__CombatBuffsBar__(false));
             else
                 WriteLine("");
             WriteLine("--------------------------------------------------------------");
         }
-        private string __CombatBuffsBar__(CharacterTemplate p_player, bool p_buff)
+        private string __CombatBuffsBar__(bool p_buff)
         {
             StringBuilder outty = new StringBuilder();
             if (p_buff)
             {
-                for(int i=0; i< p_player.Buffs.Count;i++)
+                for(int i=0; i< ConsoleGamePlayer.player.Buffs.Count;i++)
                 {
-                    if (p_player.Buffs.Count <= i)
-                        outty.Append(" " + p_player.Buffs[i].name.ToString() + ": " + p_player.Buffs[i].timer + " turn" + ", ");
+                    if (ConsoleGamePlayer.player.Buffs.Count <= i)
+                        outty.Append(" " + ConsoleGamePlayer.player.Buffs[i].name.ToString() + ": " + ConsoleGamePlayer.player.Buffs[i].timer + " turn" + ", ");
                     else
-                        outty.Append(" " + p_player.Buffs[i].name.ToString() + ": " + p_player.Buffs[i].timer + " turn");
+                        outty.Append(" " + ConsoleGamePlayer.player.Buffs[i].name.ToString() + ": " + ConsoleGamePlayer.player.Buffs[i].timer + " turn");
                 }
             }
             else
             {
-                for (int i = 0; i < p_player.Debuffs.Count; i++)
+                for (int i = 0; i < ConsoleGamePlayer.player.Debuffs.Count; i++)
                 {
-                    if (p_player.Debuffs.Count <= i)
-                        outty.Append(" " + p_player.Debuffs[i].name.ToString() + ": " + p_player.Debuffs[i].timer + " turn" + ", ");
+                    if (ConsoleGamePlayer.player.Debuffs.Count <= i)
+                        outty.Append(" " + ConsoleGamePlayer.player.Debuffs[i].name.ToString() + ": " + ConsoleGamePlayer.player.Debuffs[i].timer + " turn" + ", ");
                     else
-                        outty.Append(" " + p_player.Debuffs[i].name.ToString() + ": " + p_player.Debuffs[i].timer + " turn");
+                        outty.Append(" " + ConsoleGamePlayer.player.Debuffs[i].name.ToString() + ": " + ConsoleGamePlayer.player.Debuffs[i].timer + " turn");
                 }
             }
             return outty.ToString();
@@ -109,15 +109,15 @@ namespace ConsoleGamePlayer.ConsoleInterface
 
         // MIDDLE PART
         //------------------------------------------------------------------------------------------------------------
-        private void __CombatMiddlePart__(CharacterTemplate p_player)
+        private void __CombatMiddlePart__()
         {
             for (int i = 0; i < MiddleLines; i++)
             {
                 StringBuilder str = new StringBuilder();
-                if (p_player.Position.Y == i) {
-                    for (int j = 0; j < p_player.Position.X; j++)
+                if (ConsoleGamePlayer.player.Position.Y == i) {
+                    for (int j = 0; j < ConsoleGamePlayer.player.Position.X; j++)
                     {
-                        if (j < p_player.Position.X-1)
+                        if (j < ConsoleGamePlayer.player.Position.X-1)
                             str.Append("  ");
                         else
                             str.Append("X");
@@ -131,20 +131,20 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             WriteLine("--------------------------------------------------------------");
         }
-        private void __Position__(CharacterTemplate p_player)
+        private void __Position__()
         {
             
         }
 
         // BOTTOM PART
         //------------------------------------------------------------------------------------------------------------
-        private void __SelectionMenu__(Config p_config, string[] Menus)
+        private void __SelectionMenu__(string[] Menus)
         {
             string cur;
-            p_config.ChangingMax(Menus.Length - 1);
+            ConsoleGamePlayer.config.ChangingMax(Menus.Length - 1);
             for (int i = 0; i < Menus.Length; i++)
             {
-                if (i == p_config.Position)
+                if (i == ConsoleGamePlayer.config.Position)
                 {
                     cur = "> ";
                     Console.BackgroundColor = ConsoleColor.Red;
@@ -158,13 +158,13 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             Console.BackgroundColor = ConsoleColor.Black;
         }
-        private void __CombatActionBar__(CharacterTemplate p_player, Config p_config)
+        private void __CombatActionBar__()
         {
-            p_config.ChangingMax(p_player.Actions.Count - 1);
+            ConsoleGamePlayer.config.ChangingMax(ConsoleGamePlayer.player.Actions.Count - 1);
             string cur;
-            for (int i = 0; i < p_player.Actions.Count; i++)
+            for (int i = 0; i < ConsoleGamePlayer.player.Actions.Count; i++)
             {
-                if (i == p_config.Position)
+                if (i == ConsoleGamePlayer.config.Position)
                 {
                     cur = "> ";
                     Console.BackgroundColor = ConsoleColor.Red;
@@ -174,13 +174,13 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     cur = "  ";
                     Console.BackgroundColor = ConsoleColor.Black;
                 }
-                if (p_player.Spellcost > 0)
+                if (ConsoleGamePlayer.player.Spellcost > 0)
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, p_player.Actions[i].name, p_player.Spellcost, p_player.Actions[i].cost);
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, ConsoleGamePlayer.player.Actions[i].name, ConsoleGamePlayer.player.Spellcost, ConsoleGamePlayer.player.Actions[i].cost);
                 }
                 else
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, p_player.Actions[i].name, " ", " ");
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, ConsoleGamePlayer.player.Actions[i].name, " ", " ");
                 }
             }
             Console.BackgroundColor = ConsoleColor.Black;
