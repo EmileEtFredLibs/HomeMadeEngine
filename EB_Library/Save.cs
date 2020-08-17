@@ -33,7 +33,7 @@ namespace ConsoleGamePlayer
         //    }
         //    return;
         //}
-        public void SaveData()
+        public void SaveBin()
         {
             int nbSave = 0;
             try 
@@ -62,7 +62,7 @@ namespace ConsoleGamePlayer
                 Console.ReadKey();
             }
         }
-        public void LoadData()
+        public void LoadBin()
         {
             BinaryFormatter formatter = new BinaryFormatter();
             try

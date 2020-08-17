@@ -10,7 +10,7 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            new Save().LoadData();
+            new Save().LoadBin();
             try
             {
                 Save.Config.Version = "v0.0.0.5b";
@@ -18,7 +18,7 @@ namespace ConsoleGamePlayer
             }
             finally
             {
-                new Save().SaveData();
+                new Save().SaveBin();
             }
         }
     }
