@@ -35,6 +35,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             this.Menu = InterfaceEnum.CombatMenu;
             this.Max = 10;
             this.Cursor = "> ";
+            this.Version = "";
         }
         public Config() : this(0) { }
         public Config(InterfaceEnum interf)
@@ -43,6 +44,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             this.Menu = interf;
             this.Max = 10;
             this.Cursor = "> ";
+            this.Version = "";
         }
 
         //------------------------------------------------------------------------------------------------------------
