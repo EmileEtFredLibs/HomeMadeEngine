@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using ConsoleGamePlayer.ConsoleInterface;
+using ConsoleGamePlayer.Serialization;
 using HomeMadeEngine;
 using HomeMadeEngine.Character;
 using HomeMadeEngine.Math;
@@ -17,7 +18,7 @@ namespace ConsoleGamePlayer
             {
                 [ConsoleKey.Escape] = 0
             };
-            Save.Player.LearnAction("Cure 1", 2, 0);
+            //Save.Player.LearnAction("Cure 1", 2, 0);
             Save.Player.LearnAction("Attack 1", 0, 1);
             Save.Player.LearnAction("Berserker Rage 1", 5, 3);
             Save.Config.ResetPos();

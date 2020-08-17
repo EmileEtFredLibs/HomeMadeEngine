@@ -1,4 +1,5 @@
-﻿using HomeMadeEngine;
+﻿using ConsoleGamePlayer.Serialization;
+using HomeMadeEngine;
 using HomeMadeEngine.Character;
 using System;
 using System.Text;
