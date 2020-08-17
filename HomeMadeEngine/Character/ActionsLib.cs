@@ -13,7 +13,8 @@ namespace HomeMadeEngine.Character
                 ActionsLib.Cure1,
                 ActionsLib.StandardAttack,
                 ActionsLib.AttackMultiTarget,
-                ActionsLib.BerserkerRage
+                ActionsLib.BerserkerRage,
+                ActionsLib.Cure2
             };
         //------------------------------------------------------------------------------------------------------------
         // RANDOM NUMBERS

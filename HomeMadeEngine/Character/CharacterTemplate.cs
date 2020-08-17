@@ -363,7 +363,10 @@ namespace HomeMadeEngine.Character
         /// <param name="p_cost">Cost of the action in ressources</param>
         /// <param name="p_action">Static function uses when the action is used</param>
         public void LearnAction(string p_name, int p_cost, int p_index)
-                => this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, index = p_index });
+        {
+            if(!this.Actions.Exists((a)=>a.name==p_name))
+                this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, index = p_index });
+        }
         /// <summary>
         /// Delete an action of the list of actions
         /// </summary>
