@@ -5,23 +5,21 @@ using System.Text;
 
 namespace ConsoleGamePlayer.ConsoleInterface
 {
-    [DataContract]
+    [Serializable]
     public class Config
     {
         //------------------------------------------------------------------------------------------------------------
         // CONSTANTS
         //____________________________________________________________________________________________________________
-        public const string JsonSaveData = "{\"Max\":1,\"Position\":0}";
+        //[DataMember]
+        //public const string JsonSaveData = "{\"Max\":1,\"Position\":0}";
         public const int NumberMenu = 4;
 
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        [DataMember]
         public int Position { get; private set; }
-        [DataMember]
         public InterfaceEnum Menu { get; private set; }
-        [DataMember]
         public int Max { get; private set; }
         public string Cursor{ get; }
         public string Version{ get; set; }

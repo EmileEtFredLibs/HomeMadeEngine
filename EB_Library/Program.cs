@@ -10,15 +10,15 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            new Save().Load();
+            new Save().LoadBin();
             try
             {
-                Save.Config.Version = "v0.0.0.5a";
+                Save.Config.Version = "v0.0.0.5b";
                 new ConsoleGamePlayer().Setup();
             }
             finally
             {
-                //new Save().SaveData();
+                new Save().SaveBin();
             }
         }
     }
