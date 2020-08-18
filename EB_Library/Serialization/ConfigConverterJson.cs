@@ -11,14 +11,20 @@ namespace ConsoleGamePlayer.Serialization
         {
             return objectType == typeof(Config);
         }
-        public override void WriteJson(JsonWriter writer, object value, JsonSerializer serializer)
+        public override void WriteJson(JsonWriter writer, object? value, JsonSerializer serializer)
         {
+            if (value != null)
+            {
 
+            }
         }
 
-        public override object ReadJson(JsonReader reader, Type objectType, object existingValue, JsonSerializer serializer)
+        public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
+            if (existingValue != null)
+            {
 
+            }
             return new Config();
         }
     }
