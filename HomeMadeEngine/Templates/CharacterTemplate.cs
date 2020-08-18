@@ -345,27 +345,31 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_target">Targets of that action</param>
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
-            if (this.CurrentRessource < this.Actions[p_index].Cost && (int)this.Spellcost > 1)
-                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].Cost, this.Spellcost);
-            else if (this.CurrentHp < this.Actions[p_index].Cost && (int)this.Spellcost == 1)
-                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].Cost);
+            if (this.CurrentRessource < __CostReturner__(p_index) && (int)this.Spellcost > 1)
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, __CostReturner__(p_index), this.Spellcost);
+            else if (this.CurrentHp <  __CostReturner__(p_index) && (int)this.Spellcost == 1)
+                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, __CostReturner__(p_index));
             else if (!this.Actions[p_index].UseAction(this,p_target))
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= this.Actions[p_index].Cost;
+                    this.CurrentRessource -= __CostReturner__(p_index);
                 Console.WriteLine("{0} FAILED", this.Actions[p_index].Name);
             }
             else
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= this.Actions[p_index].Cost;
+                    this.CurrentRessource -= __CostReturner__(p_index);
                 else if ((int)this.Spellcost == 1)
                 {
-                    this.CurrentHp -= this.Actions[p_index].Cost;
+                    this.CurrentHp -=  __CostReturner__(p_index);
                 }
                 Console.WriteLine("You casted {0}", this.Actions[p_index].Name);
             }
             Console.ReadKey();
+        }
+        private int __CostReturner__(int p_index)
+        {
+            return this.Actions[p_index].Cost;
         }
         /// <summary>
         /// Add an action to the character
