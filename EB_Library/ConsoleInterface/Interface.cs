@@ -181,7 +181,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 }
                 else if (Save.Player.Spellcost > 0)
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, Save.Player.Spellcost, Save.Player.Actions[i].Cost);
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, Save.Player.Spellcost, Save.Player.CostReturner(i));
                 }
                 else 
                 {
