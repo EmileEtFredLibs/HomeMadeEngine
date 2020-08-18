@@ -12,7 +12,6 @@ namespace ConsoleGamePlayer
         public static void Main(string[] args)
         {
             new Save().Loading(Save.SaveType.Bin);
-            //new Save().LoadJson();
             try
             {
                 Save.Config.Version = "v0.0.0.7";
@@ -21,7 +20,6 @@ namespace ConsoleGamePlayer
             finally
             {
                 new Save().Saving(Save.SaveType.Bin);
-                //new Save().SaveJson();
             }
         }
     }
