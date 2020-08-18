@@ -22,27 +22,27 @@ namespace HomeMadeEngine.Action
             double damageDone = 0;
             foreach (StatsTemplate atkStat in p_attacker)
             {
-                if (atkStat.dmg == DamageType.Unmidigatable)
+                if (atkStat.Dmg == DamageType.Unmidigatable)
                 {
                     Console.WriteLine("{0} * {1} = {2} {3}", 
-                        atkStat.flat, atkStat.multi , (int)(atkStat.flat * atkStat.multi), atkStat.type);
-                    damageDone += (int)(atkStat.flat * atkStat.multi);
+                        atkStat.Flat, atkStat.Multi , (int)(atkStat.Flat * atkStat.Multi), atkStat.Type);
+                    damageDone += (int)(atkStat.Flat * atkStat.Multi);
                 }
                 else
                 {
                     double damageRatio = 0;
                     foreach (StatsTemplate defStat in p_defender)
                     {
-                        if (atkStat.type == defStat.type)
+                        if (atkStat.Type == defStat.Type)
                         {
-                            damageRatio = (double)DefenseMethod((int)(defStat.flat * defStat.multi));
+                            damageRatio = (double)DefenseMethod((int)(defStat.Flat * defStat.Multi));
                             Console.WriteLine("({0} * {1}) * {2} * {3} = {4} {5}",
-                                atkStat.flat, atkStat.multi, defStat.flat, defStat.multi,
-                                (int)((atkStat.flat * atkStat.multi) * damageRatio), atkStat.type);
+                                atkStat.Flat, atkStat.Multi, defStat.Flat, defStat.Multi,
+                                (int)((atkStat.Flat * atkStat.Multi) * damageRatio), atkStat.Type);
                         }
                     }
                     
-                    damageDone += (int)((atkStat.flat * atkStat.multi) * damageRatio);
+                    damageDone += (int)((atkStat.Flat * atkStat.Multi) * damageRatio);
                 }
             }
             Console.WriteLine(damageDone);
@@ -94,9 +94,9 @@ namespace HomeMadeEngine.Action
             }
             foreach (BuffsTemplate buff in p_char.Buffs)
             {
-                if (buff.stat != null)
+                if (buff.Stat != null)
                 {
-                    foreach (StatsTemplate stats in buff.stat)
+                    foreach (StatsTemplate stats in buff.Stat)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
@@ -104,9 +104,9 @@ namespace HomeMadeEngine.Action
             }
             foreach (DebuffsTemplate debuff in p_char.Debuffs)
             {
-                if (debuff.stat != null)
+                if (debuff.Stat != null)
                 {
-                    foreach (StatsTemplate stats in debuff.stat)
+                    foreach (StatsTemplate stats in debuff.Stat)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
@@ -127,9 +127,9 @@ namespace HomeMadeEngine.Action
                     }
                     foreach (BuffsTemplate buff in character.Buffs)
                     {
-                        if (buff.stat!=null)
+                        if (buff.Stat!=null)
                         {
-                            foreach (StatsTemplate stats in buff.stat)
+                            foreach (StatsTemplate stats in buff.Stat)
                             {
                                     DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
@@ -137,9 +137,9 @@ namespace HomeMadeEngine.Action
                     }
                     foreach (DebuffsTemplate debuff in character.Debuffs)
                     {
-                        if (debuff.stat != null)
+                        if (debuff.Stat != null)
                         {
-                            foreach (StatsTemplate stats in debuff.stat)
+                            foreach (StatsTemplate stats in debuff.Stat)
                             {
                                     DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
@@ -151,24 +151,24 @@ namespace HomeMadeEngine.Action
         }
         public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, StatType p_type)
         {
-            if (p_damage.dmg != null)
+            if (p_damage.Dmg != null)
             {
-                if (p_damage.type == p_type)
+                if (p_damage.Type == p_type)
                 {
-                    int index = p_listDmg.FindIndex((c) => c.type == p_damage.type);
+                    int index = p_listDmg.FindIndex((c) => c.Type == p_damage.Type);
                     if (index >= 0)
                     {
-                        string names = p_listDmg[index].name;
-                        double flats = p_listDmg[index].flat + p_damage.flat;
-                        double multis = p_listDmg[index].multi * p_damage.multi;
-                        DamageType? types = p_damage.dmg;
-                        StatType stats = p_damage.type;
+                        string names = p_listDmg[index].Name;
+                        double flats = p_listDmg[index].Flat + p_damage.Flat;
+                        double multis = p_listDmg[index].Multi * p_damage.Multi;
+                        DamageType? types = p_damage.Dmg;
+                        StatType stats = p_damage.Type;
                         p_listDmg.RemoveAt(index);
                         p_listDmg.Add(new StatsTemplate(names, stats, types, flats, multis));
                     }
                     else
                     {
-                        p_listDmg.Add(new StatsTemplate(p_damage.name, p_damage.type, p_damage.dmg, p_damage.flat, p_damage.multi));
+                        p_listDmg.Add(new StatsTemplate(p_damage.Name, p_damage.Type, p_damage.Dmg, p_damage.Flat, p_damage.Multi));
                     }
                 }
             }

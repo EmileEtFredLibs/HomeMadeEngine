@@ -10,10 +10,10 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public string name { get; set; }
-        public EquipementSlot? slot { get; set; }
-        public ItemRarity rarity { get; set; }
-        public StatsTemplate[]? stats { get; set; }
+        public string Name { get; set; }
+        public EquipementSlot? Slot { get; set; }
+        public ItemRarity Rarity { get; set; }
+        public StatsTemplate[]? Stats { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
@@ -22,10 +22,10 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         public EquipementsTemplate(string p_name, EquipementSlot? p_slot, ItemRarity p_rarity, StatsTemplate[]? p_stats)
         {
-            this.name = p_name;
-            this.slot = p_slot;
-            this.rarity = p_rarity;
-            this.stats = p_stats;
+            this.Name = p_name;
+            this.Slot = p_slot;
+            this.Rarity = p_rarity;
+            this.Stats = p_stats;
         }
 
         // SHORTCUT CONSTRUCTORS

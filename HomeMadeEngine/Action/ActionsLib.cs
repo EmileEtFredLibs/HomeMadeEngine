@@ -36,7 +36,7 @@ namespace HomeMadeEngine.Action
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.name == Debuff.Unhealable))
+            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;
@@ -78,11 +78,11 @@ namespace HomeMadeEngine.Action
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Buffs.Any(a => a.name == Buff.DamageUp))
+            if (p_target[0].Buffs.Any(a => a.Name == Buff.DamageUp))
             {
                 p_caster.RemoveBuff(Buff.DamageUp);
             }
-            if (p_target[0].Debuffs.Any(a => a.name == Debuff.DefenseDown))
+            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.DefenseDown))
             {
                 p_caster.RemoveDebuff(Debuff.DefenseDown);
             }
@@ -105,7 +105,7 @@ namespace HomeMadeEngine.Action
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.name == Debuff.Unhealable))
+            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;

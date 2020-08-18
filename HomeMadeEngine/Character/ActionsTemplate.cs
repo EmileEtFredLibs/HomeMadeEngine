@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeMadeEngine.Action;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -10,20 +11,20 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public string name { get; set; }
-        public int cost { get; set; }
-        public int index { get; set; }
+        public string Name { get; set; }
+        public int Cost { get; set; }
+        public int Index { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public ActionsTemplate (string p_name, int p_cost, int p_index)
+        public ActionsTemplate(string p_name, int p_cost, int p_index)
         {
-            this.name = p_name;
-            this.cost = p_cost;
-            this.index = p_index;
+            this.Name = p_name;
+            this.Cost = p_cost;
+            this.Index = p_index;
         }
 
         // SHORTCUT CONSTRUCTORS
@@ -32,5 +33,7 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
         //____________________________________________________________________________________________________________
+        public bool UseAction(CharacterTemplate p_caster, CharacterTemplate[] p_target) => ActionsLib.Action[this.Index](p_caster, p_target);
+        }
     }
 }

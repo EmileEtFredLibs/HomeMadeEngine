@@ -90,9 +90,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 for(int i=0; i< Save.Player.Buffs.Count;i++)
                 {
                     if (Save.Player.Buffs.Count <= i)
-                        outty.Append(" " + Save.Player.Buffs[i].name.ToString() + ": " + Save.Player.Buffs[i].timer + " turn" + ", ");
+                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + Save.Player.Buffs[i].Timer + " turn" + ", ");
                     else
-                        outty.Append(" " + Save.Player.Buffs[i].name.ToString() + ": " + Save.Player.Buffs[i].timer + " turn");
+                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + Save.Player.Buffs[i].Timer + " turn");
                 }
             }
             else
@@ -100,9 +100,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 for (int i = 0; i < Save.Player.Debuffs.Count; i++)
                 {
                     if (Save.Player.Debuffs.Count <= i)
-                        outty.Append(" " + Save.Player.Debuffs[i].name.ToString() + ": " + Save.Player.Debuffs[i].timer + " turn" + ", ");
+                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + Save.Player.Debuffs[i].Timer + " turn" + ", ");
                     else
-                        outty.Append(" " + Save.Player.Debuffs[i].name.ToString() + ": " + Save.Player.Debuffs[i].timer + " turn");
+                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + Save.Player.Debuffs[i].Timer + " turn");
                 }
             }
             return outty.ToString();
@@ -181,11 +181,11 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 }
                 else if (Save.Player.Spellcost > 0)
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].name, Save.Player.Spellcost, Save.Player.Actions[i].cost);
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, Save.Player.Spellcost, Save.Player.Actions[i].Cost);
                 }
                 else 
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].name, " ", " ");
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, " ", " ");
                 }
             }
             

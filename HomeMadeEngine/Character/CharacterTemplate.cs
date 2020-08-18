@@ -329,25 +329,25 @@ namespace HomeMadeEngine.Character
         /// <param name="p_target">Targets of that action</param>
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
-            if (this.CurrentRessource < this.Actions[p_index].cost && (int)this.Spellcost > 1)
-                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost, this.Spellcost);
-            else if (this.CurrentHp < this.Actions[p_index].cost && (int)this.Spellcost == 1)
-                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].cost);
-            else if (!ActionsLib.Action[this.Actions[p_index].index](this, p_target))
+            if (this.CurrentRessource < this.Actions[p_index].Cost && (int)this.Spellcost > 1)
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].Cost, this.Spellcost);
+            else if (this.CurrentHp < this.Actions[p_index].Cost && (int)this.Spellcost == 1)
+                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, this.Actions[p_index].Cost);
+            else if (!this.Actions[p_index].UseAction(this,p_target))
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= this.Actions[p_index].cost;
-                Console.WriteLine("{0} FAILED", this.Actions[p_index].name);
+                    this.CurrentRessource -= this.Actions[p_index].Cost;
+                Console.WriteLine("{0} FAILED", this.Actions[p_index].Name);
             }
             else
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= this.Actions[p_index].cost;
+                    this.CurrentRessource -= this.Actions[p_index].Cost;
                 else if ((int)this.Spellcost == 1)
                 {
-                    this.CurrentHp -= this.Actions[p_index].cost;
+                    this.CurrentHp -= this.Actions[p_index].Cost;
                 }
-                Console.WriteLine("You casted {0}", this.Actions[p_index].name);
+                Console.WriteLine("You casted {0}", this.Actions[p_index].Name);
             }
             Console.ReadKey();
         }
@@ -359,7 +359,7 @@ namespace HomeMadeEngine.Character
         /// <param name="p_action">Static function uses when the action is used</param>
         public void LearnAction(string p_name, int p_cost, int p_index)
         {
-            if(!this.Actions.Exists((a)=>a.name==p_name))
+            if(!this.Actions.Exists((a)=>a.Name==p_name))
                 this.Actions.Add(new ActionsTemplate (p_name, p_cost, p_index ));
         }
         /// <summary>
@@ -372,12 +372,12 @@ namespace HomeMadeEngine.Character
         /// Delete an action of the list of actions
         /// </summary>
         /// <param name="p_action">ActionsTemplate of the action</param>
-        public void UnlearnAction(ActionsTemplate p_action) => this.Actions.RemoveAll(a => a.name == p_action.name);
+        public void UnlearnAction(ActionsTemplate p_action) => this.Actions.RemoveAll(a => a.Name == p_action.Name);
         /// <summary>
         /// Delete an action of the list of actions
         /// </summary>
         /// <param name="p_action">Name of the action (can be different of the function name)</param>
-        public void UnlearnAction(string p_action) => this.Actions.RemoveAll(a => a.name == p_action);
+        public void UnlearnAction(string p_action) => this.Actions.RemoveAll(a => a.Name == p_action);
 
         // BUFFS AND DEBUFFS
         //------------------------------------------------------------------------------------------------------------
@@ -401,12 +401,12 @@ namespace HomeMadeEngine.Character
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void RemoveBuff(BuffsTemplate p_buff)=>Buffs.RemoveAll((b) => b.name == p_buff.name);
+        public void RemoveBuff(BuffsTemplate p_buff)=>Buffs.RemoveAll((b) => b.Name == p_buff.Name);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">Buff to remove</param>
-        public void RemoveBuff(Buff p_buff) => Buffs.RemoveAll((b) => b.name == p_buff);
+        public void RemoveBuff(Buff p_buff) => Buffs.RemoveAll((b) => b.Name == p_buff);
         /// <summary>
         /// Add a debuff to the character
         /// </summary>
@@ -428,12 +428,12 @@ namespace HomeMadeEngine.Character
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">DebuffsTemplate of the debuff</param>
-        public void RemoveDebuff(DebuffsTemplate p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff.name);
+        public void RemoveDebuff(DebuffsTemplate p_debuff) => Debuffs.RemoveAll(d => d.Name == p_debuff.Name);
         /// <summary>
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">Debuff to remove</param>
-        public void RemoveDebuff(Debuff p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff);
+        public void RemoveDebuff(Debuff p_debuff) => Debuffs.RemoveAll(d => d.Name == p_debuff);
 
         // UPDATERS
         //------------------------------------------------------------------------------------------------------------
@@ -449,9 +449,9 @@ namespace HomeMadeEngine.Character
             for (int i = 0; i < Buffs.Count; i++)
             {
                 BuffsTemplate buff = this.Buffs[i];
-                if (buff.timer > 0)
+                if (buff.Timer > 0)
                 { 
-                    buff.timer -= 1;
+                    buff.Timer -= 1;
                     this.Buffs.RemoveAt(i);
                     this.Buffs.Add(buff);
                 }
@@ -461,9 +461,9 @@ namespace HomeMadeEngine.Character
             for (int i = 0; i < Debuffs.Count; i++)
             {
                 DebuffsTemplate debuffs = this.Debuffs[i];
-                if (debuffs.timer > 0)
+                if (debuffs.Timer > 0)
                 {
-                    debuffs.timer -= 1;
+                    debuffs.Timer -= 1;
                     this.Debuffs.RemoveAt(i);
                     this.Debuffs.Add(debuffs);
                 }

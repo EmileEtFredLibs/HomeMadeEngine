@@ -10,9 +10,9 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public Buff name { get; set; }
-        public int timer { get; set; }
-        public StatsTemplate[]? stat { get; set; }
+        public Buff Name { get; set; }
+        public int Timer { get; set; }
+        public StatsTemplate[]? Stat { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
@@ -21,9 +21,9 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         public BuffsTemplate(Buff p_name, int p_timer, StatsTemplate[]? p_stat)
         {
-            this.name = p_name;
-            this.timer = p_timer;
-            this.stat = p_stat;
+            this.Name = p_name;
+            this.Timer = p_timer;
+            this.Stat = p_stat;
         }
 
         // SHORTCUT CONSTRUCTORS
