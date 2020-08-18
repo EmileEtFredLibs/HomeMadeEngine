@@ -15,7 +15,7 @@ namespace ConsoleGamePlayer
             //new Save().LoadJson();
             try
             {
-                Save.Config.Version = "v0.0.0.6a";
+                Save.Config.Version = "v0.0.0.7";
                 new ConsoleGamePlayer().Setup();
             }
             finally
