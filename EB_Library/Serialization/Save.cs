@@ -24,7 +24,7 @@ namespace ConsoleGamePlayer.Serialization
         public static CharacterTemplate Player;
         public static Config Config;
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
-        public enum SaveType { All=0, Bin=1, Json=2, XML=3 }
+        public enum SaveType { None=0, Bin=1, Json=2, XML=3 }
 
         //------------------------------------------------------------------------------------------------------------
         // MAIN FUNCTIONS
@@ -33,6 +33,7 @@ namespace ConsoleGamePlayer.Serialization
         {
             switch (p_type)
             {
+                case SaveType.None: break;
                 case SaveType.Bin: __SaveBin__(); break;
                 case SaveType.Json: __SaveJson__(); break;
                 case SaveType.XML: break;
@@ -46,6 +47,7 @@ namespace ConsoleGamePlayer.Serialization
         {
             switch (p_type)
             {
+                case SaveType.None: break;
                 case SaveType.Bin: __LoadBin__(); break;
                 case SaveType.Json: __LoadJson__(); break;
                 case SaveType.XML: break;
