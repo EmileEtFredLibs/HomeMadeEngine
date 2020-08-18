@@ -12,12 +12,12 @@ namespace ConsoleGamePlayer
 {
     public class ConsoleGamePlayer
     {
+        public static Dictionary<ConsoleKey, int> Options = new Dictionary<ConsoleKey, int>
+        {
+            [ConsoleKey.Escape] = 0
+        };
         public void Setup()
         {
-            var options = new Dictionary<ConsoleKey, int>
-            {
-                [ConsoleKey.Escape] = 0
-            };
             //Save.Player.LearnAction("Cure 1", 2, 0);
             Save.Player.LearnAction("Attack 1", 0, 1);
             Save.Player.LearnAction("Berserker Rage 1", 5, 3);
