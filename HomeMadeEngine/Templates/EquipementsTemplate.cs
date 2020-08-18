@@ -2,28 +2,30 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HomeMadeEngine.Character
+namespace HomeMadeEngine.Templates
 {
     [Serializable]
-    public class BuffsTemplate
+    public class EquipementsTemplate
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public Buff Name { get; set; }
-        public int Timer { get; set; }
-        public StatsTemplate[]? Stat { get; set; }
+        public string Name { get; set; }
+        public EquipementSlot? Slot { get; set; }
+        public ItemRarity Rarity { get; set; }
+        public StatsTemplate[]? Stats { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public BuffsTemplate(Buff p_name, int p_timer, StatsTemplate[]? p_stat)
+        public EquipementsTemplate(string p_name, EquipementSlot? p_slot, ItemRarity p_rarity, StatsTemplate[]? p_stats)
         {
             this.Name = p_name;
-            this.Timer = p_timer;
-            this.Stat = p_stat;
+            this.Slot = p_slot;
+            this.Rarity = p_rarity;
+            this.Stats = p_stats;
         }
 
         // SHORTCUT CONSTRUCTORS

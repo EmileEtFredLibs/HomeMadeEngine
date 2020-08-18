@@ -2,32 +2,37 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace HomeMadeEngine.Character
+namespace HomeMadeEngine.Templates
 {
     [Serializable]
-    public class DebuffsTemplate
+    public class StatsTemplate
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public Debuff Name { get; set; }
-        public int Timer { get; set; }
-        public StatsTemplate[]? Stat { get; set; }
+        public string Name { get; set; }
+        public StatType Type { get; set; }
+        public DamageType? Dmg { get; set; }
+        public double Flat { get; set; }
+        public double Multi { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public DebuffsTemplate(Debuff p_name, int p_timer, StatsTemplate[]? p_stat)
+        public StatsTemplate(string p_name, StatType p_stat, DamageType? p_dmg, double p_flat, double p_multi)
         {
             this.Name = p_name;
-            this.Timer = p_timer;
-            this.Stat = p_stat;
+            this.Type = p_stat;
+            this.Dmg = p_dmg;
+            this.Flat = p_flat;
+            this.Multi = p_multi;
         }
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
+        // public StatsTemplate(string p_name, StatType p_stat, double p_flat, double p_multi) : this(p_name, p_stat, null, p_flat, p_multi);
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

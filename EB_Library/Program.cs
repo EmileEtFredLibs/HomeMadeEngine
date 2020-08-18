@@ -2,7 +2,7 @@
 using System.Numerics;
 using ConsoleGamePlayer.ConsoleInterface;
 using HomeMadeEngine;
-using HomeMadeEngine.Character;
+using HomeMadeEngine.Templates;
 using ConsoleGamePlayer.Serialization;
 
 namespace ConsoleGamePlayer

@@ -1,5 +1,5 @@
 ﻿using ConsoleGamePlayer.ConsoleInterface;
-using HomeMadeEngine.Character;
+using HomeMadeEngine.Templates;
 using Newtonsoft.Json;
 using System;
 using System.IO;

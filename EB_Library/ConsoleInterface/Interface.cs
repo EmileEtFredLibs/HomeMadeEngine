@@ -1,6 +1,6 @@
 ﻿using ConsoleGamePlayer.Serialization;
 using HomeMadeEngine;
-using HomeMadeEngine.Character;
+using HomeMadeEngine.Templates;
 using System;
 using System.Text;
 using static System.Console;

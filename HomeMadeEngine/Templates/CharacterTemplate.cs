@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using HomeMadeEngine.Action;
-using HomeMadeEngine.Character;
+using HomeMadeEngine.Templates;
 using HomeMadeEngine.Math;
 
-namespace HomeMadeEngine.Character
+namespace HomeMadeEngine.Templates
 {
     [Serializable]
     public class CharacterTemplate

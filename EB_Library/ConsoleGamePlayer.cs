@@ -4,7 +4,7 @@ using System.Text;
 using ConsoleGamePlayer.ConsoleInterface;
 using ConsoleGamePlayer.Serialization;
 using HomeMadeEngine;
-using HomeMadeEngine.Character;
+using HomeMadeEngine.Templates;
 using HomeMadeEngine.Math;
 using static System.Console;
 
