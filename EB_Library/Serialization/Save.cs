@@ -180,7 +180,7 @@ namespace ConsoleGamePlayer.Serialization
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 if (Player == null)
                 {
-                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.SpellCost.Energy, 12, 100, false, 4, 5, 0, 0, 0, 0);
+                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.SpellCost.Rage, 12, 100, false, 4, 5, 0, 0, 0, 0);
                     Console.WriteLine("LOAD PLAYER FAILED");
                 }
                 if (Config == null)

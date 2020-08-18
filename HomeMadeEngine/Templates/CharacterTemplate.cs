@@ -264,16 +264,25 @@ namespace HomeMadeEngine.Templates
         //------------------------------------------------------------------------------------------------------------
         public void Defend()
         {
+            //Energy recovers based on the amount of current energy you have
             if (this.Spellcost == SpellCost.Energy)
             {
                 if (this.CurrentRessource + this.CurrentRessource * 0.1 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
+                else if (this.CurrentRessource <= 0 || this.CurrentRessource * 0.1 < 1)
+                    this.CurrentRessource += 1;
                 else
                     this.CurrentRessource += (int)(this.CurrentRessource * 0.1);
             }
+            //Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
             else if (this.Spellcost == SpellCost.Rage)
             {
-                    this.CurrentRessource -= (int)(this.CurrentRessource * 0.1);
+                this.CurrentRessource -= (int)(this.MaxRessource * 0.1);
+            }
+            //Mana recovers based on your maximum Mana
+            else if (this.Spellcost == SpellCost.Mana)
+            {
+                this.CurrentRessource += (int)(this.MaxRessource * 0.1);
             }
         }
         /// <summary>
@@ -301,6 +310,7 @@ namespace HomeMadeEngine.Templates
                 }
                 else
                     this.CurrentHp -= p_damage;
+               
             }
         }
         /// <summary>

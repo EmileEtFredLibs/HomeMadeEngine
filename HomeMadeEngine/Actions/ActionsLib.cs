@@ -29,10 +29,10 @@ namespace HomeMadeEngine.Action
         /// <returns>Cures the character for 1-10 hp</returns>
         public static bool Cure1(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
-            var randValue = new Random();
+            var randValueLvl1 = new Random();
             int maxHealthRegain = 10;
             int minHealthRegain = 1;
-            int healingValue = randValue.Next(minHealthRegain, maxHealthRegain + 1);
+            int healingValue = randValueLvl1.Next(minHealthRegain, maxHealthRegain + 1);
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
@@ -91,22 +91,23 @@ namespace HomeMadeEngine.Action
             return true;
         }
         /// <summary>
-        /// Cure Lvl.2 / Index no.0
+        /// Cure Lvl.2 / Index no.4
         /// </summary>
         /// <param name="p_caster">Character activating the cure</param>
         /// <param name="p_target">Character recieving the cure</param>
-        /// <returns>Cures the character for 1-10 hp</returns>
+        /// <returns>Cures the character for 10-20 hp</returns>
         public static bool Cure2(CharacterTemplate p_caster, CharacterTemplate[] p_target)
         {
-            var randValue = new Random();
-            int maxHealthRegain = 10;
-            int minHealthRegain = 1;
-            int healingValue = randValue.Next(minHealthRegain, maxHealthRegain + 1);
+            var randValueLvl2 = new Random();
+            int maxHealthRegain = 20;
+            int minHealthRegain = 10;
+            int healingValue = randValueLvl2.Next(minHealthRegain, maxHealthRegain + 1);
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
             if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
                 return false;
+              
             p_target[0].Heal(healingValue);
             return true;
         }
