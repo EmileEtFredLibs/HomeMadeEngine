@@ -5,7 +5,7 @@ using System.Text;
 namespace HomeMadeEngine.Character
 {
     [Serializable]
-    public class StatsTemplate
+    public class ActionsTemplate
     {
 
     }
