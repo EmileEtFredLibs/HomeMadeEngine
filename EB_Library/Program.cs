@@ -11,7 +11,7 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            new Save().LoadBin();
+            new Save().Loading(Save.SaveType.Bin);
             //new Save().LoadJson();
             try
             {
@@ -20,7 +20,7 @@ namespace ConsoleGamePlayer
             }
             finally
             {
-                new Save().SaveBin();
+                new Save().Saving(Save.SaveType.Bin);
                 //new Save().SaveJson();
             }
         }

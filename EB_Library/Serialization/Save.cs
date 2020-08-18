@@ -24,11 +24,42 @@ namespace ConsoleGamePlayer.Serialization
         public static CharacterTemplate Player;
         public static Config Config;
 #pragma warning restore CS8618 // Non-nullable field is uninitialized. Consider declaring as nullable.
+        public enum SaveType { All=0, Bin=1, Json=2, XML=3 }
+
+        //------------------------------------------------------------------------------------------------------------
+        // MAIN FUNCTIONS
+        //____________________________________________________________________________________________________________
+        public void Saving(SaveType p_type)
+        {
+            switch (p_type)
+            {
+                case SaveType.Bin: __SaveBin__(); break;
+                case SaveType.Json: __SaveJson__(); break;
+                case SaveType.XML: break;
+                default:                    
+                    __SaveBin__();                   
+                    __SaveJson__(); 
+                    break;
+            }
+        }
+        public void Loading(SaveType p_type)
+        {
+            switch (p_type)
+            {
+                case SaveType.Bin: __LoadBin__(); break;
+                case SaveType.Json: __LoadJson__(); break;
+                case SaveType.XML: break;
+                default:
+                    __LoadBin__();
+                    __LoadJson__();
+                    break;
+            }
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // SAVE FUNCTIONS
         //____________________________________________________________________________________________________________
-        public void SaveBin()
+        private void __SaveBin__()
         {
             int nbSave = 0;
             try 
@@ -57,7 +88,7 @@ namespace ConsoleGamePlayer.Serialization
                 Console.ReadKey();
             }
         }
-        public void SaveJson()
+        private void __SaveJson__()
         {
             int nbSave = 0;
             try
@@ -88,7 +119,7 @@ namespace ConsoleGamePlayer.Serialization
         //------------------------------------------------------------------------------------------------------------
         // LOAD FUNCTIONS
         //____________________________________________________________________________________________________________
-        public void LoadBin()
+        private void __LoadBin__()
         {
             BinaryFormatter formatter = new BinaryFormatter();
             try
@@ -122,7 +153,7 @@ namespace ConsoleGamePlayer.Serialization
                 Console.ReadKey();
             }
         }
-        public void LoadJson()
+        private void __LoadJson__()
         {
             try
             {
