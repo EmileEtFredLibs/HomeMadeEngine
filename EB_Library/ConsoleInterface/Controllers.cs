@@ -23,14 +23,14 @@ namespace ConsoleGamePlayer.ConsoleInterface
         }
 
         //------------------------------------------------------------------------------------------------------------
-        // MAIN MENU
+        // COMMUN MENU
         //____________________________________________________________________________________________________________
         public bool MainMenu()
         {
             __InterfaceCenter__();
-            return __MenuChoice__();
+            return __MainChoice__();
         }
-        private bool __MenuChoice__()
+        private bool __MainChoice__()
         {
             switch (ReadKey().Key)
             {
@@ -78,6 +78,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 case 3: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
+            Save.Config.ResetPos();
             new Interface().CombatMenu();
         }
         private void __CombatActionMenu__()
@@ -95,6 +96,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             {
                 throw new ArgumentException("CombatActionMenu action not handled");
             }
+            Save.Config.ResetPos();
             Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
         }
 
@@ -105,12 +107,12 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             switch (Save.Config.Position)
             {
-                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
-                case 1: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); break;
+                case 0: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); new Interface().CombatMenu(); break;
+                case 1: Save.Config.MenuChanging(InterfaceEnum.CombatMenu); new Interface().CombatMenu(); break;
                 case 2: return true;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
-            new Interface().CombatMenu();
+            Save.Config.ResetPos();
             return false;
         }
     }
