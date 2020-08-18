@@ -367,6 +367,11 @@ namespace HomeMadeEngine.Templates
             }
             Console.ReadKey();
         }
+        /// <summary>
+        /// Calculate the cost of an action
+        /// </summary>
+        /// <param name="p_index">index of the action</param>
+        /// <returns>cost of the action</returns>
         public int CostReturner(int p_index)
         {
             StatsTemplate modifyer = new StatsTemplate("Manacost", StatType.Ressource, null, 0, 1);
