@@ -62,12 +62,6 @@ namespace ConsoleGamePlayer.Serialization
             int nbSave = 0;
             try
             {
-                JsonConvert.DefaultSettings = () =>
-                {
-                    var settings = new JsonSerializerSettings();
-                    settings.Converters.Add(new CharacterTemplateConverterJson());
-                    return settings;
-                };
                 string jsonString = JsonConvert.SerializeObject(Player);
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Converters.Add(new CharacterTemplateConverterJson());
@@ -132,11 +126,18 @@ namespace ConsoleGamePlayer.Serialization
         {
             try
             {
+                Console.BackgroundColor = ConsoleColor.DarkGreen;
                 string jsonString = File.ReadAllText(SavePlayerJson);
                 Player = JsonConvert.DeserializeObject<CharacterTemplate>(jsonString);
+                Console.WriteLine("LOAD PLAYER SUCCESFULL");
+                
                 //jsonString = File.ReadAllText(SaveConfigJson);
-                //Config = JsonSerializer.Deserialize<Config>(jsonString);
+                //Config = JsonConvert.DeserializeObject<Config>(jsonString);
+                //Console.WriteLine("LOAD CONFIG SUCCESFULL");
                 Config = new Config();
+
+                Console.BackgroundColor = ConsoleColor.Black;
+                Console.ReadKey();
             }
             catch
             {
