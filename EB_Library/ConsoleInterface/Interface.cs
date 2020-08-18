@@ -45,7 +45,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             Clear();
             __CombatStatusBar__();
-            //__CombatMiddlePart__(Save.Player);
+            __CombatMiddlePart__();
             if (Save.Config.Menu == InterfaceEnum.CombatMenu)
                 __SelectionMenu__(new string[] { "Actions", "Defend", "Inventory", "Leave"});
             if (Save.Config.Menu == InterfaceEnum.CombatActionMenu)
