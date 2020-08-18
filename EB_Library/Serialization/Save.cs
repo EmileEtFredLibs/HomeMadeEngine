@@ -65,16 +65,18 @@ namespace ConsoleGamePlayer.Serialization
             try 
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                FileStream stream = new FileStream(SavePlayerBin, FileMode.Create, FileAccess.Write);
                 BinaryFormatter formatter = new BinaryFormatter();
-                formatter.Serialize(stream, Player);
-                Console.WriteLine("SAVE PLAYER SUCCESSFULL");
-                nbSave++;
-                stream.Close();
-                stream = new FileStream(SaveConfigBin, FileMode.Create, FileAccess.Write);
-                formatter.Serialize(stream, Config);
-                Console.WriteLine("SAVE CONFIG SUCCESSFULL");
-                stream.Close();
+                using (FileStream stream = new FileStream(SavePlayerBin, FileMode.Create, FileAccess.Write))
+                {
+                    formatter.Serialize(stream, Player);
+                    Console.WriteLine("SAVE PLAYER SUCCESSFULL");
+                    nbSave++;
+                }
+                using (FileStream stream = new FileStream(SaveConfigBin, FileMode.Create, FileAccess.Write))
+                {
+                    formatter.Serialize(stream, Config);
+                    Console.WriteLine("SAVE CONFIG SUCCESSFULL");
+                }
                 Console.BackgroundColor = ConsoleColor.Black;
             }
             catch
@@ -125,14 +127,16 @@ namespace ConsoleGamePlayer.Serialization
             try
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                FileStream stream = new FileStream(SavePlayerBin, FileMode.Open, FileAccess.Read);
-                Player = (CharacterTemplate)formatter.Deserialize(stream);
-                Console.WriteLine("LOAD PLAYER SUCCESFULL");
-                stream.Close();
-                stream = new FileStream(SaveConfigBin, FileMode.Open, FileAccess.Read);
-                Config = (Config)formatter.Deserialize(stream);
-                stream.Close();
-                Console.WriteLine("LOAD CONFIG SUCCESFULL");
+                using (FileStream stream = new FileStream(SavePlayerBin, FileMode.Open, FileAccess.Read))
+                {
+                    Player = (CharacterTemplate)formatter.Deserialize(stream);
+                    Console.WriteLine("LOAD PLAYER SUCCESFULL");
+                }
+                using (FileStream stream = new FileStream(SaveConfigBin, FileMode.Open, FileAccess.Read))
+                {
+                    Config = (Config)formatter.Deserialize(stream);
+                    Console.WriteLine("LOAD CONFIG SUCCESFULL");
+                }
                 Console.BackgroundColor = ConsoleColor.Black;
                 Console.ReadKey();
             }
