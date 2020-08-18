@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using HomeMadeEngine.Action;
 using HomeMadeEngine.Math;
 
 namespace HomeMadeEngine.Character
@@ -32,11 +33,11 @@ namespace HomeMadeEngine.Character
         public int CurrentRessource { get; private set; }
         public int MaxRessource { get; private set; }
         public bool IsDead { get; private set; }
-        public List<StatsTemplate> Stats { get; private set; }
-        public List<EquipementsTemplate> Equipement { get; private set; }
-        public List<ActionsTemplate> Actions { get; private set; }
-        public List<BuffsTemplate> Buffs { get; private set; }
-        public List<DebuffsTemplate> Debuffs { get; private set; }
+        public List<StatsTemplates> Stats { get; private set; }
+        public List<EquipementsTemplates> Equipement { get; private set; }
+        public List<ActionsTemplates> Actions { get; private set; }
+        public List<BuffsTemplates> Buffs { get; private set; }
+        public List<DebuffsTemplates> Debuffs { get; private set; }
         public HmVector Position { get; private set; }
         public HmVector Velocity { get; private set; }
         public HmVector Acceleration { get; private set; }
@@ -72,8 +73,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_yVect">Y velocity</param>
         /// <param name="p_zVect">Z velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
-            int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, List<EquipementsTemplate>p_equip, 
-            List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
+            int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplates>p_stat, List<EquipementsTemplates>p_equip, 
+            List<ActionsTemplates> p_actions, List<BuffsTemplates> p_buffs, List<DebuffsTemplates> p_debuffs,
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect)
         {
             if (p_maxHp < 0)
@@ -128,8 +129,8 @@ namespace HomeMadeEngine.Character
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
-                __StatInitialiser__(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
-                new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+                __StatInitialiser__(), new List<EquipementsTemplates>(), new List<ActionsTemplates>(), 
+                new List<BuffsTemplates>(), new List<DebuffsTemplates>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         /// <summary>
         /// Constructor for a character
         /// </summary>
@@ -183,15 +184,15 @@ namespace HomeMadeEngine.Character
         /// Create a base StatsTemplate if needed
         /// </summary>
         /// <returns>base StatsTemplate</returns>
-        private static List<StatsTemplate> __StatInitialiser__()
+        private static List<StatsTemplates> __StatInitialiser__()
         {
-            List<StatsTemplate> placeHolder = new List<StatsTemplate>();
+            List<StatsTemplates> placeHolder = new List<StatsTemplates>();
             for (int i = 0; i < StatNames.Length; i++)
             {
-                placeHolder.Add(new StatsTemplate
+                placeHolder.Add(new StatsTemplates
                 {
                     dmg = (DamageType)(System.Math.Floor((decimal)i / 2)),
-                    type = (StatsType)(i % 2),
+                    type = (StatType)(i % 2),
                     name = StatNames[i],
                     flat = (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1,
                     multi = 1
@@ -365,7 +366,7 @@ namespace HomeMadeEngine.Character
         public void LearnAction(string p_name, int p_cost, int p_index)
         {
             if(!this.Actions.Exists((a)=>a.name==p_name))
-                this.Actions.Add(new ActionsTemplate { name = p_name, cost = p_cost, index = p_index });
+                this.Actions.Add(new ActionsTemplates { name = p_name, cost = p_cost, index = p_index });
         }
         /// <summary>
         /// Delete an action of the list of actions
@@ -377,7 +378,7 @@ namespace HomeMadeEngine.Character
         /// Delete an action of the list of actions
         /// </summary>
         /// <param name="p_action">ActionsTemplate of the action</param>
-        public void UnlearnAction(ActionsTemplate p_action) => this.Actions.RemoveAll(a => a.name == p_action.name);
+        public void UnlearnAction(ActionsTemplates p_action) => this.Actions.RemoveAll(a => a.name == p_action.name);
         /// <summary>
         /// Delete an action of the list of actions
         /// </summary>
@@ -390,7 +391,7 @@ namespace HomeMadeEngine.Character
         /// Add a buff to the character
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void ApplyBuff(BuffsTemplate p_buff) {
+        public void ApplyBuff(BuffsTemplates p_buff) {
             if (Buffs.Contains(p_buff))
             {
                 this.Buffs.Remove(p_buff);
@@ -406,17 +407,17 @@ namespace HomeMadeEngine.Character
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void RemoveBuff(BuffsTemplate p_buff)=>Buffs.RemoveAll((b) => b.name == p_buff.name);
+        public void RemoveBuff(BuffsTemplates p_buff)=>Buffs.RemoveAll((b) => b.name == p_buff.name);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_buff">Buff to remove</param>
-        public void RemoveBuff(Buffs p_buff) => Buffs.RemoveAll((b) => b.name == p_buff);
+        public void RemoveBuff(Buff p_buff) => Buffs.RemoveAll((b) => b.name == p_buff);
         /// <summary>
         /// Add a debuff to the character
         /// </summary>
         /// <param name="p_debuff">DebuffsTemplate of the buff</param>
-        public void ApplyDebuff(DebuffsTemplate p_debuff)
+        public void ApplyDebuff(DebuffsTemplates p_debuff)
         {
             if (Debuffs.Contains(p_debuff))
             {
@@ -433,12 +434,12 @@ namespace HomeMadeEngine.Character
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">DebuffsTemplate of the debuff</param>
-        public void RemoveDebuff(DebuffsTemplate p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff.name);
+        public void RemoveDebuff(DebuffsTemplates p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff.name);
         /// <summary>
         /// Remove a debuff from the buffs list
         /// </summary>
         /// <param name="p_debuff">Debuff to remove</param>
-        public void RemoveDebuff(Debuffs p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff);
+        public void RemoveDebuff(Debuff p_debuff) => Debuffs.RemoveAll(d => d.name == p_debuff);
 
         // UPDATERS
         //------------------------------------------------------------------------------------------------------------
@@ -453,7 +454,7 @@ namespace HomeMadeEngine.Character
                 this.Shield = 0;
             for (int i = 0; i < Buffs.Count; i++)
             {
-                BuffsTemplate buff = this.Buffs[i];
+                BuffsTemplates buff = this.Buffs[i];
                 if (buff.timer > 0)
                 { 
                     buff.timer -= 1;
@@ -465,7 +466,7 @@ namespace HomeMadeEngine.Character
             }
             for (int i = 0; i < Debuffs.Count; i++)
             {
-                DebuffsTemplate debuffs = this.Debuffs[i];
+                DebuffsTemplates debuffs = this.Debuffs[i];
                 if (debuffs.timer > 0)
                 {
                     debuffs.timer -= 1;

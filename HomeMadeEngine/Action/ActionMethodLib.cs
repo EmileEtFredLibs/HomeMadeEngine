@@ -1,9 +1,10 @@
-﻿using System;
+﻿using HomeMadeEngine.Character;
+using System;
 using System.Collections.Generic;
 using System.IO.Pipes;
 using System.Text;
 
-namespace HomeMadeEngine.Character
+namespace HomeMadeEngine.Action
 {
     public class ActionMethodLib
     {
@@ -16,10 +17,10 @@ namespace HomeMadeEngine.Character
         /// <param name="p_attacker">Array of the damage type</param>
         /// <param name="p_defender">Array of the armor type</param>
         /// <returns> Total damage that got through. </returns>
-        public static int AttackMethod(List<StatsTemplate> p_attacker, List<StatsTemplate> p_defender)
+        public static int AttackMethod(List<StatsTemplates> p_attacker, List<StatsTemplates> p_defender)
         {
             double damageDone = 0;
-            foreach (StatsTemplate atkStat in p_attacker)
+            foreach (StatsTemplates atkStat in p_attacker)
             {
                 if (atkStat.dmg == DamageType.Unmidigatable)
                 {
@@ -30,7 +31,7 @@ namespace HomeMadeEngine.Character
                 else
                 {
                     double damageRatio = 0;
-                    foreach (StatsTemplate defStat in p_defender)
+                    foreach (StatsTemplates defStat in p_defender)
                     {
                         if (atkStat.type == defStat.type)
                         {
@@ -57,8 +58,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_buff">Buff that is applied</param>
         /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
-        public static void Buff(CharacterTemplate p_character, Buffs p_buff, int p_timer, StatsTemplate[]? p_stats)
-            => p_character.ApplyBuff(new BuffsTemplate { name= p_buff, timer = p_timer, stat = p_stats });
+        public static void Buff(CharacterTemplate p_character, Buff p_buff, int p_timer, StatsTemplates[]? p_stats)
+            => p_character.ApplyBuff(new BuffsTemplates { name= p_buff, timer = p_timer, stat = p_stats });
         //------------------------------------------------------------------------------------------------------------
         // APPLYING A DEBUFF
         //____________________________________________________________________________________________________________
@@ -69,8 +70,8 @@ namespace HomeMadeEngine.Character
         /// <param name="p_debuff">Debuff that is applied</param>
         /// <param name="p_timer">Number of turns that the debuff will last</param>
         /// <param name="p_stats">Effects of the debuff</param>
-        public static void Debuff(CharacterTemplate p_character, Debuffs p_debuff, int p_timer, StatsTemplate[]? p_stats) 
-            => p_character.ApplyDebuff(new DebuffsTemplate { name = p_debuff, timer = p_timer, stat = p_stats });
+        public static void Debuff(CharacterTemplate p_character, Debuff p_debuff, int p_timer, StatsTemplates[]? p_stats) 
+            => p_character.ApplyDebuff(new DebuffsTemplates { name = p_debuff, timer = p_timer, stat = p_stats });
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
@@ -84,28 +85,28 @@ namespace HomeMadeEngine.Character
         //------------------------------------------------------------------------------------------------------------
         // DAMAGE GROUPER (OFFENSE AND DEFENSE)
         //____________________________________________________________________________________________________________
-        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate p_char, StatsType p_type)
+        public static List<StatsTemplates> DamageTypeGrouper(CharacterTemplate p_char, StatType p_type)
         {
-            List<StatsTemplate> charDamage = new List<StatsTemplate>();
-            foreach(StatsTemplate stats in p_char.Stats)
+            List<StatsTemplates> charDamage = new List<StatsTemplates>();
+            foreach(StatsTemplates stats in p_char.Stats)
             {
                  DamageTypeAdapter(ref charDamage, stats, p_type);
             }
-            foreach (BuffsTemplate buff in p_char.Buffs)
+            foreach (BuffsTemplates buff in p_char.Buffs)
             {
                 if (buff.stat != null)
                 {
-                    foreach (StatsTemplate stats in buff.stat)
+                    foreach (StatsTemplates stats in buff.stat)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
                 }
             }
-            foreach (DebuffsTemplate debuff in p_char.Debuffs)
+            foreach (DebuffsTemplates debuff in p_char.Debuffs)
             {
                 if (debuff.stat != null)
                 {
-                    foreach (StatsTemplate stats in debuff.stat)
+                    foreach (StatsTemplates stats in debuff.stat)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
@@ -113,32 +114,32 @@ namespace HomeMadeEngine.Character
             }
             return charDamage;
         }
-        public static List<StatsTemplate> DamageTypeGrouper(CharacterTemplate[] p_char, StatsType p_type)
+        public static List<StatsTemplates> DamageTypeGrouper(CharacterTemplate[] p_char, StatType p_type)
         {
-            List<StatsTemplate> charDamage = new List<StatsTemplate>();
+            List<StatsTemplates> charDamage = new List<StatsTemplates>();
             if (p_char.Length > 0)
             {
                 foreach (CharacterTemplate character in p_char)
                 {
-                    foreach (StatsTemplate stats in character.Stats)
+                    foreach (StatsTemplates stats in character.Stats)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
-                    foreach (BuffsTemplate buff in character.Buffs)
+                    foreach (BuffsTemplates buff in character.Buffs)
                     {
                         if (buff.stat!=null)
                         {
-                            foreach (StatsTemplate stats in buff.stat)
+                            foreach (StatsTemplates stats in buff.stat)
                             {
                                     DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
                         }
                     }
-                    foreach (DebuffsTemplate debuff in character.Debuffs)
+                    foreach (DebuffsTemplates debuff in character.Debuffs)
                     {
                         if (debuff.stat != null)
                         {
-                            foreach (StatsTemplate stats in debuff.stat)
+                            foreach (StatsTemplates stats in debuff.stat)
                             {
                                     DamageTypeAdapter(ref charDamage, stats, p_type);
                             }
@@ -148,7 +149,7 @@ namespace HomeMadeEngine.Character
             }
             return charDamage;
         }
-        public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, StatsType p_type)
+        public static void DamageTypeAdapter(ref List<StatsTemplates> p_listDmg, StatsTemplates p_damage, StatType p_type)
         {
             if (p_damage.dmg != null)
             {
@@ -161,9 +162,9 @@ namespace HomeMadeEngine.Character
                         double flats = p_listDmg[index].flat + p_damage.flat;
                         double multis = p_listDmg[index].multi * p_damage.multi;
                         DamageType? types = p_damage.dmg;
-                        StatsType stats = p_damage.type;
+                        StatType stats = p_damage.type;
                         p_listDmg.RemoveAt(index);
-                        p_listDmg.Add(new StatsTemplate
+                        p_listDmg.Add(new StatsTemplates
                         {
                             name = names,
                             flat = flats,
@@ -175,7 +176,7 @@ namespace HomeMadeEngine.Character
                     }
                     else
                     {
-                        p_listDmg.Add(new StatsTemplate
+                        p_listDmg.Add(new StatsTemplates
                         {
                             flat = p_damage.flat,
                             multi = p_damage.multi,

@@ -1,10 +1,11 @@
-﻿using System;
+﻿using HomeMadeEngine.Character;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using static HomeMadeEngine.Character.ActionMethodLib;
+using static HomeMadeEngine.Action.ActionMethodLib;
 
-namespace HomeMadeEngine.Character
+namespace HomeMadeEngine.Action
 {
     
     public class ActionsLib
@@ -35,7 +36,7 @@ namespace HomeMadeEngine.Character
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.name == Debuffs.Unhealable))
+            if (p_target[0].Debuffs.Any(a => a.name == Debuff.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;
@@ -50,7 +51,7 @@ namespace HomeMadeEngine.Character
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            p_target[0].Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatsType.Attack), DamageTypeGrouper(p_target, StatsType.Defense)));
+            p_target[0].Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatType.Attack), DamageTypeGrouper(p_target, StatType.Defense)));
             return true;
         }
         /// <summary>
@@ -64,7 +65,7 @@ namespace HomeMadeEngine.Character
             if (p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target MINIMUM");
             foreach(CharacterTemplate target in p_target)
-                target.Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatsType.Attack), DamageTypeGrouper(target, StatsType.Defense)));
+                target.Hurt(AttackMethod(DamageTypeGrouper(p_caster, StatType.Attack), DamageTypeGrouper(target, StatType.Defense)));
             return true;
         }
         /// <summary>
@@ -77,16 +78,16 @@ namespace HomeMadeEngine.Character
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Buffs.Any(a => a.name == Buffs.DamageUp))
+            if (p_target[0].Buffs.Any(a => a.name == Buff.DamageUp))
             {
-                p_caster.RemoveBuff(Buffs.DamageUp);
+                p_caster.RemoveBuff(Buff.DamageUp);
             }
-            if (p_target[0].Debuffs.Any(a => a.name == Debuffs.DefenseDown))
+            if (p_target[0].Debuffs.Any(a => a.name == Debuff.DefenseDown))
             {
-                p_caster.RemoveDebuff(Debuffs.DefenseDown);
+                p_caster.RemoveDebuff(Debuff.DefenseDown);
             }
-            Buff(p_caster, Buffs.DamageUp, 5, new StatsTemplate[] { new StatsTemplate{} });
-            Debuff(p_caster, Debuffs.DefenseDown, 5, null);
+            Buff(p_caster, Buff.DamageUp, 5, new StatsTemplates[] { new StatsTemplates{} });
+            Debuff(p_caster, Debuff.DefenseDown, 5, null);
             return true;
         }
         /// <summary>
@@ -104,7 +105,7 @@ namespace HomeMadeEngine.Character
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.name == Debuffs.Unhealable))
+            if (p_target[0].Debuffs.Any(a => a.name == Debuff.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;
