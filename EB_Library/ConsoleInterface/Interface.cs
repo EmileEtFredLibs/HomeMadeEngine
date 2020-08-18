@@ -59,15 +59,15 @@ namespace ConsoleGamePlayer.ConsoleInterface
             WriteLine("--------------------------------------------------------------"); // 1,90,1
             Console.BackgroundColor = ConsoleColor.Red;
             WriteLine(" {0}/{1} Health", Save.Player.CurrentHp, Save.Player.MaxHp);
-            switch (Save.Player.Spellcost)
+            switch (Save.Player.RessourceType)
             {
                 case SpellCost.Mana: Console.BackgroundColor = ConsoleColor.Blue; break;
                 case SpellCost.Rage: Console.BackgroundColor = ConsoleColor.DarkRed; break;
                 case SpellCost.Energy: Console.BackgroundColor = ConsoleColor.DarkYellow; break;
                 default: Console.BackgroundColor = ConsoleColor.Black; break;
             }
-            if ((int)Save.Player.Spellcost > 1)
-                WriteLine(" {0}/{1} {2}", Save.Player.CurrentRessource, Save.Player.MaxRessource, Save.Player.Spellcost);
+            if ((int)Save.Player.RessourceType > 1)
+                WriteLine(" {0}/{1} {2}", Save.Player.CurrentRessource, Save.Player.MaxRessource, Save.Player.RessourceType);
             else
                 WriteLine("");
             Console.BackgroundColor = ConsoleColor.Black;
@@ -179,9 +179,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 {
                     WriteLine("{0}Return",cur);
                 }
-                else if (Save.Player.Spellcost > 0)
+                else if (Save.Player.RessourceType > 0)
                 {
-                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, Save.Player.Spellcost, Save.Player.CostReturner(i));
+                    WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, Save.Player.RessourceType, Save.Player.CostReturner(i));
                 }
                 else 
                 {

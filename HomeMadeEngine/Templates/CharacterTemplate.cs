@@ -30,7 +30,7 @@ namespace HomeMadeEngine.Templates
         public int MaxHp { get; private set; }
         public int Shield { get; private set; }
         public int ShieldTimer { get; private set; }
-        public SpellCost Spellcost { get; private set; }
+        public SpellCost RessourceType { get; private set; }
         public int CurrentRessource { get; private set; }
         public int MaxRessource { get; private set; }
         public bool IsDead { get; private set; }
@@ -92,7 +92,7 @@ namespace HomeMadeEngine.Templates
             this.MaxHp = p_maxHp;
             this.Shield = p_shield;
             this.ShieldTimer = p_shieldTimer;
-            this.Spellcost = p_spellCost;
+            this.RessourceType = p_spellCost;
             this.CurrentRessource = p_cRessource;
             this.MaxRessource = p_ressource;
             this.IsDead = p_isDead;
@@ -265,7 +265,7 @@ namespace HomeMadeEngine.Templates
         public void Defend()
         {
             //Energy recovers based on the amount of current energy you have
-            if (this.Spellcost == SpellCost.Energy)
+            if (this.RessourceType == SpellCost.Energy)
             {
                 if (this.CurrentRessource + this.CurrentRessource * 0.1 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
@@ -275,7 +275,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource += (int)(this.CurrentRessource * 0.1);
             }
             //Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
-            else if (this.Spellcost == SpellCost.Rage)
+            else if (this.RessourceType == SpellCost.Rage)
             {
                 if (this.CurrentRessource - (int)(this.MaxRessource * 0.1) > 0)
                     this.CurrentRessource -= (int)(this.MaxRessource * 0.1);
@@ -283,7 +283,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource = 0;
             }
             //Mana recovers based on your maximum Mana
-            else if (this.Spellcost == SpellCost.Mana)
+            else if (this.RessourceType == SpellCost.Mana)
             {
                 if (this.CurrentRessource + this.MaxRessource * 0.1 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
@@ -345,21 +345,21 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_target">Targets of that action</param>
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
-            if (this.CurrentRessource < CostReturner(p_index) && (int)this.Spellcost > 1)
-                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index), this.Spellcost);
-            else if (this.CurrentHp <  CostReturner(p_index) && (int)this.Spellcost == 1)
+            if (this.CurrentRessource < CostReturner(p_index) && (int)this.RessourceType > 1)
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index), this.RessourceType);
+            else if (this.CurrentHp <  CostReturner(p_index) && (int)this.RessourceType == 1)
                 Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index));
             else if (!this.Actions[p_index].UseAction(this,p_target))
             {
-                if ((int)this.Spellcost > 1)
+                if ((int)this.RessourceType > 1)
                     this.CurrentRessource -= CostReturner(p_index);
                 Console.WriteLine("{0} FAILED", this.Actions[p_index].Name);
             }
             else
             {
-                if ((int)this.Spellcost > 1)
+                if ((int)this.RessourceType > 1)
                     this.CurrentRessource -= CostReturner(p_index);
-                else if ((int)this.Spellcost == 1)
+                else if ((int)this.RessourceType == 1)
                 {
                     this.CurrentHp -=  CostReturner(p_index);
                 }
