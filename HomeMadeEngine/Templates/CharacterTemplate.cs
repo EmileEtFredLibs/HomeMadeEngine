@@ -345,31 +345,60 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_target">Targets of that action</param>
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
-            if (this.CurrentRessource < __CostReturner__(p_index) && (int)this.Spellcost > 1)
-                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, __CostReturner__(p_index), this.Spellcost);
-            else if (this.CurrentHp <  __CostReturner__(p_index) && (int)this.Spellcost == 1)
-                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, __CostReturner__(p_index));
+            if (this.CurrentRessource < CostReturner(p_index) && (int)this.Spellcost > 1)
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index), this.Spellcost);
+            else if (this.CurrentHp <  CostReturner(p_index) && (int)this.Spellcost == 1)
+                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index));
             else if (!this.Actions[p_index].UseAction(this,p_target))
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= __CostReturner__(p_index);
+                    this.CurrentRessource -= CostReturner(p_index);
                 Console.WriteLine("{0} FAILED", this.Actions[p_index].Name);
             }
             else
             {
                 if ((int)this.Spellcost > 1)
-                    this.CurrentRessource -= __CostReturner__(p_index);
+                    this.CurrentRessource -= CostReturner(p_index);
                 else if ((int)this.Spellcost == 1)
                 {
-                    this.CurrentHp -=  __CostReturner__(p_index);
+                    this.CurrentHp -=  CostReturner(p_index);
                 }
                 Console.WriteLine("You casted {0}", this.Actions[p_index].Name);
             }
             Console.ReadKey();
         }
-        private int __CostReturner__(int p_index)
+        public int CostReturner(int p_index)
         {
-            return this.Actions[p_index].Cost;
+            StatsTemplate modifyer = new StatsTemplate("Manacost", StatType.Ressource, null, 0, 1);
+            foreach(BuffsTemplate buff in Buffs)
+            {
+                if (buff.Name == Buff.ManaCostDown)
+                {
+                    if (buff.Stat != null)
+                    {
+                        foreach (StatsTemplate stat in buff.Stat)
+                        {
+                            modifyer.Flat += stat.Flat;
+                            modifyer.Multi *= stat.Multi;
+                        }
+                    }
+                }
+            }
+            foreach(DebuffsTemplate debuffs in Debuffs)
+            {
+                if (debuffs.Name == Debuff.ManaCostUp)
+                {
+                    if (debuffs.Stat != null)
+                    {
+                        foreach (StatsTemplate stat in debuffs.Stat)
+                        {
+                            modifyer.Flat += stat.Flat;
+                            modifyer.Multi *= stat.Multi;
+                        }
+                    }
+                }
+            }
+            return (int)((this.Actions[p_index].Cost+modifyer.Flat)*modifyer.Multi);
         }
         /// <summary>
         /// Add an action to the character
