@@ -277,12 +277,18 @@ namespace HomeMadeEngine.Templates
             //Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
             else if (this.Spellcost == SpellCost.Rage)
             {
-                this.CurrentRessource -= (int)(this.MaxRessource * 0.1);
+                if (this.CurrentRessource - (int)(this.MaxRessource * 0.1) > 0)
+                    this.CurrentRessource -= (int)(this.MaxRessource * 0.1);
+                else
+                    this.CurrentRessource = 0;
             }
             //Mana recovers based on your maximum Mana
             else if (this.Spellcost == SpellCost.Mana)
             {
-                this.CurrentRessource += (int)(this.MaxRessource * 0.1);
+                if (this.CurrentRessource + this.MaxRessource * 0.1 >= this.MaxRessource)
+                    this.CurrentRessource = this.MaxRessource;
+                else
+                    this.CurrentRessource += (int)(this.MaxRessource * 0.1);
             }
         }
         /// <summary>
