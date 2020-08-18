@@ -100,11 +100,12 @@ namespace ConsoleGamePlayer.Serialization
                 serializer.Converters.Add(new CharacterTemplateConverterJson());
                 serializer.NullValueHandling = NullValueHandling.Include;
                 using (StreamWriter stream = new StreamWriter(SavePlayerJson))
-                using (JsonWriter writer = new JsonTextWriter(stream))
                 {
-                    serializer.Serialize(writer, jsonString);
+                    using (JsonWriter writer = new JsonTextWriter(stream))
+                    {
+                        serializer.Serialize(writer, jsonString);
+                    }
                 }
-
             }
             catch
             {
