@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using HomeMadeEngine.Action;
+using HomeMadeEngine.Character;
 using HomeMadeEngine.Math;
 
 namespace HomeMadeEngine.Character
