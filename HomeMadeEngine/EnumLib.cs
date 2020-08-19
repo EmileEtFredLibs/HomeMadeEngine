@@ -7,7 +7,7 @@ namespace HomeMadeEngine
     [Serializable]
     public enum SpellCost { Nothing=0, Health=1, Mana=2, Rage=3, Energy=4 }
     [Serializable]
-    public enum Buff { DefenseUp=0, DamageUp=1, ManaCostDown=2 }
+    public enum Buff { DefenseUp=0, DamageUp=1, ManaCostDown=2, Defend=3 }
     [Serializable]
     public enum Debuff { Unhealable=0, DefenseDown=1, ManaCostUp = 2 }
     [Serializable]

@@ -263,9 +263,12 @@ namespace HomeMadeEngine.Templates
 
         // HP AND RESSOURCE CHANGER
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// The stance to regen or degen energy.
+        /// </summary>
         public void Defend()
         {
-            //Energy recovers based on the amount of current energy you have
+            // Energy recovers based on the amount of current energy you have
             if (this.RessourceType == SpellCost.Energy)
             {
                 if (this.CurrentRessource + this.CurrentRessource * 0.2 >= this.MaxRessource)
@@ -275,7 +278,7 @@ namespace HomeMadeEngine.Templates
                 else
                     this.CurrentRessource += (int)(this.CurrentRessource * 0.2);
             }
-            //Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
+            // Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
             else if (this.RessourceType == SpellCost.Rage)
             {
                 if (this.CurrentRessource - (int)(this.MaxRessource * 0.1) > 0)
@@ -283,13 +286,31 @@ namespace HomeMadeEngine.Templates
                 else
                     this.CurrentRessource = 0;
             }
-            //Mana recovers based on your maximum Mana
+            // Mana recovers based on your maximum Mana
             else if (this.RessourceType == SpellCost.Mana)
             {
                 if (this.CurrentRessource + this.MaxRessource * 0.1 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
                 else
                     this.CurrentRessource += (int)(this.MaxRessource * 0.1);
+            }
+            bool isIn = false;
+            foreach(BuffsTemplate buff in this.Buffs)
+            {
+                if (buff.Name == Buff.Defend)
+                {
+                    buff.Timer += 1;
+                    isIn = true;
+                }
+            }
+            if (!isIn)
+            {
+                this.Buffs.Add(new BuffsTemplate(Buff.Defend, 1, 
+                    new StatsTemplate[] {
+                        new StatsTemplate("DEFEND MAGIC", StatType.Defense, DamageType.Magical, 1, 1.1),
+                        new StatsTemplate("DEFEND PSYCHOLOGICAL", StatType.Defense, DamageType.Psychological, 1, 1.1),
+                        new StatsTemplate("DEFEND PHYSICAL", StatType.Defense, DamageType.Physical, 1, 1.1)
+                    }));
             }
         }
         /// <summary>
@@ -347,9 +368,11 @@ namespace HomeMadeEngine.Templates
         public void UseAction(int p_index, CharacterTemplate[] p_target)
         {
             if (this.CurrentRessource < CostReturner(p_index) && (int)this.RessourceType > 1)
-                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index), this.RessourceType);
+                Console.WriteLine("Not enough {2} (Current {0} / Cost {1})", 
+                    this.CurrentRessource, CostReturner(p_index), this.RessourceType);
             else if (this.CurrentHp <  CostReturner(p_index) && (int)this.RessourceType == 1)
-                Console.WriteLine("Not enough health (Current {0} / Cost {1})", this.CurrentRessource, CostReturner(p_index));
+                Console.WriteLine("Not enough health (Current {0} / Cost {1})", 
+                    this.CurrentRessource, CostReturner(p_index));
             else if (!this.Actions[p_index].UseAction(this,p_target))
             {
                 if ((int)this.RessourceType > 1)
