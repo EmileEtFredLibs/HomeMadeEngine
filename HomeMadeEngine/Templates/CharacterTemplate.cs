@@ -70,19 +70,20 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_xPox">X spacial positions</param>
         /// <param name="p_yPos">Y spacial positions</param>
         /// <param name="p_zPos">Z spacial positions</param>
-        /// <param name="p_xVect">X velocity</param>
-        /// <param name="p_yVect">Y velocity</param>
-        /// <param name="p_zVect">Z velocity</param>
-        public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost, 
-            int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, List<EquipementsTemplate>p_equip, 
-            List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, List<DebuffsTemplate> p_debuffs,
-            double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect)
+        /// <param name="p_xVector">X vector of velocity</param>
+        /// <param name="p_yVector">Y vector of velocity</param>
+        /// <param name="p_zVector">Z vector of velocity</param>
+        public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, 
+            SpellCost p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
+            List<EquipementsTemplate>p_equip, List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, 
+            List<DebuffsTemplate> p_debuffs, double p_xPox, double p_yPos, double p_zPos, 
+            double p_xVector, double p_yVector, double p_zVector)
         {
             if (p_maxHp < 0)
                 throw new ArgumentException("HP MUST BE POSITIVE");
             if (p_cHp > p_maxHp)
                 throw new ArgumentException("CURRENT HP CAN'T BE HIGHER THAN MAX HP");
-            if (p_cHp > p_maxHp)
+            if (p_cRessource > p_ressource)
                 throw new ArgumentException("CURRENT RESSOURCE CAN'T BE HIGHER THAN MAX RESSOURCE");
             if (p_ressource < 0)
                 throw new ArgumentException("RESSOURCES MUST BE POSITIVE");
@@ -102,8 +103,8 @@ namespace HomeMadeEngine.Templates
             this.Buffs = p_buffs;
             this.Debuffs = p_debuffs;
             this.Position = new HmVector(p_xPox, p_yPos, p_zPos);
-            this.Velocity = new HmVector(p_xVect, p_yVect, p_zVect);
-            this.Acceleration = new HmVector();
+            this.Velocity = new HmVector(p_xVector, p_yVector, p_zVector);
+            this.Acceleration = new HmVector(BaseGravity.X, BaseGravity.Y, BaseGravity.Z);
             this.Gravity = new HmVector(BaseGravity.X, BaseGravity.Y, BaseGravity.Z);
         }
 
@@ -175,9 +176,9 @@ namespace HomeMadeEngine.Templates
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
             this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 0) { }
         /// <summary>
-        /// Constructor for a character with 10/10 hp and 0/0 mana
+        /// Constructor for a character with 10/10 hp and 10/10 mana
         /// </summary>
-        public CharacterTemplate() : this(10, 10, 0, 0, false) { }
+        public CharacterTemplate() : this(10, 10, 10, 10, false) { }
 
         // DEFAULT BUILDERS
         //------------------------------------------------------------------------------------------------------------
@@ -403,7 +404,7 @@ namespace HomeMadeEngine.Templates
                     }
                 }
             }
-            return (int)((this.Actions[p_index].Cost+modifyer.Flat)*modifyer.Multi);
+            return (int)((this.Actions[p_index].Cost + modifyer.Flat) * modifyer.Multi);
         }
         /// <summary>
         /// Add an action to the character
