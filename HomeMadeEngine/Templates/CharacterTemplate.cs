@@ -268,12 +268,12 @@ namespace HomeMadeEngine.Templates
             //Energy recovers based on the amount of current energy you have
             if (this.RessourceType == SpellCost.Energy)
             {
-                if (this.CurrentRessource + this.CurrentRessource * 0.1 >= this.MaxRessource)
+                if (this.CurrentRessource + this.CurrentRessource * 0.2 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
-                else if (this.CurrentRessource <= 0 || this.CurrentRessource * 0.1 < 1)
+                else if (this.CurrentRessource <= 0 || this.CurrentRessource * 0.2 < 1)
                     this.CurrentRessource += 1;
                 else
-                    this.CurrentRessource += (int)(this.CurrentRessource * 0.1);
+                    this.CurrentRessource += (int)(this.CurrentRessource * 0.2);
             }
             //Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
             else if (this.RessourceType == SpellCost.Rage)
