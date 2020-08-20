@@ -20,6 +20,7 @@ namespace ConsoleGamePlayer.Serialization
             else
                 charT = new CharacterTemplate();
             writer.WriteStartObject();
+
             writer.WritePropertyName("Level");
             serializer.Serialize(writer, charT.Level);
 
