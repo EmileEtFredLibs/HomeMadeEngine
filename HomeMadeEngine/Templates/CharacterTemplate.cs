@@ -30,12 +30,12 @@ namespace HomeMadeEngine.Templates
         public int MaxHp { get; private set; }
         public int Shield { get; private set; }
         public int ShieldTimer { get; private set; }
-        public SpellCost RessourceType { get; private set; }
+        public RessourceTypes RessourceType { get; private set; }
         public int CurrentRessource { get; private set; }
         public int MaxRessource { get; private set; }
         public bool IsDead { get; private set; }
         public List<StatsTemplate> Stats { get; private set; }
-        public List<EquipementsTemplate> Equipement { get; private set; }
+        public List<EquipementsTemplate> Equipements { get; private set; }
         public List<ActionsTemplate> Actions { get; private set; }
         public List<BuffsTemplate> Buffs { get; private set; }
         public List<DebuffsTemplate> Debuffs { get; private set; }
@@ -74,7 +74,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_yVector">Y vector of velocity</param>
         /// <param name="p_zVector">Z vector of velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, 
-            SpellCost p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
+            RessourceTypes p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
             List<EquipementsTemplate>p_equip, List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, 
             List<DebuffsTemplate> p_debuffs, double p_xPox, double p_yPos, double p_zPos, 
             double p_xVector, double p_yVector, double p_zVector)
@@ -98,7 +98,7 @@ namespace HomeMadeEngine.Templates
             this.MaxRessource = p_ressource;
             this.IsDead = p_isDead;
             this.Stats = p_stat;
-            this.Equipement = p_equip;
+            this.Equipements = p_equip;
             this.Actions = p_actions;
             this.Buffs = p_buffs;
             this.Debuffs = p_debuffs;
@@ -127,7 +127,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_xVect">X velocity</param>
         /// <param name="p_yVect">Y velocity</param>
         /// <param name="p_zVect">Z velocity</param>
-        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, SpellCost p_spellCost,
+        public CharacterTemplate(int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, RessourceTypes p_spellCost,
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
@@ -149,7 +149,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_zVect">Z velocity</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead, 
             double p_xPox, double p_yPos, double p_zPos, double p_xVect, double p_yVect, double p_zVect) :
-            this(p_cHp, p_maxHp, 0, 0, (SpellCost)2, p_cRessource, p_ressource, isDead, 
+            this(p_cHp, p_maxHp, 0, 0, (RessourceTypes)2, p_cRessource, p_ressource, isDead, 
                 p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         /// <summary>
         /// Constructor for a character
@@ -269,7 +269,7 @@ namespace HomeMadeEngine.Templates
         public void Defend()
         {
             // Energy recovers based on the amount of current energy you have
-            if (this.RessourceType == SpellCost.Energy)
+            if (this.RessourceType == RessourceTypes.Energy)
             {
                 if (this.CurrentRessource + this.CurrentRessource * 0.2 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;
@@ -279,7 +279,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource += (int)(this.CurrentRessource * 0.2);
             }
             // Rage loses a portion of its maximum every time you defend, and recovers when using a standard attack
-            else if (this.RessourceType == SpellCost.Rage)
+            else if (this.RessourceType == RessourceTypes.Rage)
             {
                 if (this.CurrentRessource - (int)(this.MaxRessource * 0.1) > 0)
                     this.CurrentRessource -= (int)(this.MaxRessource * 0.1);
@@ -287,7 +287,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource = 0;
             }
             // Mana recovers based on your maximum Mana
-            else if (this.RessourceType == SpellCost.Mana)
+            else if (this.RessourceType == RessourceTypes.Mana)
             {
                 if (this.CurrentRessource + this.MaxRessource * 0.1 >= this.MaxRessource)
                     this.CurrentRessource = this.MaxRessource;

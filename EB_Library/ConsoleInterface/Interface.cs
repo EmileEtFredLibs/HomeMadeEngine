@@ -61,9 +61,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
             WriteLine(" {0}/{1} Health", Save.Player.CurrentHp, Save.Player.MaxHp);
             switch (Save.Player.RessourceType)
             {
-                case SpellCost.Mana: Console.BackgroundColor = ConsoleColor.Blue; break;
-                case SpellCost.Rage: Console.BackgroundColor = ConsoleColor.DarkRed; break;
-                case SpellCost.Energy: Console.BackgroundColor = ConsoleColor.DarkYellow; break;
+                case RessourceTypes.Mana: Console.BackgroundColor = ConsoleColor.Blue; break;
+                case RessourceTypes.Rage: Console.BackgroundColor = ConsoleColor.DarkRed; break;
+                case RessourceTypes.Energy: Console.BackgroundColor = ConsoleColor.DarkYellow; break;
                 default: Console.BackgroundColor = ConsoleColor.Black; break;
             }
             if ((int)Save.Player.RessourceType > 1)

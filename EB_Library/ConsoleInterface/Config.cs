@@ -11,8 +11,6 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         // CONSTANTS
         //____________________________________________________________________________________________________________
-        //[DataMember]
-        //public const string JsonSaveData = "{\"Max\":1,\"Position\":0}";
         public const int NumberMenu = 4;
 
         //------------------------------------------------------------------------------------------------------------
@@ -21,8 +19,8 @@ namespace ConsoleGamePlayer.ConsoleInterface
         public int Position { get; private set; }
         public InterfaceEnum Menu { get; private set; }
         public int Max { get; private set; }
-        public string Cursor{ get; }
-        public string Version{ get; set; }
+        public string Cursor { get; }
+        public string Version { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
