@@ -12,10 +12,16 @@ namespace ConsoleGamePlayer.Serialization
         //------------------------------------------------------------------------------------------------------------
         // CONST FIELDS
         //____________________________________________________________________________________________________________
-        public const string SaveConfigBin = "Config.txt";
-        public const string SaveConfigJson = "Config.json";
-        public const string SavePlayerBin = "Player.txt";
-        public const string SavePlayerJson = "Player.json";
+        // FILENAME
+        //------------------------------------------------------------------------------------------------------------
+        public const string SaveConfig = "Config";
+        public const string SavePlayer = "Player";
+
+        // EXTENTION
+        //------------------------------------------------------------------------------------------------------------
+        public const string Bin = ".txt";
+        public const string Json = ".json";
+        public const string Xml = ".xml";
 
         //------------------------------------------------------------------------------------------------------------
         // STATIC FIELDS
@@ -73,13 +79,13 @@ namespace ConsoleGamePlayer.Serialization
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
                 BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream stream = new FileStream(SavePlayerBin, FileMode.Create, FileAccess.Write))
+                using (FileStream stream = new FileStream(SavePlayer+Bin, FileMode.Create, FileAccess.Write))
                 {
                     formatter.Serialize(stream, Player);
                     Console.WriteLine("SAVE PLAYER SUCCESSFULL");
                     nbSave++;
                 }
-                using (FileStream stream = new FileStream(SaveConfigBin, FileMode.Create, FileAccess.Write))
+                using (FileStream stream = new FileStream(SaveConfig+Bin, FileMode.Create, FileAccess.Write))
                 {
                     formatter.Serialize(stream, Config);
                     Console.WriteLine("SAVE CONFIG SUCCESSFULL");
@@ -106,7 +112,7 @@ namespace ConsoleGamePlayer.Serialization
                 JsonSerializer serializer = new JsonSerializer();
                 serializer.Converters.Add(new CharacterTemplateConverterJson());
                 serializer.NullValueHandling = NullValueHandling.Include;
-                using (StreamWriter stream = new StreamWriter(SavePlayerJson))
+                using (StreamWriter stream = new StreamWriter(SavePlayer+Json))
                 {
                     using (JsonWriter writer = new JsonTextWriter(stream))
                     {
@@ -135,12 +141,12 @@ namespace ConsoleGamePlayer.Serialization
             try
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                using (FileStream stream = new FileStream(SavePlayerBin, FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(SavePlayer+Bin, FileMode.Open, FileAccess.Read))
                 {
                     Player = (CharacterTemplate)formatter.Deserialize(stream);
                     Console.WriteLine("LOAD PLAYER SUCCESFULL");
                 }
-                using (FileStream stream = new FileStream(SaveConfigBin, FileMode.Open, FileAccess.Read))
+                using (FileStream stream = new FileStream(SaveConfig+Bin, FileMode.Open, FileAccess.Read))
                 {
                     Config = (Config)formatter.Deserialize(stream);
                     Console.WriteLine("LOAD CONFIG SUCCESFULL");
@@ -170,11 +176,11 @@ namespace ConsoleGamePlayer.Serialization
             try
             {
                 Console.BackgroundColor = ConsoleColor.DarkGreen;
-                string jsonString = File.ReadAllText(SavePlayerJson);
+                string jsonString = File.ReadAllText(SavePlayer+Json);
                 Player = JsonConvert.DeserializeObject<CharacterTemplate>(jsonString);
                 Console.WriteLine("LOAD PLAYER SUCCESFULL");
                 
-                //jsonString = File.ReadAllText(SaveConfigJson);
+                //jsonString = File.ReadAllText(SaveConfig+Json);
                 //Config = JsonConvert.DeserializeObject<Config>(jsonString);
                 //Console.WriteLine("LOAD CONFIG SUCCESFULL");
                 Config = new Config();
