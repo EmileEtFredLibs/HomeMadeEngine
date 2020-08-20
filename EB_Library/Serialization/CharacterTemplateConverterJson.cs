@@ -163,6 +163,7 @@ namespace ConsoleGamePlayer.Serialization
         }
         public override object ReadJson(JsonReader reader, Type objectType, object? existingValue, JsonSerializer serializer)
         {
+            CharacterTemplate charT;
             if (existingValue != null)
             {
                 while (reader.Read())
@@ -171,6 +172,8 @@ namespace ConsoleGamePlayer.Serialization
                 }
                 
             }
+            else
+                charT = new CharacterTemplate();
             return new CharacterTemplate();
         }
     }
