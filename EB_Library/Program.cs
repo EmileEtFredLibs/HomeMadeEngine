@@ -19,7 +19,7 @@ namespace ConsoleGamePlayer
             }
             finally
             {
-                new Save().Saving(Save.SaveType.Bin);
+                new Save().Saving(Save.SaveType.All);
             }
         }
     }
