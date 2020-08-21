@@ -12,14 +12,14 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         public Debuff Name { get; set; }
         public int Timer { get; set; }
-        public StatsTemplate[]? Stat { get; set; }
+        public List<StatsTemplate>? Stat { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public DebuffsTemplate(Debuff p_name, int p_timer, StatsTemplate[]? p_stat)
+        public DebuffsTemplate(Debuff p_name, int p_timer, List<StatsTemplate>? p_stat)
         {
             this.Name = p_name;
             this.Timer = p_timer;

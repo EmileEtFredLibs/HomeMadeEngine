@@ -306,7 +306,7 @@ namespace HomeMadeEngine.Templates
             if (!isIn)
             {
                 this.Buffs.Add(new BuffsTemplate(Buff.Defend, 1, 
-                    new StatsTemplate[] {
+                    new List<StatsTemplate> {
                         new StatsTemplate("DEFEND MAGIC", StatType.Defense, DamageType.Magical, 1, 1.1),
                         new StatsTemplate("DEFEND PSYCHOLOGICAL", StatType.Defense, DamageType.Psychological, 1, 1.1),
                         new StatsTemplate("DEFEND PHYSICAL", StatType.Defense, DamageType.Physical, 1, 1.1)
