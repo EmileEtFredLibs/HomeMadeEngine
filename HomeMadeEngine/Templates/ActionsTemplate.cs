@@ -33,7 +33,7 @@ namespace HomeMadeEngine.Templates
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
         //____________________________________________________________________________________________________________
-        public bool UseAction(CharacterTemplate p_caster, CharacterTemplate[] p_target) => ActionsLib.Action[this.Index](p_caster, p_target);
+        public bool UseAction(CharacterTemplate p_caster, CharacterTemplate[] p_target) => TargetedActions.Library[this.Index](p_caster, p_target);
         
     }
 }

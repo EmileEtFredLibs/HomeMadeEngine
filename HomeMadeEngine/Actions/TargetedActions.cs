@@ -8,14 +8,14 @@ using static HomeMadeEngine.Action.ActionMethodLib;
 namespace HomeMadeEngine.Action
 {
     
-    public class ActionsLib
+    public class TargetedActions
     {
-        public static List<Func<CharacterTemplate, CharacterTemplate[], bool>> Action = new List<Func<CharacterTemplate, CharacterTemplate[], bool>>(){
-                ActionsLib.Cure1,
-                ActionsLib.StandardAttack,
-                ActionsLib.AttackMultiTarget,
-                ActionsLib.BerserkerRage,
-                ActionsLib.Cure2
+        public static List<Func<CharacterTemplate, CharacterTemplate[], bool>> Library = new List<Func<CharacterTemplate, CharacterTemplate[], bool>>(){
+                TargetedActions.Cure1,
+                TargetedActions.StandardAttack,
+                TargetedActions.AttackMultiTarget,
+                TargetedActions.BerserkerRage,
+                TargetedActions.Cure2
             };
         //------------------------------------------------------------------------------------------------------------
         // RANDOM NUMBERS
