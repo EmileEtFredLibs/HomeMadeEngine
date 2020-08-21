@@ -31,20 +31,8 @@ namespace HomeMadeEngine.Templates
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public EquipementsTemplate(string p_name, ItemRarity p_rarity, List<StatsTemplate>? p_stats)
-        {
-            this.Name = p_name;
-            this.Slot = null;
-            this.Rarity = p_rarity;
-            this.Stats = p_stats;
-        }
-        public EquipementsTemplate(string p_name, ItemRarity p_rarity)
-        {
-            this.Name = p_name;
-            this.Slot = null;
-            this.Rarity = p_rarity;
-            this.Stats = null;
-        }
+        public EquipementsTemplate(string p_name, ItemRarity p_rarity, List<StatsTemplate>? p_stats) : this(p_name,null,p_rarity,p_stats) { }
+        public EquipementsTemplate(string p_name, ItemRarity p_rarity): this(p_name, null, p_rarity, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

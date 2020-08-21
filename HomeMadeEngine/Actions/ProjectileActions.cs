@@ -8,9 +8,9 @@ namespace HomeMadeEngine.Actions
 {
     public class ProjectileActions
     {
-        public static List<Func<CharacterTemplate, HmVector, HmMatrix?, bool>> Library = new List<Func<CharacterTemplate, HmVector, HmMatrix?, bool>>(){
+        public static List<Func<CharacterTemplate, HmVector, HmAreaOfEffect?, HmAreaOfEffect?, bool>> Library = new List<Func<CharacterTemplate, HmVector, HmAreaOfEffect?, HmAreaOfEffect?, bool>>(){
 
             };
-
+        public static bool StandartProjectile(CharacterTemplate p_caster, HmVector p_velocity, HmAreaOfEffect? p_hitbox, HmAreaOfEffect? p_areaOfEffect)
     }
 }
