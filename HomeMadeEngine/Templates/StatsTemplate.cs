@@ -32,7 +32,14 @@ namespace HomeMadeEngine.Templates
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        // public StatsTemplate(string p_name, StatType p_stat, double p_flat, double p_multi) : this(p_name, p_stat, null, p_flat, p_multi);
+        public StatsTemplate(string p_name, StatType p_stat)
+        {
+            this.Name = p_name;
+            this.Stat = p_stat;
+            this.Dmg = null;
+            this.Flat = 0;
+            this.Multi = 1;
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
