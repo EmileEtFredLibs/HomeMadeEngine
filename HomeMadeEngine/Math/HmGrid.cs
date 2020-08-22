@@ -120,6 +120,14 @@ namespace HomeMadeEngine.Math
                     foreach (SpaceTakersTemplate sq in oned)
                        sq.ChangeType(SpaceTaker.Nothing);
         }
+        public void ResetCharacter()
+        {
+            foreach (List<List<SpaceTakersTemplate>> towd in this.Space)
+                foreach (List<SpaceTakersTemplate> oned in towd)
+                    foreach (SpaceTakersTemplate sq in oned)
+                        if ((int)sq.Type<2)
+                            sq.ChangeType(SpaceTaker.Nothing);
+        }
         public void ChangeSpot(int p_x, int p_y, int p_z, SpaceTaker p_type) => this.Space[p_x][p_y][p_z].ChangeType(p_type);
         public void ChangeSpot(int p_x, int p_y, SpaceTaker p_type) => this.ChangeSpot(p_x, p_y, 0, p_type);
         public void ChangeSpot(int p_x, SpaceTaker p_type) => this.ChangeSpot(p_x, 0, p_type);

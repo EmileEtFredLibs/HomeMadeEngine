@@ -114,7 +114,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         private void __CombatMiddlePart__()
         {
-            ConsoleGamePlayer.MainGrid.ResetGrid();
+            ConsoleGamePlayer.MainGrid.ResetCharacter();
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
