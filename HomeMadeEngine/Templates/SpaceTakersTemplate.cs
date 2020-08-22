@@ -38,6 +38,12 @@ namespace HomeMadeEngine.Templates
             this.Character = null;
             this.Object = null;
         }
+        public SpaceTakersTemplate(SpaceTakersTemplate p_spot)
+        {
+            this.Type = p_spot.Type;
+            this.Character = p_spot.Character;
+            this.Object = p_spot.Object;
+        }
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------

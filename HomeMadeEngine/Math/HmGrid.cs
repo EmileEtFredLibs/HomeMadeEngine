@@ -42,10 +42,10 @@ namespace HomeMadeEngine.Math
                     List<SpaceTakersTemplate> Zrow = new List<SpaceTakersTemplate>();
                     for (int z = p_z; z > 0; z--)
                     {
-                        Zrow.Add(p_spot);
+                        Zrow.Add(new SpaceTakersTemplate(p_spot));
                     }
                     if (p_z <= 0)
-                        Zrow.Add(p_spot);
+                        Zrow.Add(new SpaceTakersTemplate(p_spot));
                     Yrow.Add(Zrow);
                 }
                 this.Space.Add(Yrow);

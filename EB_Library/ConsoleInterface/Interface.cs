@@ -113,7 +113,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __CombatMiddlePart__()
         {
             ConsoleGamePlayer.MainGrid.ResetGrid();
-            ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
+             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             foreach (List<List<SpaceTakersTemplate>> towd in ConsoleGamePlayer.MainGrid.Space)
             {
                 foreach (List<SpaceTakersTemplate> oned in towd)
