@@ -34,13 +34,13 @@ namespace HomeMadeEngine.Math
             this.Y = p_y;
             this.Z = p_z;
             this.Space = new List<List<List<SpaceTakersTemplate>>>();
-            for(int x = p_x; x > 0; x--)
+            for(int x = 0; p_x > x; x++)
             {
                 List<List<SpaceTakersTemplate>> Yrow = new List<List<SpaceTakersTemplate>>();
-                for (int y = p_y; y > 0; y--) 
+                for (int y = 0; p_y> y ; y++) 
                 {
                     List<SpaceTakersTemplate> Zrow = new List<SpaceTakersTemplate>();
-                    for (int z = p_z; z > 0; z--)
+                    for (int z = 0; p_z> z; z++)
                     {
                         Zrow.Add(new SpaceTakersTemplate(p_spot));
                     }
@@ -69,8 +69,8 @@ namespace HomeMadeEngine.Math
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmGrid(int p_x, int p_y, SpaceTakersTemplate p_spot) : this(p_x, p_y, 0, p_spot) { }
-        public HmGrid(int p_x, SpaceTakersTemplate p_spot) : this(p_x, 0, p_spot) { }
+        public HmGrid(int p_x, int p_y, SpaceTakersTemplate p_spot) : this(p_x, p_y, 1, p_spot) { }
+        public HmGrid(int p_x, SpaceTakersTemplate p_spot) : this(p_x, 1, p_spot) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

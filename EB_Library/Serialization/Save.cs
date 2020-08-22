@@ -62,6 +62,7 @@ namespace ConsoleGamePlayer.Serialization
                 case SaveType.Bin: __LoadBin__(); break;
                 case SaveType.Json: __LoadJson__(); break;
                 case SaveType.XML: break;
+                case SaveType.SQL: break;
                 default:
                     __LoadBin__();
                     __LoadJson__();

@@ -80,6 +80,8 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 WriteLine(__CombatBuffsBar__(false));
             else
                 WriteLine("");
+
+            WriteLine("X:{0} Y:{1} Z:{2}", Save.Player.Position.X, Save.Player.Position.Y, Save.Player.Position.Z);
             WriteLine("--------------------------------------------------------------");
         }
         private string __CombatBuffsBar__(bool p_buff)
@@ -113,14 +115,14 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __CombatMiddlePart__()
         {
             ConsoleGamePlayer.MainGrid.ResetGrid();
-             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
-            foreach (List<List<SpaceTakersTemplate>> towd in ConsoleGamePlayer.MainGrid.Space)
+            ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
+            for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
-                foreach (List<SpaceTakersTemplate> oned in towd)
+                for (int y = 0; ConsoleGamePlayer.MainGrid.Y > y; y++)
                 {
-                    foreach (SpaceTakersTemplate sq in oned)
+                    for (int x = 0; ConsoleGamePlayer.MainGrid.X > x; x++)
                     {
-                        switch (sq.Type)
+                        switch (ConsoleGamePlayer.MainGrid.Space[x][y][z].Type)
                         {
                             case SpaceTaker.Nothing: Write("[ ]"); break;
                             case SpaceTaker.Player: Write(" O "); break;
@@ -128,9 +130,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
                             case SpaceTaker.Allies: Write(" + "); break;
                             case SpaceTaker.Object: Write(" = "); break;
                         }
+                        
                     }
+                    WriteLine();
                 }
-                WriteLine();
             }
             WriteLine("--------------------------------------------------------------");
         }
