@@ -113,5 +113,16 @@ namespace HomeMadeEngine.Math
             else
                 return p_space;
         }
+        public void ResetGrid()
+        {
+            foreach (List<List<SpaceTakersTemplate>> towd in this.Space)
+                foreach (List<SpaceTakersTemplate> oned in towd)
+                    foreach (SpaceTakersTemplate sq in oned)
+                       sq.ChangeType(SpaceTaker.Nothing);
+        }
+        public void ChangeSpot(int p_x, int p_y, int p_z, SpaceTaker p_type) => this.Space[p_x][p_y][p_z].ChangeType(p_type);
+        public void ChangeSpot(int p_x, int p_y, SpaceTaker p_type) => this.ChangeSpot(p_x, p_y, 0, p_type);
+        public void ChangeSpot(int p_x, SpaceTaker p_type) => this.ChangeSpot(p_x, 0, p_type);
+        public void ChangeSpot(HmVector p_vector, SpaceTaker p_type) => this.ChangeSpot((int)p_vector.X, (int)p_vector.Y, (int)p_vector.Z, p_type);
     }
 }

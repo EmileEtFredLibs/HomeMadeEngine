@@ -45,5 +45,18 @@ namespace HomeMadeEngine.Templates
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
         //____________________________________________________________________________________________________________
+        public void ChangeType(SpaceTaker p_type) => this.Type = p_type;
+        public void ChangeCharacter(SpaceTaker p_type, CharacterTemplate p_char)
+        {
+            this.Type = p_type;
+            this.Character = p_char;
+            this.Object = null;
+        }
+        public void ChangeObject(SpaceTaker p_type, int p_int)
+        {
+            this.Type = p_type;
+            this.Character = null;
+            this.Object = p_int;
+        }
     }
 }
