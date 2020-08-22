@@ -14,7 +14,6 @@ namespace ConsoleGamePlayer
             new Save().Loading(Save.SaveType.Bin);
             try
             {
-                Save.Config.Version = "v0.0.0.8";
                 new ConsoleGamePlayer().Setup();
             }
             finally

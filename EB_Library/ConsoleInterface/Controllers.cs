@@ -1,5 +1,6 @@
 ﻿using ConsoleGamePlayer.Serialization;
 using HomeMadeEngine;
+using HomeMadeEngine.Math;
 using HomeMadeEngine.Templates;
 using System;
 using System.Collections.Generic;
@@ -13,13 +14,35 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         // TEST FUNCTION
         //____________________________________________________________________________________________________________
-        private void __TestPlayer__()
-        {
-            
-        }
         private void __TestMenu__()
         {
-            new Interface().MainMenu();
+            HmGrid mainGrid = new HmGrid(10, 10, false);
+            HmGrid playerHitBox = new HmGrid(1, true);
+            HmVector proj = new HmVector(1, 1);
+            mainGrid.Space[3][4][0] = true;
+            int x = 0;
+            int y = 0;
+            int z = 0;
+            foreach(List<List<bool>> towd in mainGrid.Space)
+            {
+                y = 0;
+                foreach (List<bool> oned in towd)
+                {
+                    z = 0;
+                    foreach (bool sq in oned)
+                    {
+                        if (sq)
+                            Write(" X ");
+                        else
+                            Write("[ ]");
+                        z++;
+                    }
+                    y++;
+                }
+                WriteLine();
+                x++;
+            }
+            WriteLine("X={0}\nY={1}\nZ={2}", x, y, z);
         }
 
         //------------------------------------------------------------------------------------------------------------

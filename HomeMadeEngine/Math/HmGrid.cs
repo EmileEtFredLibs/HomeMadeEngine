@@ -21,7 +21,7 @@ namespace HomeMadeEngine.Math
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmGrid(int p_x, int p_y, int p_z)
+        public HmGrid(int p_x, int p_y, int p_z, bool p_bool)
         {
             if (p_x <= 0)
                 throw new ArgumentException("X MUST BE HIGHER THAN 0");
@@ -41,10 +41,10 @@ namespace HomeMadeEngine.Math
                     List<bool> Zrow = new List<bool>();
                     for (int z = p_z; z > 0; z--)
                     {
-                        Zrow.Add(true);
+                        Zrow.Add(p_bool);
                     }
                     if (p_z <= 0)
-                        Zrow.Add(true);
+                        Zrow.Add(p_bool);
                     Yrow.Add(Zrow);
                 }
                 this.Space.Add(Yrow);
@@ -68,8 +68,8 @@ namespace HomeMadeEngine.Math
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmGrid(int p_x, int p_y) : this(p_x, p_y, 0) { }
-        public HmGrid(int p_x) : this(p_x, 0) { }
+        public HmGrid(int p_x, int p_y, bool p_bool) : this(p_x, p_y, 0, p_bool) { }
+        public HmGrid(int p_x, bool p_bool) : this(p_x, 0, p_bool) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
@@ -91,7 +91,7 @@ namespace HomeMadeEngine.Math
         }
         public HmGrid CopySizeTo(HmGrid p_space)
         {
-            HmGrid newSpace = new HmGrid(this.X, this.Y, this.Z);
+            HmGrid newSpace = new HmGrid(this.X, this.Y, this.Z, false);
             if (p_space.X != this.X || p_space.Y != this.Y || p_space.Z != this.Z)
             {
                 for (int x = this.X; x > 0; x--)
