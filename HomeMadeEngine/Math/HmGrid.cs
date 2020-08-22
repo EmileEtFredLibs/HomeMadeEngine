@@ -132,5 +132,9 @@ namespace HomeMadeEngine.Math
         public void ChangeSpot(int p_x, int p_y, SpaceTaker p_type) => this.ChangeSpot(p_x, p_y, 0, p_type);
         public void ChangeSpot(int p_x, SpaceTaker p_type) => this.ChangeSpot(p_x, 0, p_type);
         public void ChangeSpot(HmVector p_vector, SpaceTaker p_type) => this.ChangeSpot((int)p_vector.X, (int)p_vector.Y, (int)p_vector.Z, p_type);
+        public void Pathfinder(HmVector p_begin, HmVector p_end)
+        {
+
+        }
     }
 }
