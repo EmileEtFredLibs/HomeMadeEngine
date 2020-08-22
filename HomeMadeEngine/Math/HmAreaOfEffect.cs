@@ -70,7 +70,7 @@ namespace HomeMadeEngine.Math
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
         public HmAreaOfEffect(int p_x, int p_y) : this(p_x, p_y, 0) { }
-        public HmAreaOfEffect(int p_x,) : this(p_x, 0) { }
+        public HmAreaOfEffect(int p_x) : this(p_x, 0) { }
         public HmAreaOfEffect(List<bool> p_x, List<bool> p_y) : this(p_x, p_y, new List<bool>()) { }
         public HmAreaOfEffect(List<bool> p_x):this(p_x, new List<bool>()) { }
 
