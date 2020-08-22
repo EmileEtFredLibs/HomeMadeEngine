@@ -8,10 +8,10 @@ namespace HomeMadeEngine.Actions
 {
     public class ProjectileActions
     {
-        public static List<Func<CharacterTemplate, HmVector, HmAreaOfEffect?, HmAreaOfEffect?, bool>> Library = new List<Func<CharacterTemplate, HmVector, HmAreaOfEffect?, HmAreaOfEffect?, bool>>(){
+        public static List<Func<CharacterTemplate, HmVector, HmSpace?, HmSpace?, bool>> Library = new List<Func<CharacterTemplate, HmVector, HmSpace?, HmSpace?, bool>>(){
             ProjectileActions.StandartProjectile
             };
-        public static bool StandartProjectile(CharacterTemplate p_caster, HmVector p_velocity, HmAreaOfEffect? p_hitbox, HmAreaOfEffect? p_areaOfEffect)
+        public static bool StandartProjectile(CharacterTemplate p_caster, HmVector p_velocity, HmSpace? p_hitbox, HmSpace? p_areaOfEffect)
         {
             return true;
         }
