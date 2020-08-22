@@ -16,34 +16,28 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private void __TestMenu__()
         {
-            HmGrid mainGrid = new HmGrid(10, 10, new SpaceTakersTemplate(SpaceTaker.Nothing));
-            HmGrid playerHitBox = new HmGrid(1, new SpaceTakersTemplate(SpaceTaker.Nothing));
-            HmGrid collidHitBox = new HmGrid(1, new SpaceTakersTemplate(SpaceTaker.Nothing));
-            HmVector proj = new HmVector(1, 1);
-            mainGrid.Space[3][4][0] = new SpaceTakersTemplate(SpaceTaker.Player, Save.Player);
-            int x = 0;
-            int y = 0;
-            int z = 0;
-            foreach(List<List<SpaceTakersTemplate>> towd in mainGrid.Space)
+            ConsoleGamePlayer.MainGrid.ResetCharacter();
+            ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
+            for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
-                y = 0;
-                foreach (List<SpaceTakersTemplate> oned in towd)
+                for (int y = 0; ConsoleGamePlayer.MainGrid.Y > y; y++)
                 {
-                    z = 0;
-                    foreach (SpaceTakersTemplate sq in oned)
+                    for (int x = 0; ConsoleGamePlayer.MainGrid.X > x; x++)
                     {
-                        if ((int)sq.Type>0)
-                            Write(" X ");
-                        else
-                            Write("[ ]");
-                        z++;
+                        switch (ConsoleGamePlayer.MainGrid.Space[x][y][z].Type)
+                        {
+                            case SpaceTaker.Nothing: Write("[ ]"); break;
+                            case SpaceTaker.Player: Write(" O "); break;
+                            case SpaceTaker.Ennemi: Write(" X "); break;
+                            case SpaceTaker.Allies: Write(" + "); break;
+                            case SpaceTaker.Object: Write(" = "); break;
+                        }
+
                     }
-                    y++;
+                    WriteLine();
                 }
-                WriteLine();
-                x++;
             }
-            WriteLine("X={0}\nY={1}\nZ={2}", x, y, z);
+            WriteLine("--------------------------------------------------------------");
         }
 
         //------------------------------------------------------------------------------------------------------------
@@ -99,7 +93,8 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 case 0: Save.Config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
                 case 1: Save.Player.Defend(); break;
                 case 2: break;
-                case 3: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
+                case 3: break;
+                case 4: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
             }
             Save.Config.ResetPos();

@@ -315,5 +315,35 @@ namespace HomeMadeEngine.Math
             this.Y -= y;
             this.Z -= z;
         }
+        // SUBSTRACT ABSOLUTE
+        //------------------------------------------------------------------------------------------------------------
+        public HmVector SubstractAbs(HmVector p_vector)
+        {
+            HmVector result = this.Substract(p_vector);
+            if (result.X < 0)
+                result.X *= -1;
+            if (result.Y < 0)
+                result.Y *= -1;
+            if (result.Z < 0)
+                result.Z *= -1;
+            return result;
+        }
+        public HmVector SubstractAbs(double x, double y, double z) => this.SubstractAbs(new HmVector(x, y, z));
+        public HmVector SubstractAbs(double x, double y) => this.SubstractAbs(new HmVector(x, y, 0));
+        public HmVector SubstractAbs(double x) => this.SubstractAbs(new HmVector(x, 0));
+
+        public void SubstractAbsOnSelf(HmVector p_vector)
+        {
+            this.SubstractOnSelf(p_vector);
+            if (this.X < 0)
+                this.X *= -1;
+            if (this.Y < 0)
+                this.Y *= -1;
+            if (this.Z < 0)
+                this.Z *= -1;
+        }
+        public void SubstractAbsOnSelf(double x, double y, double z) => this.SubstractAbs(new HmVector(x, y, z));
+        public void SubstractAbsOnSelf(double x, double y) => this.SubstractAbs(new HmVector(x, y, 0));
+        public void SubstractAbsOnSelf(double x) => this.SubstractAbs(new HmVector(x, 0));
     }
 }

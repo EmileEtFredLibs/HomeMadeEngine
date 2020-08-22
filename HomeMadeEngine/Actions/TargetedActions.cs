@@ -102,12 +102,10 @@ namespace HomeMadeEngine.Action
             int maxHealthRegain = 20;
             int minHealthRegain = 10;
             int healingValue = randValueLvl2.Next(minHealthRegain, maxHealthRegain + 1);
-            
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
             if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
                 return false;
-              
             p_target[0].Heal(healingValue);
             return true;
         }

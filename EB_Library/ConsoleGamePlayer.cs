@@ -24,6 +24,7 @@ namespace ConsoleGamePlayer
             Save.Config.Version = "v0.0.0.8";
             Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             Save.Config.ResetPos();
+
             // PLAYERS
             Save.Player.LearnAction("Cure 1", 2, 0);
             Save.Player.LearnAction("Attack 1", 0, 1);
