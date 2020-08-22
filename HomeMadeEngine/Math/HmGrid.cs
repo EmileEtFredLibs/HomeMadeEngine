@@ -5,7 +5,7 @@ using System.Text;
 
 namespace HomeMadeEngine.Math
 {
-    public class HmSpace
+    public class HmGrid
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
@@ -21,7 +21,7 @@ namespace HomeMadeEngine.Math
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmSpace(int p_x, int p_y, int p_z)
+        public HmGrid(int p_x, int p_y, int p_z)
         {
             if (p_x <= 0)
                 throw new ArgumentException("X MUST BE HIGHER THAN 0");
@@ -51,7 +51,7 @@ namespace HomeMadeEngine.Math
             }
             this.Dimension = 1 + ((this.Y > 0) ? 1 : 0) + ((this.Z > 0) ? 1 : 0);
         }
-        public HmSpace(List<List<List<bool>>>p_space)
+        public HmGrid(List<List<List<bool>>>p_space)
         {
             if (p_space.Count <= 0)
                 throw new ArgumentException("X MUST BE HIGHER THAN 0");
@@ -68,15 +68,15 @@ namespace HomeMadeEngine.Math
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmSpace(int p_x, int p_y) : this(p_x, p_y, 0) { }
-        public HmSpace(int p_x) : this(p_x, 0) { }
+        public HmGrid(int p_x, int p_y) : this(p_x, p_y, 0) { }
+        public HmGrid(int p_x) : this(p_x, 0) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
         //____________________________________________________________________________________________________________
-        public bool IsColliding(HmSpace p_space)
+        public bool IsColliding(HmGrid p_space)
         {
-            HmSpace comparative = this.CopySizeTo(p_space);
+            HmGrid comparative = this.CopySizeTo(p_space);
             for (int x = this.X; x > 0; x--)
             {
                 for (int y = this.Y; y > 0; y--)
@@ -89,9 +89,9 @@ namespace HomeMadeEngine.Math
             }
             return false;
         }
-        public HmSpace CopySizeTo(HmSpace p_space)
+        public HmGrid CopySizeTo(HmGrid p_space)
         {
-            HmSpace newSpace = new HmSpace(this.X, this.Y, this.Z);
+            HmGrid newSpace = new HmGrid(this.X, this.Y, this.Z);
             if (p_space.X != this.X || p_space.Y != this.Y || p_space.Z != this.Z)
             {
                 for (int x = this.X; x > 0; x--)
