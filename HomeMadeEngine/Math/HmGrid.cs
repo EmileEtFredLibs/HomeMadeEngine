@@ -1,4 +1,5 @@
-﻿using System;
+﻿using HomeMadeEngine.Templates;
+using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
 using System.Text;
@@ -14,14 +15,14 @@ namespace HomeMadeEngine.Math
         public int X { get; private set; }
         public int Y { get; private set; }
         public int Z { get; private set; }
-        public List<List<List<bool>>> Space { get; private set; }
+        public List<List<List<SpaceTakersTemplate>>> Space { get; private set; }
 
         //------------------------------------------------------------------------------------------------------------
         // CONSTRUCTORS
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmGrid(int p_x, int p_y, int p_z, bool p_bool)
+        public HmGrid(int p_x, int p_y, int p_z, SpaceTakersTemplate p_spot)
         {
             if (p_x <= 0)
                 throw new ArgumentException("X MUST BE HIGHER THAN 0");
@@ -32,26 +33,26 @@ namespace HomeMadeEngine.Math
             this.X = p_x;
             this.Y = p_y;
             this.Z = p_z;
-            this.Space = new List<List<List<bool>>>();
+            this.Space = new List<List<List<SpaceTakersTemplate>>>();
             for(int x = p_x; x > 0; x--)
             {
-                List<List<bool>> Yrow = new List<List<bool>>();
+                List<List<SpaceTakersTemplate>> Yrow = new List<List<SpaceTakersTemplate>>();
                 for (int y = p_y; y > 0; y--) 
                 {
-                    List<bool> Zrow = new List<bool>();
+                    List<SpaceTakersTemplate> Zrow = new List<SpaceTakersTemplate>();
                     for (int z = p_z; z > 0; z--)
                     {
-                        Zrow.Add(p_bool);
+                        Zrow.Add(p_spot);
                     }
                     if (p_z <= 0)
-                        Zrow.Add(p_bool);
+                        Zrow.Add(p_spot);
                     Yrow.Add(Zrow);
                 }
                 this.Space.Add(Yrow);
             }
             this.Dimension = 1 + ((this.Y > 0) ? 1 : 0) + ((this.Z > 0) ? 1 : 0);
         }
-        public HmGrid(List<List<List<bool>>>p_space)
+        public HmGrid(List<List<List<SpaceTakersTemplate>>>p_space)
         {
             if (p_space.Count <= 0)
                 throw new ArgumentException("X MUST BE HIGHER THAN 0");
@@ -68,8 +69,8 @@ namespace HomeMadeEngine.Math
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public HmGrid(int p_x, int p_y, bool p_bool) : this(p_x, p_y, 0, p_bool) { }
-        public HmGrid(int p_x, bool p_bool) : this(p_x, 0, p_bool) { }
+        public HmGrid(int p_x, int p_y, SpaceTakersTemplate p_spot) : this(p_x, p_y, 0, p_spot) { }
+        public HmGrid(int p_x, SpaceTakersTemplate p_spot) : this(p_x, 0, p_spot) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
@@ -83,7 +84,7 @@ namespace HomeMadeEngine.Math
                 {
                     for (int z = this.Z; z > 0; z--)
                     {
-                        if (this.Space[x][y][z] && comparative.Space[x][y][z]) return true;
+                        if ((int)this.Space[x][y][z].Type>0 && (int)comparative.Space[x][y][z].Type > 0) return true;
                     }
                 }
             }
@@ -91,7 +92,7 @@ namespace HomeMadeEngine.Math
         }
         public HmGrid CopySizeTo(HmGrid p_space)
         {
-            HmGrid newSpace = new HmGrid(this.X, this.Y, this.Z, false);
+            HmGrid newSpace = new HmGrid(this.X, this.Y, this.Z, new SpaceTakersTemplate(SpaceTaker.Nothing));
             if (p_space.X != this.X || p_space.Y != this.Y || p_space.Z != this.Z)
             {
                 for (int x = this.X; x > 0; x--)
@@ -101,7 +102,7 @@ namespace HomeMadeEngine.Math
                         for (int z = this.Z; z > 0; z--)
                         {
                             if (x > p_space.X || y > p_space.Y || z > p_space.Z)
-                                newSpace.Space[x][y][z] = false;
+                                newSpace.Space[x][y][z] = new SpaceTakersTemplate(SpaceTaker.Nothing);
                             else
                                 newSpace.Space[x][y][z] = p_space.Space[x][y][z];
                         }

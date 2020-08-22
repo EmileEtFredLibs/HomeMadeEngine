@@ -12,6 +12,7 @@ namespace ConsoleGamePlayer
 {
     public class ConsoleGamePlayer
     {
+        public static HmGrid MainGrid = new HmGrid(10, 10, new SpaceTakersTemplate(SpaceTaker.Nothing));
         public static Dictionary<ConsoleKey, int> Options = new Dictionary<ConsoleKey, int>
         {
             [ConsoleKey.Escape] = 0
@@ -20,7 +21,7 @@ namespace ConsoleGamePlayer
         {
             // CONFIGS
             Save.Config.Version = "v0.0.0.8";
-            Save.Config.MenuChanging(InterfaceEnum.Testing);
+            Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             Save.Config.ResetPos();
             // PLAYERS
             Save.Player.LearnAction("Cure 1", 2, 0);

@@ -16,23 +16,23 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //____________________________________________________________________________________________________________
         private void __TestMenu__()
         {
-            HmGrid mainGrid = new HmGrid(10, 10, false);
-            HmGrid playerHitBox = new HmGrid(1, true);
-            HmGrid collidHitBox = new HmGrid(1, true);
+            HmGrid mainGrid = new HmGrid(10, 10, new SpaceTakersTemplate(SpaceTaker.Nothing));
+            HmGrid playerHitBox = new HmGrid(1, new SpaceTakersTemplate(SpaceTaker.Nothing));
+            HmGrid collidHitBox = new HmGrid(1, new SpaceTakersTemplate(SpaceTaker.Nothing));
             HmVector proj = new HmVector(1, 1);
-            mainGrid.Space[3][4][0] = true;
+            mainGrid.Space[3][4][0] = new SpaceTakersTemplate(SpaceTaker.Player, Save.Player);
             int x = 0;
             int y = 0;
             int z = 0;
-            foreach(List<List<bool>> towd in mainGrid.Space)
+            foreach(List<List<SpaceTakersTemplate>> towd in mainGrid.Space)
             {
                 y = 0;
-                foreach (List<bool> oned in towd)
+                foreach (List<SpaceTakersTemplate> oned in towd)
                 {
                     z = 0;
-                    foreach (bool sq in oned)
+                    foreach (SpaceTakersTemplate sq in oned)
                     {
-                        if (sq)
+                        if ((int)sq.Type>0)
                             Write(" X ");
                         else
                             Write("[ ]");

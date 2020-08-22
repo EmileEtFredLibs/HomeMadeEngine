@@ -18,4 +18,5 @@ namespace HomeMadeEngine
     public enum ItemRarity { Normal=0, Rare=1, Legendary=2, Unique=3}
     [Serializable]
     public enum StatType { Attack=0, Defense=1, Ressource=2, Sneak }
+    public enum SpaceTaker { Nothing=0, Player=1, Ennemi=2, Allies=3, Object=4 }
 }

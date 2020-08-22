@@ -2,6 +2,7 @@
 using HomeMadeEngine;
 using HomeMadeEngine.Templates;
 using System;
+using System.Collections.Generic;
 using System.Text;
 using static System.Console;
 
@@ -112,23 +113,22 @@ namespace ConsoleGamePlayer.ConsoleInterface
         //------------------------------------------------------------------------------------------------------------
         private void __CombatMiddlePart__()
         {
-            for (int i = 0; i < MiddleLines; i++)
+            foreach (List<List<SpaceTakersTemplate>> towd in ConsoleGamePlayer.MainGrid.Space)
             {
-                StringBuilder str = new StringBuilder();
-                if (Save.Player.Position.Y == i) {
-                    for (int j = 0; j < Save.Player.Position.X; j++)
+                foreach (List<SpaceTakersTemplate> oned in towd)
+                {
+                    foreach (SpaceTakersTemplate sq in oned)
                     {
-                        if (j < Save.Player.Position.X-1)
-                            str.Append("  ");
-                        else
-                            str.Append("X");
+                        switch (sq.Type)
+                        {
+                            case SpaceTaker.Nothing: Write("[ ]"); break;
+                            case SpaceTaker.Player: Write(" O "); break;
+                            case SpaceTaker.Ennemi: Write(" X "); break;
+                            case SpaceTaker.Allies: Write(" + "); break;
+                            case SpaceTaker.Object: Write(" = "); break;
+                        }
                     }
                 }
-                else
-                {
-                    str.Append("");
-                }
-                WriteLine(str.ToString());
             }
             WriteLine("--------------------------------------------------------------");
         }
