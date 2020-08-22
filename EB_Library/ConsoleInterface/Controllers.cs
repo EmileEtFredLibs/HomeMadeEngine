@@ -18,6 +18,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             HmGrid mainGrid = new HmGrid(10, 10, false);
             HmGrid playerHitBox = new HmGrid(1, true);
+            HmGrid collidHitBox = new HmGrid(1, true);
             HmVector proj = new HmVector(1, 1);
             mainGrid.Space[3][4][0] = true;
             int x = 0;
