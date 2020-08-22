@@ -190,7 +190,6 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     WriteLine("{0,0}{1,-30}{2,-10}: {3,-20}", cur, Save.Player.Actions[i].Name, " ", " ");
                 }
             }
-            
             Console.BackgroundColor = ConsoleColor.Black;
         }
     }
