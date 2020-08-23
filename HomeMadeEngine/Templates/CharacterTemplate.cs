@@ -361,7 +361,7 @@ namespace HomeMadeEngine.Templates
             }
         }
 
-        // ACTIONS
+        // ACTIONS & ITEMS
         //------------------------------------------------------------------------------------------------------------
         /// <summary>
         /// Use an action of the character on one or more target
@@ -393,6 +393,11 @@ namespace HomeMadeEngine.Templates
                 Console.WriteLine("You casted {0}", this.Actions[p_index].Name);
             }
             Console.ReadKey();
+        }
+
+        public void UseItem(int p_index, CharacterTemplate[] p_target)
+        {
+            
         }
         /// <summary>
         /// Calculate the cost of an action

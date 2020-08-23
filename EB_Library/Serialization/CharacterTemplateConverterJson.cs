@@ -64,18 +64,18 @@ namespace ConsoleGamePlayer.Serialization
             writer.WriteEndObject();
             writer.WriteEndArray();
 
-            writer.WritePropertyName("Equipements");
+            writer.WritePropertyName("Inventory");
             writer.WriteStartArray();
             writer.WriteStartObject();
             writer.WritePropertyName("Name");
-            serializer.Serialize(writer, charT.Equipements[0].Name);
+            serializer.Serialize(writer, charT.Inventory[0].Name);
             writer.WritePropertyName("Dmg");
-            serializer.Serialize(writer, charT.Equipements[0].Slot);
+            serializer.Serialize(writer, charT.Inventory[0].Slot);
             writer.WritePropertyName("Stat");
-            serializer.Serialize(writer, charT.Equipements[0].Rarity);
+            serializer.Serialize(writer, charT.Inventory[0].Rarity);
             writer.WriteStartArray();
             writer.WritePropertyName("Flat");
-            serializer.Serialize(writer, charT.Equipements[0].Stats);
+            serializer.Serialize(writer, charT.Inventory[0].Stats);
             writer.WriteEndArray();
             writer.WriteEndObject();
             writer.WriteEndArray();

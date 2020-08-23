@@ -61,10 +61,5 @@ namespace HomeMadeEngine.Templates
                 }
             }
         }
-        //public bool UseItem(int p_index, CharacterTemplate[] p_template)
-       // {
-            
-
-       // }
     }
 }
