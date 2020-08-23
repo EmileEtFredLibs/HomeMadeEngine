@@ -28,6 +28,7 @@ namespace HomeMadeEngine.Templates
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
+        public BuffsTemplate(Buff p_name, int p_timer) : this(p_name, p_timer, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

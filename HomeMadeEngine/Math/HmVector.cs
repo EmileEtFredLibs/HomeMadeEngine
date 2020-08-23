@@ -315,8 +315,13 @@ namespace HomeMadeEngine.Math
             this.Y -= y;
             this.Z -= z;
         }
-        // SUBSTRACT ABSOLUTE
+        // ABSOLUTE SUBSTRACTION
         //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Substract a vector out of this one and send the absolute difference resulting
+        /// </summary>
+        /// <param name="p_vector">Vector used for the operation on this</param>
+        /// <returns>Absolute difference between those 2 vectors</returns>
         public HmVector SubstractAbs(HmVector p_vector)
         {
             HmVector result = this.Substract(p_vector);
@@ -328,10 +333,32 @@ namespace HomeMadeEngine.Math
                 result.Z *= -1;
             return result;
         }
+        /// <summary>
+        /// Substract a vector out of this one and send the absolute difference resulting
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
+        /// <param name="y">Y axe of the vector used for the operation on this</param>
+        /// <param name="z">Z axe of the vector used for the operation on this</param>
+        /// <returns>Absolute difference between those 2 vectors</returns>
         public HmVector SubstractAbs(double x, double y, double z) => this.SubstractAbs(new HmVector(x, y, z));
+        /// <summary>
+        /// Substract a vector out of this one and send the absolute difference resulting
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
+        /// <param name="y">Y axe of the vector used for the operation on this</param>
+        /// <returns>Absolute difference between those 2 vectors</returns>
         public HmVector SubstractAbs(double x, double y) => this.SubstractAbs(new HmVector(x, y, 0));
+        /// <summary>
+        /// Substract a vector out of this one and send the absolute difference resulting
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
+        /// <returns>Absolute difference between those 2 vectors</returns>
         public HmVector SubstractAbs(double x) => this.SubstractAbs(new HmVector(x, 0));
 
+        /// <summary>
+        /// Substract a vector out of this one and make it positive
+        /// </summary>
+        /// <param name="p_vector"></param>
         public void SubstractAbsOnSelf(HmVector p_vector)
         {
             this.SubstractOnSelf(p_vector);
@@ -342,8 +369,23 @@ namespace HomeMadeEngine.Math
             if (this.Z < 0)
                 this.Z *= -1;
         }
+        /// <summary>
+        /// Substract a vector out of this one and make it positive
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
+        /// <param name="y">Y axe of the vector used for the operation on this</param>
+        /// <param name="z">Z axe of the vector used for the operation on this</param>
         public void SubstractAbsOnSelf(double x, double y, double z) => this.SubstractAbs(new HmVector(x, y, z));
+        /// <summary>
+        /// Substract a vector out of this one and make it positive
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
+        /// <param name="y">Y axe of the vector used for the operation on this</param>
         public void SubstractAbsOnSelf(double x, double y) => this.SubstractAbs(new HmVector(x, y, 0));
+        /// <summary>
+        /// Substract a vector out of this one and make it positive
+        /// </summary>
+        /// <param name="x">X axe of the vector used for the operation on this</param>
         public void SubstractAbsOnSelf(double x) => this.SubstractAbs(new HmVector(x, 0));
     }
 }
