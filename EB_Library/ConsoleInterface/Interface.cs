@@ -126,7 +126,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
                         {
                             case SpaceTaker.Nothing: Write("[ ]"); break;
                             case SpaceTaker.Player: Write(" O "); break;
-                            case SpaceTaker.Ennemi: Write(" X "); break;
+                            case SpaceTaker.Enemy: Write(" X "); break;
                             case SpaceTaker.Allies: Write(" + "); break;
                             case SpaceTaker.Object: Write(" = "); break;
                         }

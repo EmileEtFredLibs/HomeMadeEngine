@@ -19,7 +19,7 @@ namespace HomeMadeEngine
     [Serializable]
     public enum StatType { Attack = 0, Defense = 1, Ressource = 2, Sneak }
     [Serializable]
-    public enum SpaceTaker { Nothing = 0, Object = 1, Player = 2, Ennemi = 3, Allies = 4 }
+    public enum SpaceTaker { Nothing = 0, Object = 1, Player = 2, Enemy = 3, Allies = 4 }
     [Serializable]
     public enum Direction { North=0, South=1, West=2, East=3}
 }
