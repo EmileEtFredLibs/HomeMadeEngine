@@ -92,7 +92,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
             {
                 case 0: Save.Config.MenuChanging(InterfaceEnum.CombatActionMenu); break;
                 case 1: Save.Player.Defend(); break;
-                case 2: break;
+                case 2: Save.Config.MenuChanging(InterfaceEnum.InventoryMenu); break;
                 case 3: break;
                 case 4: Save.Config.MenuChanging(InterfaceEnum.MainMenu); break;
                 default: throw new ArgumentException("CombatMainMenu choice not handled");
@@ -117,6 +117,17 @@ namespace ConsoleGamePlayer.ConsoleInterface
             }
             Save.Config.ResetPos();
             Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
+        }
+        //------------------------------------------------------------------------------------------------------------
+        // INVENTORY CONTROLLER
+        //____________________________________________________________________________________________________________
+
+        private void __InventoryMenu__()
+        {
+            if (Save.Player.Inventory.Count > Save.Config.Position)
+            {
+                
+            }
         }
 
         //------------------------------------------------------------------------------------------------------------

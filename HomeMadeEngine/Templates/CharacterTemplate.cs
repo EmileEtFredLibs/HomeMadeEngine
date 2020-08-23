@@ -35,7 +35,7 @@ namespace HomeMadeEngine.Templates
         public int MaxRessource { get; private set; }
         public bool IsDead { get; private set; }
         public List<StatsTemplate> Stats { get; private set; }
-        public List<EquipementsTemplate> Equipements { get; private set; }
+        public List<ItemsTemplate> Inventory { get; private set; }
         public List<ActionsTemplate> Actions { get; private set; }
         public List<BuffsTemplate> Buffs { get; private set; }
         public List<DebuffsTemplate> Debuffs { get; private set; }
@@ -75,7 +75,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_zVector">Z vector of velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, 
             RessourceTypes p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
-            List<EquipementsTemplate>p_equip, List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, 
+            List<ItemsTemplate>p_equip, List<ActionsTemplate> p_actions, List<BuffsTemplate> p_buffs, 
             List<DebuffsTemplate> p_debuffs, double p_xPox, double p_yPos, double p_zPos, 
             double p_xVector, double p_yVector, double p_zVector)
         {
@@ -98,7 +98,7 @@ namespace HomeMadeEngine.Templates
             this.MaxRessource = p_ressource;
             this.IsDead = p_isDead;
             this.Stats = p_stat;
-            this.Equipements = p_equip;
+            this.Inventory = p_equip;
             this.Actions = p_actions;
             this.Buffs = p_buffs;
             this.Debuffs = p_debuffs;
@@ -131,7 +131,7 @@ namespace HomeMadeEngine.Templates
             int p_cRessource, int p_ressource, bool p_isDead, double p_xPox, double p_yPos, double p_zPos,
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
-                __StatInitialiser__(), new List<EquipementsTemplate>(), new List<ActionsTemplate>(), 
+                __StatInitialiser__(), new List<ItemsTemplate>(), new List<ActionsTemplate>(), 
                 new List<BuffsTemplate>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         /// <summary>
         /// Constructor for a character
@@ -191,7 +191,10 @@ namespace HomeMadeEngine.Templates
             List<StatsTemplate> placeHolder = new List<StatsTemplate>();
             for (int i = 0; i < StatNames.Length; i++)
             {
-                placeHolder.Add(new StatsTemplate(StatNames[i], (StatType)(i % 2), (DamageType)(System.Math.Floor((decimal)i / 2)), (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1, 1));
+                placeHolder.Add(new StatsTemplate(StatNames[i],
+                    (StatType)(i % 2), 
+                    (DamageType)(System.Math.Floor((decimal)i / 2)), 
+                    (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1, 1));
             }
             return placeHolder;
         }
