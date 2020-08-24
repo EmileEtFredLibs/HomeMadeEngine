@@ -17,6 +17,24 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __TestMenu__()
         {
             ConsoleGamePlayer.MainGrid.ResetCharacter();
+            List<HmVector> walls = new List<HmVector>
+            {
+                new HmVector(2,2,1),
+                new HmVector(3,2,1),
+                new HmVector(4,2,1),
+                new HmVector(4,3,1),
+                new HmVector(4,4,1),
+                new HmVector(4,5,1),
+                new HmVector(5,5,1),
+                new HmVector(5,6,1),
+                new HmVector(5,7,1)
+            };
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 1, 1));
+            if (path.Count != 0)
+                foreach (var vector in path)
+                    ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
+            foreach(var wall in walls)
+                ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
@@ -37,7 +55,6 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     WriteLine();
                 }
             }
-            WriteLine("--------------------------------------------------------------");
         }
 
         //------------------------------------------------------------------------------------------------------------

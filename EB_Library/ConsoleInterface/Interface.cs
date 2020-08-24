@@ -110,7 +110,7 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __CombatMiddlePart__()
         {
             ConsoleGamePlayer.MainGrid.ResetCharacter();
-            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(10, 1, 1));
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 1, 1));
             if (path.Count != 0)
                 foreach(var vector in path)
                     ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);

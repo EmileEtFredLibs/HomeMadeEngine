@@ -91,12 +91,12 @@ namespace ConsoleGamePlayer.Serialization
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 if (Player == null)
                 {
-                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.RessourceTypes.Rage, 12, 100, false, 4, 5, 1, 0, 0, 0);
+                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.RessourceTypes.Rage, 12, 100, false, 1, 6, 1, 0, 0, 0);
                     Console.WriteLine("LOAD PLAYER FAILED");
                 }
                 if (Config == null)
                 {
-                    Config = new Config(InterfaceEnum.MainMenu);
+                    Config = new Config(InterfaceEnum.Testing);
                     Console.WriteLine("LOAD CONFIG FAILED");
                 }
                 Console.BackgroundColor = ConsoleColor.Black;

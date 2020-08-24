@@ -22,7 +22,6 @@ namespace ConsoleGamePlayer
         {
             // CONFIGS
             Save.Config.Version = "v0.0.0.8";
-            Save.Config.MenuChanging(InterfaceEnum.CombatMenu);
             Save.Config.ResetPos();
 
             // PLAYERS
