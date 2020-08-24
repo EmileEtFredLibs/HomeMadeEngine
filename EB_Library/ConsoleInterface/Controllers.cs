@@ -29,12 +29,12 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 new HmVector(5,6,1),
                 new HmVector(5,7,1)
             };
-            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 1, 1));
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 9, 1));
             if (path.Count != 0)
                 foreach (var vector in path)
                     ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
-            foreach(var wall in walls)
-                ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
+            //foreach(var wall in walls)
+            //    ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {

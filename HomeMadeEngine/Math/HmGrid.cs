@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data.SqlTypes;
+using System.IO;
 using System.Runtime.InteropServices;
 using System.Text;
 
@@ -142,12 +143,13 @@ namespace HomeMadeEngine.Math
                 p_end.X < 0 || p_end.Y < 0 || p_end.Z < 0)
                 throw new ArgumentException("BEGINNING POINT MUST BE IN THE GRID");
             else
-                return __Pathfinder__(p_begin, p_end, new List<HmVector>(), new List<HmVector>(), new List<Direction>());
+                return __Pathfinder__(p_begin, p_end, new List<HmVector>(), new List<HmVector>(), __ResetChoice__());
         }
-        private List<HmVector> __Pathfinder__(HmVector p_actual, HmVector p_end, List<HmVector> p_path, List<HmVector> p_wrong, List<Direction> p_choice)
+        private List<HmVector> __Pathfinder__(HmVector p_actual, HmVector p_end, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choices)
         {
 
             List<HmVector> result = new List<HmVector>(p_path);
+            List<HmVector> possibleRoute = __WallFinder__(p_actual, p_choices, p_wrong); 
             result.Add(p_actual);
             if (!p_actual.Compare(p_end))
             {
@@ -156,16 +158,106 @@ namespace HomeMadeEngine.Math
                 HmVector diffAbs = p_actual.SubstractAbs(p_end);
                 HmVector diff = p_actual.Substract(p_end);
                 HmVector signs = HmVector.ReturnSigns(diff);
-                if (diffAbs.Y <= diffAbs.X)
-                    pathX = __Pathfinder__(new HmVector(p_actual.X - signs.X, p_actual.Y, p_actual.Z), p_end, pathX, p_wrong, p_choice);
-                if (diffAbs.Y >= diffAbs.X)
-                    pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, pathY, p_wrong, p_choice);
+                bool xIsPossible = false;
+                bool yIsPossible = false;
+                foreach (var choice in possibleRoute)
+                {
+                    if (choice.X == signs.X)
+                        xIsPossible = true;
+                    if (choice.Y == signs.Y)
+                        yIsPossible = true;
+                }
+                if (xIsPossible && yIsPossible)
+                {
+                    if (diffAbs.Y <= diffAbs.X)
+                    {
+                        if (xIsPossible)
+                        {
+                            possibleRoute = __ResetChoice__(new HmVector(0 - signs.X, 0, 0));
+                            pathX = __Pathfinder__(new HmVector(p_actual.X - signs.X, p_actual.Y, p_actual.Z), p_end, __Shortcut__(p_actual, result, p_wrong, possibleRoute), p_wrong, possibleRoute);
+                        }
+                    }
+                    if (diffAbs.Y >= diffAbs.X)
+                    {
+                        if (yIsPossible)
+                        {
+                            possibleRoute = __ResetChoice__(new HmVector(0, 0 - signs.Y, 0));
+                            pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, __Shortcut__(p_actual, result, p_wrong, possibleRoute), p_wrong, possibleRoute);
+                        }
+                    }
+                }
+                else
+                {
+                    if (possibleRoute.Count<=0)
+                    {
+                        p_wrong.Add(p_actual);
+                        result.RemoveAt(result.Count-1);
+                    }
+                }
                 if (diffAbs.Y == diffAbs.X)
                     result = (pathX.Count > pathY.Count) ? pathY : pathX;
                 else
                     result = (pathX.Count < pathY.Count) ? pathY : pathX;
             }
             return result;
+        }
+        private List<HmVector> __Shortcut__(HmVector p_actual, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choice)
+        {
+            int nbInbetween;
+            for(nbInbetween = 3; nbInbetween <= p_path.Count; nbInbetween++)
+            {
+                if (p_path[p_path.Count - nbInbetween].Compare(p_actual)) break;
+            }
+            if (nbInbetween >= p_path.Count) return p_path;
+            for(int i=2; i<nbInbetween-1;i++)
+            {
+                p_path.RemoveAt(p_path.Count - i); 
+            }
+            return __Pathfinder__(p_path[p_path.Count - 1], p_actual, p_path, p_wrong, p_choice);
+        }
+        private List<HmVector> __ResetChoice__() => new List<HmVector>
+        {
+            new HmVector(-1,0,0),
+            new HmVector(0,-1,0),
+            new HmVector(1,0,0),
+            new HmVector(0,1,0)
+        };
+        private List<HmVector> __ResetChoice__(HmVector p_backward)
+        {
+            var choices = new List<HmVector>
+            {
+                new HmVector(-1,0,0),
+                new HmVector(0,-1,0),
+                new HmVector(1,0,0),
+                new HmVector(0,1,0)
+            };
+            choices.RemoveAll((c) => c.X == p_backward.X && c.Y == p_backward.Y);
+            return choices;
+        }
+        private List<HmVector> __WallFinder__(HmVector p_actual, List<HmVector> p_choices, List<HmVector> p_wrong)
+        {
+            for (int i=0;i<p_choices.Count;i++)
+            {
+                int x = (int)(p_actual.X - p_choices[i].X);
+                int y = (int)(p_actual.Y - p_choices[i].Y);
+                int z = (int)p_actual.Z-1;
+                bool wrong = false;
+                foreach (var wr in p_wrong)
+                {
+                    if (wr.Compare(p_actual.X - p_choices[i].X, p_actual.Y - p_choices[i].Y))
+                    {
+                        wrong = true;
+                    }
+                }
+                if (this.Space.Count <= x || this.Space[x].Count <= y ||
+                    this.Space[x][y][z].Type != SpaceTaker.Nothing || wrong)
+                {
+                    p_choices.RemoveAll((c) => c == p_choices[i]);
+                    i++;
+                }
+
+            }
+            return p_choices;
         }
     }
 }

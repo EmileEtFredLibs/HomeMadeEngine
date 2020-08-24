@@ -390,6 +390,9 @@ namespace HomeMadeEngine.Math
         public void SubstractAbsOnSelf(double x) => this.SubstractAbs(new HmVector(x, 0));
 
         public bool Compare(HmVector p_vector) => (this.X == p_vector.X && this.Y == p_vector.Y && this.Z == p_vector.Z);
+        public bool Compare(double x, double y, double z) => (this.X == x && this.Y == y && this.Z == z);
+        public bool Compare(double x, double y) => (this.X == x && this.Y == y);
+        public bool Compare(double x) => (this.X == x);
 
         // RETURN SIGNS
         //------------------------------------------------------------------------------------------------------------
