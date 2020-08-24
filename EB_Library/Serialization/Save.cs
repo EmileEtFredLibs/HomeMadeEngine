@@ -38,88 +38,24 @@ namespace ConsoleGamePlayer.Serialization
         //____________________________________________________________________________________________________________
         public void Saving(SaveType p_type)
         {
-            switch (p_type)
-            {
-                case SaveType.None: break;
-                case SaveType.All:
-                    __SaveBin__();
-                    __SaveJson__(); 
-                    break;
-                case SaveType.Bin: __SaveBin__(); break;
-                case SaveType.Json: __SaveJson__(); break;
-                case SaveType.XML: break;
-                case SaveType.SQL: break;
-                default:                    
-                    __SaveBin__();                   
-                    __SaveJson__(); 
-                    break;
-            }
-        }
-        public void Loading(SaveType p_type)
-        {
-            switch (p_type)
-            {
-                case SaveType.None: break;
-                case SaveType.Bin: __LoadBin__(); break;
-                case SaveType.Json: __LoadJson__(); break;
-                case SaveType.XML: break;
-                case SaveType.SQL: break;
-                default:
-                    __LoadBin__();
-                    __LoadJson__();
-                    break;
-            }
-        }
-
-        //------------------------------------------------------------------------------------------------------------
-        // SAVE FUNCTIONS
-        //____________________________________________________________________________________________________________
-        private void __SaveBin__()
-        {
-            int nbSave = 0;
-            try 
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                BinaryFormatter formatter = new BinaryFormatter();
-                using (FileStream stream = new FileStream(SavePlayer+Bin, FileMode.Create, FileAccess.Write))
-                {
-                    formatter.Serialize(stream, Player);
-                    Console.WriteLine("SAVE PLAYER SUCCESSFULL");
-                    nbSave++;
-                }
-                using (FileStream stream = new FileStream(SaveConfig+Bin, FileMode.Create, FileAccess.Write))
-                {
-                    formatter.Serialize(stream, Config);
-                    Console.WriteLine("SAVE CONFIG SUCCESSFULL");
-                }
-                Console.BackgroundColor = ConsoleColor.Black;
-            }
-            catch
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                if (nbSave<2)
-                    Console.WriteLine("SAVE CONFIG FAILED");
-                else if (nbSave<1)
-                    Console.WriteLine("SAVE PLAYER FAILED");
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ReadKey();
-            }
-        }
-        private void __SaveJson__()
-        {
             int nbSave = 0;
             try
             {
-                string jsonString = JsonConvert.SerializeObject(Player);
-                JsonSerializer serializer = new JsonSerializer();
-                serializer.Converters.Add(new CharacterTemplateConverterJson());
-                serializer.NullValueHandling = NullValueHandling.Include;
-                using (StreamWriter stream = new StreamWriter(SavePlayer+Json))
+                switch (p_type)
                 {
-                    using (JsonWriter writer = new JsonTextWriter(stream))
-                    {
-                        serializer.Serialize(writer, jsonString);
-                    }
+                    case SaveType.None: break;
+                    case SaveType.All:
+                        __SaveBin__(ref nbSave);
+                        __SaveJson__(ref nbSave);
+                        break;
+                    case SaveType.Bin: __SaveBin__(ref nbSave); break;
+                    case SaveType.Json: __SaveJson__(ref nbSave); break;
+                    case SaveType.XML: break;
+                    case SaveType.SQL: break;
+                    default:
+                        __SaveBin__(ref nbSave);
+                        __SaveJson__(ref nbSave);
+                        break;
                 }
             }
             catch
@@ -133,6 +69,77 @@ namespace ConsoleGamePlayer.Serialization
                 Console.ReadKey();
             }
         }
+        public void Loading(SaveType p_type)
+        {
+            try
+            {
+                switch (p_type)
+                {
+                    case SaveType.None: break;
+                    case SaveType.Bin: __LoadBin__(); break;
+                    case SaveType.Json: __LoadJson__(); break;
+                    case SaveType.XML: break;
+                    case SaveType.SQL: break;
+                    default:
+                        __LoadBin__();
+                        __LoadJson__();
+                        break;
+                }
+            }
+            catch
+            {
+                Console.BackgroundColor = ConsoleColor.DarkRed;
+                if (Player == null)
+                {
+                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.RessourceTypes.Rage, 12, 100, false, 4, 5, 1, 0, 0, 0);
+                    Console.WriteLine("LOAD PLAYER FAILED");
+                }
+                if (Config == null)
+                {
+                    Config = new Config(InterfaceEnum.MainMenu);
+                    Console.WriteLine("LOAD CONFIG FAILED");
+                }
+                Console.BackgroundColor = ConsoleColor.Black;
+            }
+            Console.ReadKey();
+        }
+
+        //------------------------------------------------------------------------------------------------------------
+        // SAVE FUNCTIONS
+        //____________________________________________________________________________________________________________
+        private void __SaveBin__(ref int p_nb)
+        {
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            BinaryFormatter formatter = new BinaryFormatter();
+            using (FileStream stream = new FileStream(SavePlayer + Bin, FileMode.Create, FileAccess.Write))
+            {
+                formatter.Serialize(stream, Player);
+                Console.WriteLine("SAVE PLAYER SUCCESSFULL");
+                p_nb++;
+            }
+            using (FileStream stream = new FileStream(SaveConfig + Bin, FileMode.Create, FileAccess.Write))
+            {
+                formatter.Serialize(stream, Config);
+                Console.WriteLine("SAVE CONFIG SUCCESSFULL");
+            }
+            Console.BackgroundColor = ConsoleColor.Black;
+        }
+        private void __SaveJson__(ref int p_nb)
+        {
+            string jsonString = JsonConvert.SerializeObject(Player);
+            JsonSerializer serializer = new JsonSerializer();
+            serializer.Converters.Add(new CharacterTemplateConverterJson());
+            serializer.NullValueHandling = NullValueHandling.Include;
+            using (StreamWriter stream = new StreamWriter(SavePlayer+Json))
+            {
+                using (JsonWriter writer = new JsonTextWriter(stream))
+                {
+                    serializer.Serialize(writer, jsonString);
+                }
+                p_nb++;
+            }
+            
+        }
 
         //------------------------------------------------------------------------------------------------------------
         // LOAD FUNCTIONS
@@ -140,72 +147,32 @@ namespace ConsoleGamePlayer.Serialization
         private void __LoadBin__()
         {
             BinaryFormatter formatter = new BinaryFormatter();
-            try
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            using (FileStream stream = new FileStream(SavePlayer+Bin, FileMode.Open, FileAccess.Read))
             {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                using (FileStream stream = new FileStream(SavePlayer+Bin, FileMode.Open, FileAccess.Read))
-                {
-                    Player = (CharacterTemplate)formatter.Deserialize(stream);
-                    Console.WriteLine("LOAD PLAYER SUCCESFULL");
-                }
-                using (FileStream stream = new FileStream(SaveConfig+Bin, FileMode.Open, FileAccess.Read))
-                {
-                    Config = (Config)formatter.Deserialize(stream);
-                    Console.WriteLine("LOAD CONFIG SUCCESFULL");
-                }
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ReadKey();
+                Player = (CharacterTemplate)formatter.Deserialize(stream);
+                Console.WriteLine("LOAD PLAYER SUCCESFULL");
             }
-            catch
+            using (FileStream stream = new FileStream(SaveConfig+Bin, FileMode.Open, FileAccess.Read))
             {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                if (Player == null)
-                {
-                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.RessourceTypes.Energy, 12, 100, false, 4, 5, 0, 0, 0, 0);
-                    Console.WriteLine("LOAD PLAYER FAILED");
-                }
-                if (Config == null)
-                {
-                    Config = new Config(InterfaceEnum.MainMenu);
-                    Console.WriteLine("LOAD CONFIG FAILED");
-                }
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ReadKey();
+                Config = (Config)formatter.Deserialize(stream);
+                Console.WriteLine("LOAD CONFIG SUCCESFULL");
             }
+            Console.BackgroundColor = ConsoleColor.Black;
         }
         private void __LoadJson__()
         {
-            try
-            {
-                Console.BackgroundColor = ConsoleColor.DarkGreen;
-                string jsonString = File.ReadAllText(SavePlayer+Json);
-                Player = JsonConvert.DeserializeObject<CharacterTemplate>(jsonString);
-                Console.WriteLine("LOAD PLAYER SUCCESFULL");
+            Console.BackgroundColor = ConsoleColor.DarkGreen;
+            string jsonString = File.ReadAllText(SavePlayer+Json);
+            Player = JsonConvert.DeserializeObject<CharacterTemplate>(jsonString);
+            Console.WriteLine("LOAD PLAYER SUCCESFULL");
                 
-                //jsonString = File.ReadAllText(SaveConfig+Json);
-                //Config = JsonConvert.DeserializeObject<Config>(jsonString);
-                //Console.WriteLine("LOAD CONFIG SUCCESFULL");
-                Config = new Config();
+            //jsonString = File.ReadAllText(SaveConfig+Json);
+            //Config = JsonConvert.DeserializeObject<Config>(jsonString);
+            //Console.WriteLine("LOAD CONFIG SUCCESFULL");
+            Config = new Config();
 
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ReadKey();
-            }
-            catch
-            {
-                Console.BackgroundColor = ConsoleColor.DarkRed;
-                if (Player == null)
-                {
-                    Player = new CharacterTemplate(50, 90, 12, 2, HomeMadeEngine.RessourceTypes.Rage, 12, 100, false, 4, 5, 0, 0, 0, 0);
-                    Console.WriteLine("LOAD PLAYER FAILED");
-                }
-                if (Config == null)
-                {
-                    Config = new Config(InterfaceEnum.MainMenu);
-                    Console.WriteLine("LOAD CONFIG FAILED");
-                }
-                Console.BackgroundColor = ConsoleColor.Black;
-                Console.ReadKey();
-            }
+            Console.BackgroundColor = ConsoleColor.Black;
         }
     }
 }

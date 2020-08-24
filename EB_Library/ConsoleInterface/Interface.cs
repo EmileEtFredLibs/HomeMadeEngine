@@ -1,5 +1,6 @@
 ﻿using ConsoleGamePlayer.Serialization;
 using HomeMadeEngine;
+using HomeMadeEngine.Math;
 using HomeMadeEngine.Templates;
 using System;
 using System.Collections.Generic;
@@ -57,6 +58,15 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __CombatStatusBar__()
         {
             WriteLine("--------------------------------------------------------------"); // 1,90,1
+            __RessWriter__();
+            WriteLine("");
+            __CombatBuffsBar__(PassiveType.Buff);
+            __CombatBuffsBar__(PassiveType.Debuff);
+            WriteLine("X:{0} Y:{1} Z:{2}", Save.Player.Position.X, Save.Player.Position.Y, Save.Player.Position.Z);
+            WriteLine("--------------------------------------------------------------");
+        }
+        private void __RessWriter__()
+        {
             Console.BackgroundColor = ConsoleColor.Red;
             WriteLine(" {0}/{1} Health", Save.Player.CurrentHp, Save.Player.MaxHp);
             switch (Save.Player.RessourceType)
@@ -71,24 +81,16 @@ namespace ConsoleGamePlayer.ConsoleInterface
             else
                 WriteLine("");
             Console.BackgroundColor = ConsoleColor.Black;
-            WriteLine("");
-            if (Save.Player.Passives.Count > 0) {
-                WriteLine(__CombatBuffsBar__(PassiveType.Buff));
-                WriteLine("");
-                WriteLine(__CombatBuffsBar__(PassiveType.Debuff));
-                WriteLine("");
-            }
-            WriteLine("X:{0} Y:{1} Z:{2}", Save.Player.Position.X, Save.Player.Position.Y, Save.Player.Position.Z);
-            WriteLine("--------------------------------------------------------------");
         }
-        private string __CombatBuffsBar__(PassiveType p_buff)
+        private void __CombatBuffsBar__(PassiveType p_passiveType)
         {
             StringBuilder outty = new StringBuilder();
+            int numb = 0;
             for (int i = 0; i < Save.Player.Passives.Count; i++)
             {
-                if (Save.Player.Passives[i].Type == p_buff)
+                if (Save.Player.Passives[i].Type == p_passiveType)
                 {
-
+                    numb++;
                     int buffTime = Save.Player.Passives[i].FindHighestTimer();
                     if (Save.Player.Passives.Count <= i)
                         outty.Append(" " + Save.Player.Passives[i].Name.ToString() + ": " + buffTime + " turn" + ", ");
@@ -97,7 +99,10 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 
                 }
             }
-            return outty.ToString();
+            if (numb == 0)
+                WriteLine("");
+            else
+                WriteLine(outty.ToString());
         }
 
         // MIDDLE PART
@@ -105,6 +110,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
         private void __CombatMiddlePart__()
         {
             ConsoleGamePlayer.MainGrid.ResetCharacter();
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(10, 1, 1));
+            foreach(var vector in path)
+                ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {

@@ -171,7 +171,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_ressource">Maximum action ressources</param>
         /// <param name="isDead">Is the character dead?</param>
         public CharacterTemplate(int p_cHp, int p_maxHp, int p_cRessource, int p_ressource, bool isDead) :
-            this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 0) { }
+            this(p_cHp, p_maxHp, p_cRessource, p_ressource, isDead, 4, 5, 1) { }
         /// <summary>
         /// Constructor for a character with 10/10 hp and 10/10 mana
         /// </summary>
