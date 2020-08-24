@@ -1,4 +1,5 @@
 ﻿using ConsoleGamePlayer.ConsoleInterface;
+using ConsoleGamePlayer.Serialization.Json;
 using HomeMadeEngine.Templates;
 using Newtonsoft.Json;
 using System;

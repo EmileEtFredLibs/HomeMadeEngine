@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace ConsoleGamePlayer.Serialization
+namespace ConsoleGamePlayer.Serialization.Json
 {
     public class CharacterTemplateConverterJson : JsonConverter
     {

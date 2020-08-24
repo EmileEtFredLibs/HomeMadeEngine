@@ -3,7 +3,7 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 
-namespace ConsoleGamePlayer.Serialization
+namespace ConsoleGamePlayer.Serialization.Json
 {
     public class ConfigConverterJson : JsonConverter
     {
