@@ -41,5 +41,23 @@ namespace HomeMadeEngine.Templates
                             timer = (int)stat.Timer;
             return timer;
         }
+        public void ReduceTimer(int p_turn)
+        {
+            if (this.Stat != null)
+                for(int i=this.Stat.Count; i>0; i--)
+                {
+                    if (this.Stat[i].Timer != null) 
+                    {
+                        if (this.Stat[i].Timer > p_turn)
+                            this.Stat[i].Timer -= p_turn;
+                        else
+                        {
+                            this.Stat.RemoveAt(i);
+                            i--;
+                        }
+                    } 
+                }
+        }
+        public void ReduceTimer() => this.ReduceTimer(1);
     }
 }
