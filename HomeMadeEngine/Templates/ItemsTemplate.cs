@@ -49,7 +49,7 @@ namespace HomeMadeEngine.Templates
                 {
                     for (int j = this.Stats.Count; j > 0; j--)
                     {
-                        if (j != i && this.Stats[i].Dmg == this.Stats[j].Dmg)
+                        if (j != i && this.Stats[i].Element == this.Stats[j].Element)
                         {
                             this.Stats[i].Flat += this.Stats[j].Flat;
                             this.Stats[i].Multi *= this.Stats[j].Multi;

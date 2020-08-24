@@ -22,10 +22,10 @@ namespace HomeMadeEngine.Action
             double damageDone = 0;
             foreach (StatsTemplate atkStat in p_attacker)
             {
-                if (atkStat.Dmg == DamageType.Unmidigatable)
+                if (atkStat.Element == DamageType.Unmidigatable)
                 {
                     Console.WriteLine("{0} * {1} = {2} {3}", 
-                        atkStat.Flat, atkStat.Multi , (int)(atkStat.Flat * atkStat.Multi), atkStat.Stat);
+                        atkStat.Flat, atkStat.Multi , (int)(atkStat.Flat * atkStat.Multi), atkStat.Type);
                     damageDone += (int)(atkStat.Flat * atkStat.Multi);
                 }
                 else
@@ -33,12 +33,12 @@ namespace HomeMadeEngine.Action
                     double damageRatio = 0;
                     foreach (StatsTemplate defStat in p_defender)
                     {
-                        if (atkStat.Stat == defStat.Stat)
+                        if (atkStat.Type == defStat.Type)
                         {
                             damageRatio = (double)DefenseMethod((int)(defStat.Flat * defStat.Multi));
                             Console.WriteLine("({0} * {1}) * {2} * {3} = {4} {5}",
                                 atkStat.Flat, atkStat.Multi, defStat.Flat, defStat.Multi,
-                                (int)((atkStat.Flat * atkStat.Multi) * damageRatio), atkStat.Stat);
+                                (int)((atkStat.Flat * atkStat.Multi) * damageRatio), atkStat.Type);
                         }
                     }
                     
@@ -151,24 +151,24 @@ namespace HomeMadeEngine.Action
         }
         public static void DamageTypeAdapter(ref List<StatsTemplate> p_listDmg, StatsTemplate p_damage, StatType p_type)
         {
-            if (p_damage.Dmg != null)
+            if (p_damage.Element != null)
             {
-                if (p_damage.Stat == p_type)
+                if (p_damage.Type == p_type)
                 {
-                    int index = p_listDmg.FindIndex((c) => c.Stat == p_damage.Stat);
+                    int index = p_listDmg.FindIndex((c) => c.Type == p_damage.Type);
                     if (index >= 0)
                     {
                         string names = p_listDmg[index].Name;
                         double flats = p_listDmg[index].Flat + p_damage.Flat;
                         double multis = p_listDmg[index].Multi * p_damage.Multi;
-                        DamageType? types = p_damage.Dmg;
-                        StatType stats = p_damage.Stat;
+                        DamageType? types = p_damage.Element;
+                        StatType stats = p_damage.Type;
                         p_listDmg.RemoveAt(index);
                         p_listDmg.Add(new StatsTemplate(names, stats, types, flats, multis));
                     }
                     else
                     {
-                        p_listDmg.Add(new StatsTemplate(p_damage.Name, p_damage.Stat, p_damage.Dmg, p_damage.Flat, p_damage.Multi));
+                        p_listDmg.Add(new StatsTemplate(p_damage.Name, p_damage.Type, p_damage.Element, p_damage.Flat, p_damage.Multi));
                     }
                 }
             }

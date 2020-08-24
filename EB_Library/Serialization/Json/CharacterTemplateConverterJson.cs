@@ -54,9 +54,9 @@ namespace ConsoleGamePlayer.Serialization.Json
             writer.WritePropertyName("Name");
             serializer.Serialize(writer, charT.Stats[0].Name);
             writer.WritePropertyName("Stat");
-            serializer.Serialize(writer, charT.Stats[0].Stat);
+            serializer.Serialize(writer, charT.Stats[0].Type);
             writer.WritePropertyName("Dmg");
-            serializer.Serialize(writer, charT.Stats[0].Dmg);
+            serializer.Serialize(writer, charT.Stats[0].Element);
             writer.WritePropertyName("Flat");
             serializer.Serialize(writer, charT.Stats[0].Flat);
             writer.WritePropertyName("Multi");

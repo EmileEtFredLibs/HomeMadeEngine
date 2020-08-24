@@ -11,8 +11,8 @@ namespace HomeMadeEngine.Templates
         // FIELDS
         //____________________________________________________________________________________________________________
         public string Name { get; set; }
-        public StatType Stat { get; set; }
-        public DamageType? Dmg { get; set; }
+        public StatType Type { get; set; }
+        public DamageType? Element { get; set; }
         public double Flat { get; set; }
         public double Multi { get; set; }
 
@@ -24,8 +24,8 @@ namespace HomeMadeEngine.Templates
         public StatsTemplate(string p_name, StatType p_stat, DamageType? p_dmg, double p_flat, double p_multi)
         {
             this.Name = p_name;
-            this.Stat = p_stat;
-            this.Dmg = p_dmg;
+            this.Type = p_stat;
+            this.Element = p_dmg;
             this.Flat = p_flat;
             this.Multi = p_multi;
         }
@@ -35,8 +35,8 @@ namespace HomeMadeEngine.Templates
         public StatsTemplate(string p_name, StatType p_stat)
         {
             this.Name = p_name;
-            this.Stat = p_stat;
-            this.Dmg = null;
+            this.Type = p_stat;
+            this.Element = null;
             this.Flat = 0;
             this.Multi = 1;
         }
