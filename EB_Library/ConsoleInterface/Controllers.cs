@@ -29,14 +29,17 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 new HmVector(5,6,1),
                 new HmVector(5,7,1)
             };
-            foreach (var wall in walls)
-                ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
-            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 1, 1));
+            //foreach (var wall in walls)
+            //    ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
+            var end = new HmVector(6, 10, 1);
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, end);
+
             if (path.Count != 0)
                 foreach (var vector in path)
                     ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
 
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
+            //ConsoleGamePlayer.MainGrid.ChangeSpot(end, SpaceTaker.Allies);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
                 for (int y = 0; ConsoleGamePlayer.MainGrid.Y > y; y++)
@@ -60,7 +63,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
                     WriteLine();
                 }
             }
-            WriteLine("6,1,1");
+            WriteLine("{0},{1},{2}", end.X, end.Y, end.Z);
+            for(int i=0;i<path.Count;i++)
+                WriteLine("[{0}]{1},{2},{3}", i , path[i].X, path[i].Y, path[i].Z);
         }
 
         //------------------------------------------------------------------------------------------------------------

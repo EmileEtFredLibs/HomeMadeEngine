@@ -143,13 +143,16 @@ namespace HomeMadeEngine.Math
                 p_end.X < 0 || p_end.Y < 0 || p_end.Z < 0)
                 throw new ArgumentException("BEGINNING POINT MUST BE IN THE GRID");
             else
-                return __Pathfinder__(p_begin, p_end, new List<HmVector>(), new List<HmVector>(), __ResetChoice__());
+            {
+                var path = __Pathfinder__(p_begin, p_end, new List<HmVector>(), new List<HmVector>(), __ResetChoice__());
+                return path;
+            }
         }
         private List<HmVector> __Pathfinder__(HmVector p_actual, HmVector p_end, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choices)
         {
 
             List<HmVector> result = new List<HmVector>(p_path);
-            List<HmVector> possibleRoute = __WallFinder__(p_actual, p_choices, p_wrong); 
+            List<HmVector> possibleRoute = p_choices;//__ObstacleFinder__(p_actual, p_choices, p_wrong); 
             result.Add(p_actual);
             if (!p_actual.Compare(p_end))
             {
@@ -169,7 +172,7 @@ namespace HomeMadeEngine.Math
                 }
                 if (xIsPossible && yIsPossible)
                 {
-                    var shorter = __Shortcut__(p_actual, result, p_wrong, possibleRoute);
+                    var shorter = result; __Shortcut__(p_actual, result, p_wrong, possibleRoute);
                     if (diffAbs.Y <= diffAbs.X)
                     {
                         if (xIsPossible)
@@ -186,20 +189,23 @@ namespace HomeMadeEngine.Math
                             pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, shorter, p_wrong, possibleRoute);
                         }
                     }
+                    if (diffAbs.Y == diffAbs.X)
+                        result = (pathX.Count > pathY.Count) ? pathY : pathX;
+                    else
+                        result = (pathX.Count < pathY.Count) ? pathY : pathX;
                 }
                 else
                 {
-                    if (possibleRoute.Count<=0)
+                    if (possibleRoute.Count <= 0)
                     {
                         p_wrong.Add(p_actual);
-                        result.RemoveAt(result.Count-1);
+                        result.RemoveAt(result.Count - 1);
                     }
                 }
-                if (diffAbs.Y == diffAbs.X)
-                    result = (pathX.Count > pathY.Count) ? pathY : pathX;
-                else
-                    result = (pathX.Count < pathY.Count) ? pathY : pathX;
+
             }
+            else
+                result.Add(p_end); 
             return result;
         }
         private List<HmVector> __Shortcut__(HmVector p_actual, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choice)
@@ -235,7 +241,7 @@ namespace HomeMadeEngine.Math
             choices.RemoveAll((c) => c.X == p_backward.X && c.Y == p_backward.Y);
             return choices;
         }
-        private List<HmVector> __WallFinder__(HmVector p_actual, List<HmVector> p_choices, List<HmVector> p_wrong)
+        private List<HmVector> __ObstacleFinder__(HmVector p_actual, List<HmVector> p_choices, List<HmVector> p_wrong)
         {
             for (int i=0;i<p_choices.Count;i++)
             {
