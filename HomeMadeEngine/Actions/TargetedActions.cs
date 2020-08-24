@@ -78,15 +78,15 @@ namespace HomeMadeEngine.Action
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Buffs.Any(a => a.Name == Buff.DamageUp))
+            if (p_target[0].Buffs.Any(a => a.Name == PassiveName.DamageUp))
             {
-                p_caster.RemoveBuff(Buff.DamageUp);
+                p_caster.RemoveBuff(PassiveName.DamageUp);
             }
             if (p_target[0].Debuffs.Any(a => a.Name == Debuff.DefenseDown))
             {
                 p_caster.RemoveDebuff(Debuff.DefenseDown);
             }
-            Buff(p_caster, Buff.DamageUp, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up", 5, StatType.Attack, DamageType.Physical, 20, 20) });
+            Buff(p_caster, PassiveName.DamageUp, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up", 5, StatType.Attack, DamageType.Physical, 20, 20) });
             Debuff(p_caster, Debuff.DefenseDown, null);
             return true;
         }

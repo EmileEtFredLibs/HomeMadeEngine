@@ -58,8 +58,8 @@ namespace HomeMadeEngine.Action
         /// <param name="p_buff">Buff that is applied</param>
         /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
-        public static void Buff(CharacterTemplate p_character, Buff p_buff, List<StatsTemplate>? p_stats)
-            => p_character.ApplyBuff(new BuffsTemplate(p_buff, p_stats));
+        public static void Buff(CharacterTemplate p_character, PassiveName p_buff, List<StatsTemplate>? p_stats)
+            => p_character.ApplyBuff(new TemporaryPassive(p_buff, p_stats));
         //------------------------------------------------------------------------------------------------------------
         // APPLYING A DEBUFF
         //____________________________________________________________________________________________________________
@@ -92,7 +92,7 @@ namespace HomeMadeEngine.Action
             {
                  DamageTypeAdapter(ref charDamage, stats, p_type);
             }
-            foreach (BuffsTemplate buff in p_char.Buffs)
+            foreach (TemporaryPassive buff in p_char.Buffs)
             {
                 if (buff.Stat != null)
                 {
@@ -125,7 +125,7 @@ namespace HomeMadeEngine.Action
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
-                    foreach (BuffsTemplate buff in character.Buffs)
+                    foreach (TemporaryPassive buff in character.Buffs)
                     {
                         if (buff.Stat!=null)
                         {

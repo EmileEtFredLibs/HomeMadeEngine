@@ -7,7 +7,9 @@ namespace HomeMadeEngine
     [Serializable]
     public enum RessourceTypes { Nothing = 0, Health = 1, Mana = 2, Rage = 3, Energy = 4 }
     [Serializable]
-    public enum Buff { DefenseUp = 0, DamageUp = 1, ManaCostDown = 2, Defend = 3, ItemBuff = 4 }
+    public enum PassiveType { Buff=0, Debuff=1 }
+    [Serializable]
+    public enum PassiveName { DefenseUp = 0, DamageUp = 1, ManaCostDown = 2, Defend = 3, ItemBuff = 4 }
     [Serializable]
     public enum Debuff { Unhealable = 0, DefenseDown = 1, ManaCostUp = 2, ItemDebuff = 3 }
     [Serializable]

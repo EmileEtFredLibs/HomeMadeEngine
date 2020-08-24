@@ -5,12 +5,13 @@ using System.Text;
 namespace HomeMadeEngine.Templates
 {
     [Serializable]
-    public class BuffsTemplate
+    public class TemporaryPassive
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
         //____________________________________________________________________________________________________________
-        public Buff Name { get; set; }
+        public PassiveType Type { get; set; }
+        public PassiveName Name { get; set; }
         public List<StatsTemplate>? Stat { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
@@ -18,7 +19,7 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public BuffsTemplate(Buff p_name, List<StatsTemplate>? p_stat)
+        public TemporaryPassive(PassiveName p_name, List<StatsTemplate>? p_stat)
         {
             this.Name = p_name;
             this.Stat = p_stat;
@@ -26,7 +27,7 @@ namespace HomeMadeEngine.Templates
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public BuffsTemplate(Buff p_name) : this(p_name, null) { }
+        public TemporaryPassive(PassiveName p_name) : this(p_name, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
