@@ -36,7 +36,7 @@ namespace HomeMadeEngine.Action
             
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
+            if (p_target[0].Passives.Any(a => a.Name == PassiveName.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;
@@ -78,16 +78,16 @@ namespace HomeMadeEngine.Action
         {
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Buffs.Any(a => a.Name == PassiveName.DamageUp))
+            if (p_target[0].Passives.Any(a => a.Name == PassiveName.Damage))
             {
-                p_caster.RemoveBuff(PassiveName.DamageUp);
+                p_caster.RemovePassive(PassiveType.Debuff, PassiveName.Damage);
             }
-            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.DefenseDown))
+            if (p_target[0].Passives.Any(a => a.Name == PassiveName.Defense))
             {
-                p_caster.RemoveDebuff(Debuff.DefenseDown);
+                p_caster.RemovePassive(PassiveType.Debuff, PassiveName.Defense);
             }
-            Buff(p_caster, PassiveName.DamageUp, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up", 5, StatType.Attack, DamageType.Physical, 20, 20) });
-            Debuff(p_caster, Debuff.DefenseDown, null);
+            ApplyGenPassive(p_caster, PassiveType.Buff, PassiveName.Damage, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up", 5, StatType.Attack, DamageType.Physical, 20, 20) });
+            ApplyGenPassive(p_caster, PassiveType.Debuff, PassiveName.Defense, null);
             return true;
         }
         /// <summary>
@@ -104,7 +104,7 @@ namespace HomeMadeEngine.Action
             int healingValue = randValueLvl2.Next(minHealthRegain, maxHealthRegain + 1);
             if (p_target.Length > 1 || p_target.Length == 0)
                 throw new ArgumentException("Requires 1 target ONLY");
-            if (p_target[0].Debuffs.Any(a => a.Name == Debuff.Unhealable))
+            if (p_target[0].Passives.Any(a => a.Name == PassiveName.Unhealable))
                 return false;
             p_target[0].Heal(healingValue);
             return true;

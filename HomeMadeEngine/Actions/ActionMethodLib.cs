@@ -49,7 +49,7 @@ namespace HomeMadeEngine.Action
             return (int)damageDone;
         }
         //------------------------------------------------------------------------------------------------------------
-        // APPLYING A BUFF
+        // APPLYING A ŦEMPORARY PASSIVES
         //____________________________________________________________________________________________________________
         /// <summary>
         /// General function to apply a buff
@@ -58,20 +58,8 @@ namespace HomeMadeEngine.Action
         /// <param name="p_buff">Buff that is applied</param>
         /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
-        public static void Buff(CharacterTemplate p_character, PassiveName p_buff, List<StatsTemplate>? p_stats)
-            => p_character.ApplyBuff(new TemporaryPassive(p_buff, p_stats));
-        //------------------------------------------------------------------------------------------------------------
-        // APPLYING A DEBUFF
-        //____________________________________________________________________________________________________________
-        /// <summary>
-        /// General function to apply a debuff
-        /// </summary>
-        /// <param name="p_character">Character on which the debuff is applied</param>
-        /// <param name="p_debuff">Debuff that is applied</param>
-        /// <param name="p_timer">Number of turns that the debuff will last</param>
-        /// <param name="p_stats">Effects of the debuff</param>
-        public static void Debuff(CharacterTemplate p_character, Debuff p_debuff, List<StatsTemplate>? p_stats)
-            => p_character.ApplyDebuff(new DebuffsTemplate(p_debuff, p_stats));
+        public static void ApplyGenPassive(CharacterTemplate p_character, PassiveType p_type, PassiveName p_buff, List<StatsTemplate>? p_stats)
+            => p_character.ApplyPassive(new TemporaryPassive(p_type, p_buff, p_stats));
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
@@ -92,21 +80,11 @@ namespace HomeMadeEngine.Action
             {
                  DamageTypeAdapter(ref charDamage, stats, p_type);
             }
-            foreach (TemporaryPassive buff in p_char.Buffs)
+            foreach (TemporaryPassive passive in p_char.Passives)
             {
-                if (buff.Stat != null)
+                if (passive.Stat != null)
                 {
-                    foreach (StatsTemplate stats in buff.Stat)
-                    {
-                            DamageTypeAdapter(ref charDamage, stats, p_type);
-                    }
-                }
-            }
-            foreach (DebuffsTemplate debuff in p_char.Debuffs)
-            {
-                if (debuff.Stat != null)
-                {
-                    foreach (StatsTemplate stats in debuff.Stat)
+                    foreach (StatsTemplate stats in passive.Stat)
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
@@ -125,21 +103,11 @@ namespace HomeMadeEngine.Action
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
-                    foreach (TemporaryPassive buff in character.Buffs)
+                    foreach (TemporaryPassive buff in character.Passives)
                     {
                         if (buff.Stat!=null)
                         {
                             foreach (StatsTemplate stats in buff.Stat)
-                            {
-                                    DamageTypeAdapter(ref charDamage, stats, p_type);
-                            }
-                        }
-                    }
-                    foreach (DebuffsTemplate debuff in character.Debuffs)
-                    {
-                        if (debuff.Stat != null)
-                        {
-                            foreach (StatsTemplate stats in debuff.Stat)
                             {
                                     DamageTypeAdapter(ref charDamage, stats, p_type);
                             }

@@ -37,8 +37,7 @@ namespace HomeMadeEngine.Templates
         public List<StatsTemplate> Stats { get; private set; }
         public List<ItemsTemplate> Inventory { get; private set; }
         public List<ActionsTemplate> Actions { get; private set; }
-        public List<TemporaryPassive> Buffs { get; private set; }
-        public List<DebuffsTemplate> Debuffs { get; private set; }
+        public List<TemporaryPassive> Passives { get; private set; }
         public HmVector Position { get; private set; }
         public HmVector Velocity { get; private set; }
         public HmVector Acceleration { get; private set; }
@@ -65,7 +64,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_stat">List of stats of the character</param>
         /// <param name="p_equip">List of equipement</param>
         /// <param name="p_actions">List of actions the character can do</param>
-        /// <param name="p_buffs">List of buffs</param>
+        /// <param name="p_passives">List of buffs</param>
         /// <param name="p_debuffs">List of debuffs</param>
         /// <param name="p_xPox">X spacial positions</param>
         /// <param name="p_yPos">Y spacial positions</param>
@@ -75,9 +74,8 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_zVector">Z vector of velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, 
             RessourceTypes p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
-            List<ItemsTemplate>p_equip, List<ActionsTemplate> p_actions, List<TemporaryPassive> p_buffs, 
-            List<DebuffsTemplate> p_debuffs, double p_xPox, double p_yPos, double p_zPos, 
-            double p_xVector, double p_yVector, double p_zVector)
+            List<ItemsTemplate>p_equip, List<ActionsTemplate> p_actions, List<TemporaryPassive> p_passives,  
+            double p_xPox, double p_yPos, double p_zPos, double p_xVector, double p_yVector, double p_zVector)
         {
             if (p_maxHp < 0)
                 throw new ArgumentException("HP MUST BE POSITIVE");
@@ -100,8 +98,7 @@ namespace HomeMadeEngine.Templates
             this.Stats = p_stat;
             this.Inventory = p_equip;
             this.Actions = p_actions;
-            this.Buffs = p_buffs;
-            this.Debuffs = p_debuffs;
+            this.Passives = p_passives;
             this.Position = new HmVector(p_xPox, p_yPos, p_zPos);
             this.Velocity = new HmVector(p_xVector, p_yVector, p_zVector);
             this.Acceleration = new HmVector(BaseGravity.X, BaseGravity.Y, BaseGravity.Z);
@@ -132,7 +129,7 @@ namespace HomeMadeEngine.Templates
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
                 __StatInitialiser__(), new List<ItemsTemplate>(), new List<ActionsTemplate>(), 
-                new List<TemporaryPassive>(), new List<DebuffsTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+                new List<TemporaryPassive>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         /// <summary>
         /// Constructor for a character
         /// </summary>
@@ -299,7 +296,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource += (int)(this.MaxRessource * 0.1);
             }
             bool isIn = false;
-            foreach(TemporaryPassive buff in this.Buffs)
+            foreach(TemporaryPassive buff in this.Passives)
             {
                 if (buff.Name == PassiveName.Defend && buff.Stat!=null)
                 {
@@ -312,7 +309,7 @@ namespace HomeMadeEngine.Templates
             }
             if (!isIn)
             {
-                this.Buffs.Add(new TemporaryPassive(PassiveName.Defend,
+                this.Passives.Add(new TemporaryPassive(PassiveType.Buff, PassiveName.Defend,
                     new List<StatsTemplate> {
                         new StatsTemplate("DEFEND MAGIC", 1, StatType.Defense, DamageType.Magical, 1, 1.1),
                         new StatsTemplate("DEFEND PSYCHOLOGICAL", 1, StatType.Defense, DamageType.Psychological, 1, 1.1),
@@ -411,27 +408,13 @@ namespace HomeMadeEngine.Templates
         public int CostReturner(int p_index)
         {
             StatsTemplate modifyer = new StatsTemplate("Manacost",null, StatType.Ressource, null, 0, 1);
-            foreach(TemporaryPassive buff in Buffs)
+            foreach(TemporaryPassive passive in Passives)
             {
-                if (buff.Name == PassiveName.ManaCostDown)
+                if (passive.Name == PassiveName.ManaCost)
                 {
-                    if (buff.Stat != null)
+                    if (passive.Stat != null)
                     {
-                        foreach (StatsTemplate stat in buff.Stat)
-                        {
-                            modifyer.Flat += stat.Flat;
-                            modifyer.Multi *= stat.Multi;
-                        }
-                    }
-                }
-            }
-            foreach(DebuffsTemplate debuffs in Debuffs)
-            {
-                if (debuffs.Name == Debuff.ManaCostUp)
-                {
-                    if (debuffs.Stat != null)
-                    {
-                        foreach (StatsTemplate stat in debuffs.Stat)
+                        foreach (StatsTemplate stat in passive.Stat)
                         {
                             modifyer.Flat += stat.Flat;
                             modifyer.Multi *= stat.Multi;
@@ -475,55 +458,29 @@ namespace HomeMadeEngine.Templates
         /// Add a buff to the character
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void ApplyBuff(TemporaryPassive p_buff) {
-            if (Buffs.Contains(p_buff))
+        public void ApplyPassive(TemporaryPassive p_buff) {
+            if (Passives.Contains(p_buff))
             {
-                this.Buffs.Remove(p_buff);
+                this.Passives.Remove(p_buff);
             }
-            this.Buffs.Add(p_buff);
+            this.Passives.Add(p_buff);
         } 
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_index">Index of the buff</param>
-        public void RemoveBuff(int p_index) => this.Buffs.Remove(this.Buffs[p_index]);
+        public void RemovePassive(int p_index) => this.Passives.Remove(this.Passives[p_index]);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
-        /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void RemoveBuff(TemporaryPassive p_buff)=>Buffs.RemoveAll((b) => b.Name == p_buff.Name);
+        /// <param name="p_passive">BuffsTemplate of the buff</param>
+        public void RemovePassive(TemporaryPassive p_passive)=>Passives.RemoveAll((p) => p.Name == p_passive.Name);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
-        /// <param name="p_buff">Buff to remove</param>
-        public void RemoveBuff(PassiveName p_buff) => Buffs.RemoveAll((b) => b.Name == p_buff);
-        /// <summary>
-        /// Add a debuff to the character
-        /// </summary>
-        /// <param name="p_debuff">DebuffsTemplate of the buff</param>
-        public void ApplyDebuff(DebuffsTemplate p_debuff)
-        {
-            if (Debuffs.Contains(p_debuff))
-            {
-                this.Debuffs.Remove(p_debuff);
-            }
-            this.Debuffs.Add(p_debuff);
-        }
-        /// <summary>
-        /// Remove a debuff from the buffs list
-        /// </summary>
-        /// <param name="p_index">Index the debuff</param>
-        public void RemoveDebuff(int p_index) => this.Debuffs.Remove(this.Debuffs[p_index]);
-        /// <summary>
-        /// Remove a debuff from the buffs list
-        /// </summary>
-        /// <param name="p_debuff">DebuffsTemplate of the debuff</param>
-        public void RemoveDebuff(DebuffsTemplate p_debuff) => Debuffs.RemoveAll(d => d.Name == p_debuff.Name);
-        /// <summary>
-        /// Remove a debuff from the buffs list
-        /// </summary>
-        /// <param name="p_debuff">Debuff to remove</param>
-        public void RemoveDebuff(Debuff p_debuff) => Debuffs.RemoveAll(d => d.Name == p_debuff);
+        /// <param name="p_passive">Buff to remove</param>
+        public void RemovePassive(PassiveType p_type, PassiveName p_passive) => Passives.RemoveAll((p) => p.Name == p_passive && p.Type == p_type);
+
 
         // UPDATERS
         //------------------------------------------------------------------------------------------------------------
@@ -536,10 +493,10 @@ namespace HomeMadeEngine.Templates
                 this.ShieldTimer -= 1;
             else
                 this.Shield = 0;
-            for (int i = 0; i < Buffs.Count; i++)
+            for (int i = 0; i < Passives.Count; i++)
             {
 
-                TemporaryPassive buff = this.Buffs[i];
+                TemporaryPassive buff = this.Passives[i];
                 if (buff.Stat != null)
                 {
                     for (int j = 0; j < buff.Stat.Count; j++)
@@ -547,29 +504,11 @@ namespace HomeMadeEngine.Templates
                         if (buff.Stat[j].Timer > 0)
                         {
                             buff.Stat[j].Timer -= 1;
-                            this.Buffs.RemoveAt(i);
-                            this.Buffs.Add(buff);
+                            this.Passives.RemoveAt(i);
+                            this.Passives.Add(buff);
                         }
                         else
-                            this.Buffs.RemoveAt(i);
-                    }
-                }
-            }
-            for (int i = 0; i < Debuffs.Count; i++)
-            {
-                DebuffsTemplate debuffs = this.Debuffs[i];
-                if (debuffs.Stat != null)
-                {
-                    for (int j = 0; j < debuffs.Stat.Count; j++)
-                    {
-                        if (debuffs.Stat[j].Timer > 0)
-                        {
-                            debuffs.Stat[j].Timer -= 1;
-                            this.Debuffs.RemoveAt(i);
-                            this.Debuffs.Add(debuffs);
-                        }
-                        else
-                            this.Debuffs.RemoveAt(i);
+                            this.Passives.RemoveAt(i);
                     }
                 }
             }

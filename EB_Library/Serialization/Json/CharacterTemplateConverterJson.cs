@@ -96,22 +96,10 @@ namespace ConsoleGamePlayer.Serialization.Json
             writer.WriteStartArray();
             writer.WriteStartObject();
             writer.WritePropertyName("Name");
-            serializer.Serialize(writer, charT.Buffs[0].Name);
+            serializer.Serialize(writer, charT.Passives[0].Name);
             writer.WriteStartArray();
             writer.WritePropertyName("Stat");
-            serializer.Serialize(writer, charT.Buffs[0].Stat);
-            writer.WriteEndArray();
-            writer.WriteEndObject();
-            writer.WriteEndArray();
-
-            writer.WritePropertyName("Debuffs");
-            writer.WriteStartArray();
-            writer.WriteStartObject();
-            writer.WritePropertyName("Name");
-            serializer.Serialize(writer, charT.Debuffs[0].Name);
-            writer.WriteStartArray();
-            writer.WritePropertyName("Stat");
-            serializer.Serialize(writer, charT.Debuffs[0].Stat);
+            serializer.Serialize(writer, charT.Passives[0].Stat);
             writer.WriteEndArray();
             writer.WriteEndObject();
             writer.WriteEndArray();

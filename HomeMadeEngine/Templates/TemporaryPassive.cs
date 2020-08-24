@@ -19,15 +19,16 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public TemporaryPassive(PassiveName p_name, List<StatsTemplate>? p_stat)
+        public TemporaryPassive(PassiveType p_type, PassiveName p_name, List<StatsTemplate>? p_stat)
         {
+            this.Type = p_type;
             this.Name = p_name;
             this.Stat = p_stat;
         }
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public TemporaryPassive(PassiveName p_name) : this(p_name, null) { }
+        public TemporaryPassive(PassiveType p_type, PassiveName p_name) : this(p_type, p_name, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

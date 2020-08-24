@@ -72,41 +72,29 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 WriteLine("");
             Console.BackgroundColor = ConsoleColor.Black;
             WriteLine("");
-            if (Save.Player.Buffs.Count > 0)
-                WriteLine(__CombatBuffsBar__(true));
-            else
+            if (Save.Player.Passives.Count > 0) {
+                WriteLine(__CombatBuffsBar__(PassiveType.Buff));
                 WriteLine("");
-            if (Save.Player.Debuffs.Count > 0)
-                WriteLine(__CombatBuffsBar__(false));
-            else
+                WriteLine(__CombatBuffsBar__(PassiveType.Debuff));
                 WriteLine("");
-
+            }
             WriteLine("X:{0} Y:{1} Z:{2}", Save.Player.Position.X, Save.Player.Position.Y, Save.Player.Position.Z);
             WriteLine("--------------------------------------------------------------");
         }
-        private string __CombatBuffsBar__(bool p_buff)
+        private string __CombatBuffsBar__(PassiveType p_buff)
         {
             StringBuilder outty = new StringBuilder();
-            if (p_buff)
+            for (int i = 0; i < Save.Player.Passives.Count; i++)
             {
-                for(int i=0; i< Save.Player.Buffs.Count;i++)
+                if (Save.Player.Passives[i].Type == p_buff)
                 {
-                    int buffTime = Save.Player.Buffs[i].FindHighestTimer();
-                    if (Save.Player.Buffs.Count <= i)
-                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + buffTime + " turn" + ", ");
+
+                    int buffTime = Save.Player.Passives[i].FindHighestTimer();
+                    if (Save.Player.Passives.Count <= i)
+                        outty.Append(" " + Save.Player.Passives[i].Name.ToString() + ": " + buffTime + " turn" + ", ");
                     else
-                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + buffTime + " turn");
-                }
-            }
-            else
-            {
-                for (int i = 0; i < Save.Player.Debuffs.Count; i++)
-                {
-                    int debuffTime = Save.Player.Debuffs[i].FindHighestTimer();
-                    if (Save.Player.Debuffs.Count <= i)
-                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + debuffTime + " turn" + ", ");
-                    else
-                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + debuffTime + " turn");
+                        outty.Append(" " + Save.Player.Passives[i].Name.ToString() + ": " + buffTime + " turn");
+                
                 }
             }
             return outty.ToString();

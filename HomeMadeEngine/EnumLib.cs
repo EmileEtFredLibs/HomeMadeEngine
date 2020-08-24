@@ -9,9 +9,7 @@ namespace HomeMadeEngine
     [Serializable]
     public enum PassiveType { Buff=0, Debuff=1 }
     [Serializable]
-    public enum PassiveName { DefenseUp = 0, DamageUp = 1, ManaCostDown = 2, Defend = 3, ItemBuff = 4 }
-    [Serializable]
-    public enum Debuff { Unhealable = 0, DefenseDown = 1, ManaCostUp = 2, ItemDebuff = 3 }
+    public enum PassiveName { Defense = 0, Damage = 1, ManaCost = 2, Defend = 3, Unhealable = 4 }
     [Serializable]
     public enum EquipementSlot { MainHand = 0, OffHand = 1, Helmet = 2, BodyArmor = 3, Legs = 4, Boots = 5 }
     [Serializable]
