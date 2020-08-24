@@ -129,43 +129,43 @@ namespace HomeMadeEngine.Math
                         if ((int)sq.Type<2)
                             sq.ChangeType(SpaceTaker.Nothing);
         }
-        public void ChangeSpot(int p_x, int p_y, int p_z, SpaceTaker p_type) => this.Space[p_x][p_y][p_z].ChangeType(p_type);
-        public void ChangeSpot(int p_x, int p_y, SpaceTaker p_type) => this.ChangeSpot(p_x, p_y, 0, p_type);
-        public void ChangeSpot(int p_x, SpaceTaker p_type) => this.ChangeSpot(p_x, 0, p_type);
+        public void ChangeSpot(int p_x, int p_y, int p_z, SpaceTaker p_type) => this.Space[p_x-1][p_y-1][p_z-1].ChangeType(p_type);
+        public void ChangeSpot(int p_x, int p_y, SpaceTaker p_type) => this.ChangeSpot(p_x, p_y, 1, p_type);
+        public void ChangeSpot(int p_x, SpaceTaker p_type) => this.ChangeSpot(p_x, 1, p_type);
         public void ChangeSpot(HmVector p_vector, SpaceTaker p_type) => this.ChangeSpot((int)p_vector.X, (int)p_vector.Y, (int)p_vector.Z, p_type);
         public List<HmVector> Pathfinder(HmVector p_begin, HmVector p_end)
         {
             if (p_begin.X > this.X || p_begin.Y > this.Y || p_begin.Z > this.Z ||
-                p_begin.X > 0 || p_begin.Y > 0 || p_begin.Z > 0)
+                p_begin.X < 0 || p_begin.Y < 0 || p_begin.Z < 0)
                 throw new ArgumentException("BEGINNING POINT MUST BE IN THE GRID");
             else if (p_end.X > this.X || p_end.Y > this.Y || p_end.Z > this.Z ||
-                p_end.X > 0 || p_end.Y > 0 || p_end.Z > 0)
+                p_end.X < 0 || p_end.Y < 0 || p_end.Z < 0)
                 throw new ArgumentException("BEGINNING POINT MUST BE IN THE GRID");
             else
                 return __Pathfinder__(p_begin, p_end, new List<HmVector>(), new List<HmVector>(), new List<Direction>());
         }
         private List<HmVector> __Pathfinder__(HmVector p_actual, HmVector p_end, List<HmVector> p_path, List<HmVector> p_wrong, List<Direction> p_choice)
         {
-            if (p_actual!=p_end)
+
+            List<HmVector> result = new List<HmVector>(p_path);
+            result.Add(p_actual);
+            if (!p_actual.Compare(p_end))
             {
+                List<HmVector> pathX = new List<HmVector>(result);
+                List<HmVector> pathY = new List<HmVector>(result);
                 HmVector diffAbs = p_actual.SubstractAbs(p_end);
-
-                if (diffAbs.X == diffAbs.Y)
-                {
-                    HmVector diff = p_actual.Substract(p_end);
-                    List<HmVector> p_pathX = new List<HmVector>(p_path);
-                    List<HmVector> p_ResultX = new List<HmVector>();
-                    p_pathX.Add(p_actual);
-                    if (diff.X < 0)
-                        p_ResultX = __Pathfinder__(new HmVector(p_actual.X + 1, p_actual.Y, p_actual.Z), p_end, p_pathX, p_wrong, p_choice);
-
-
-                }
-
-                return __Pathfinder__(p_actual, p_end, p_path, p_wrong, p_choice);
+                HmVector diff = p_actual.Substract(p_end);
+                HmVector signs = HmVector.ReturnSigns(diff);
+                if (diffAbs.Y <= diffAbs.X)
+                    pathX = __Pathfinder__(new HmVector(p_actual.X - signs.X, p_actual.Y, p_actual.Z), p_end, pathX, p_wrong, p_choice);
+                if (diffAbs.Y >= diffAbs.X)
+                    pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, pathY, p_wrong, p_choice);
+                if (diffAbs.Y == diffAbs.X)
+                    result = (pathX.Count > pathY.Count) ? pathY : pathX;
+                else
+                    result = (pathX.Count < pathY.Count) ? pathY : pathX;
             }
-            else
-                return p_path;
+            return result;
         }
     }
 }

@@ -11,7 +11,7 @@ namespace ConsoleGamePlayer
     {
         public static void Main(string[] args)
         {
-            new Save().Loading(Save.SaveType.Bin);
+            new Save().Loading(Save.SaveType.None);
             try
             {
                 new ConsoleGamePlayer().Setup();

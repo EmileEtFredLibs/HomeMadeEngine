@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Numerics;
+using System.Runtime.CompilerServices;
 using static System.Math;
 
 namespace HomeMadeEngine.Math
@@ -387,5 +388,16 @@ namespace HomeMadeEngine.Math
         /// </summary>
         /// <param name="x">X axe of the vector used for the operation on this</param>
         public void SubstractAbsOnSelf(double x) => this.SubstractAbs(new HmVector(x, 0));
+
+        public bool Compare(HmVector p_vector) => (this.X == p_vector.X && this.Y == p_vector.Y && this.Z == p_vector.Z);
+
+        // RETURN SIGNS
+        //------------------------------------------------------------------------------------------------------------
+        /// <summary>
+        /// Get the sign of the vector componant
+        /// </summary>
+        /// <param name="p_vector">Targeted vector</param>
+        /// <returns>Vector of 1 and -1 depending if its positive or negative</returns>
+        public static HmVector ReturnSigns(HmVector p_vector) => new HmVector((p_vector.X < 0) ? -1 : 1, (p_vector.Y < 0) ? -1 : 1, (p_vector.Z < 0) ? -1 : 1);
     }
 }

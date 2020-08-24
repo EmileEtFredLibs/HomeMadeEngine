@@ -111,8 +111,9 @@ namespace ConsoleGamePlayer.ConsoleInterface
         {
             ConsoleGamePlayer.MainGrid.ResetCharacter();
             var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(10, 1, 1));
-            foreach(var vector in path)
-                ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
+            if (path.Count != 0)
+                foreach(var vector in path)
+                    ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {

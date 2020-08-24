@@ -58,7 +58,7 @@ namespace ConsoleGamePlayer.Serialization
                         break;
                 }
             }
-            catch
+            finally
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 if (nbSave < 2)
@@ -86,7 +86,7 @@ namespace ConsoleGamePlayer.Serialization
                         break;
                 }
             }
-            catch
+            finally
             {
                 Console.BackgroundColor = ConsoleColor.DarkRed;
                 if (Player == null)
@@ -101,7 +101,6 @@ namespace ConsoleGamePlayer.Serialization
                 }
                 Console.BackgroundColor = ConsoleColor.Black;
             }
-            Console.ReadKey();
         }
 
         //------------------------------------------------------------------------------------------------------------
