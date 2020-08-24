@@ -29,12 +29,13 @@ namespace ConsoleGamePlayer.ConsoleInterface
                 new HmVector(5,6,1),
                 new HmVector(5,7,1)
             };
-            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 9, 1));
+            foreach (var wall in walls)
+                ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
+            var path = ConsoleGamePlayer.MainGrid.Pathfinder(Save.Player.Position, new HmVector(6, 1, 1));
             if (path.Count != 0)
                 foreach (var vector in path)
                     ConsoleGamePlayer.MainGrid.ChangeSpot(vector, SpaceTaker.Enemy);
-            //foreach(var wall in walls)
-            //    ConsoleGamePlayer.MainGrid.ChangeSpot(wall, SpaceTaker.Object);
+
             ConsoleGamePlayer.MainGrid.ChangeSpot(Save.Player.Position, SpaceTaker.Player);
             for (int z = 0; ConsoleGamePlayer.MainGrid.Z > z; z++)
             {
@@ -48,13 +49,18 @@ namespace ConsoleGamePlayer.ConsoleInterface
                             case SpaceTaker.Player: Write(" O "); break;
                             case SpaceTaker.Enemy: Write(" X "); break;
                             case SpaceTaker.Allies: Write(" + "); break;
-                            case SpaceTaker.Object: Write(" = "); break;
+                            case SpaceTaker.Object:
+                                Console.BackgroundColor = ConsoleColor.White;
+                                Write(" = ");
+                                Console.BackgroundColor = ConsoleColor.Black;
+                                break;
                         }
 
                     }
                     WriteLine();
                 }
             }
+            WriteLine("6,1,1");
         }
 
         //------------------------------------------------------------------------------------------------------------

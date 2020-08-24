@@ -169,12 +169,13 @@ namespace HomeMadeEngine.Math
                 }
                 if (xIsPossible && yIsPossible)
                 {
+                    var shorter = __Shortcut__(p_actual, result, p_wrong, possibleRoute);
                     if (diffAbs.Y <= diffAbs.X)
                     {
                         if (xIsPossible)
                         {
                             possibleRoute = __ResetChoice__(new HmVector(0 - signs.X, 0, 0));
-                            pathX = __Pathfinder__(new HmVector(p_actual.X - signs.X, p_actual.Y, p_actual.Z), p_end, __Shortcut__(p_actual, result, p_wrong, possibleRoute), p_wrong, possibleRoute);
+                            pathX = __Pathfinder__(new HmVector(p_actual.X - signs.X, p_actual.Y, p_actual.Z), p_end, shorter, p_wrong, possibleRoute);
                         }
                     }
                     if (diffAbs.Y >= diffAbs.X)
@@ -182,7 +183,7 @@ namespace HomeMadeEngine.Math
                         if (yIsPossible)
                         {
                             possibleRoute = __ResetChoice__(new HmVector(0, 0 - signs.Y, 0));
-                            pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, __Shortcut__(p_actual, result, p_wrong, possibleRoute), p_wrong, possibleRoute);
+                            pathY = __Pathfinder__(new HmVector(p_actual.X, p_actual.Y - signs.Y, p_actual.Z), p_end, shorter, p_wrong, possibleRoute);
                         }
                     }
                 }
