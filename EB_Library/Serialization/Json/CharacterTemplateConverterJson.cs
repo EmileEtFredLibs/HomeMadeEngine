@@ -97,8 +97,6 @@ namespace ConsoleGamePlayer.Serialization.Json
             writer.WriteStartObject();
             writer.WritePropertyName("Name");
             serializer.Serialize(writer, charT.Buffs[0].Name);
-            writer.WritePropertyName("Timer");
-            serializer.Serialize(writer, charT.Buffs[0].Timer);
             writer.WriteStartArray();
             writer.WritePropertyName("Stat");
             serializer.Serialize(writer, charT.Buffs[0].Stat);
@@ -111,8 +109,6 @@ namespace ConsoleGamePlayer.Serialization.Json
             writer.WriteStartObject();
             writer.WritePropertyName("Name");
             serializer.Serialize(writer, charT.Debuffs[0].Name);
-            writer.WritePropertyName("Timer");
-            serializer.Serialize(writer, charT.Debuffs[0].Timer);
             writer.WriteStartArray();
             writer.WritePropertyName("Stat");
             serializer.Serialize(writer, charT.Debuffs[0].Stat);

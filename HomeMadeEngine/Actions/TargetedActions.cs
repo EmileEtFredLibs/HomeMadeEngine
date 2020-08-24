@@ -86,8 +86,8 @@ namespace HomeMadeEngine.Action
             {
                 p_caster.RemoveDebuff(Debuff.DefenseDown);
             }
-            Buff(p_caster, Buff.DamageUp, 5, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up",StatType.Attack, DamageType.Physical, 20, 20) });
-            Debuff(p_caster, Debuff.DefenseDown, 5, null);
+            Buff(p_caster, Buff.DamageUp, new List<StatsTemplate> { new StatsTemplate("Physical Damage Up", 5, StatType.Attack, DamageType.Physical, 20, 20) });
+            Debuff(p_caster, Debuff.DefenseDown, null);
             return true;
         }
         /// <summary>

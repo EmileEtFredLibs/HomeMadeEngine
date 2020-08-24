@@ -58,8 +58,8 @@ namespace HomeMadeEngine.Action
         /// <param name="p_buff">Buff that is applied</param>
         /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
-        public static void Buff(CharacterTemplate p_character, Buff p_buff, int p_timer, List<StatsTemplate>? p_stats)
-            => p_character.ApplyBuff(new BuffsTemplate(p_buff, p_timer, p_stats));
+        public static void Buff(CharacterTemplate p_character, Buff p_buff, List<StatsTemplate>? p_stats)
+            => p_character.ApplyBuff(new BuffsTemplate(p_buff, p_stats));
         //------------------------------------------------------------------------------------------------------------
         // APPLYING A DEBUFF
         //____________________________________________________________________________________________________________
@@ -70,8 +70,8 @@ namespace HomeMadeEngine.Action
         /// <param name="p_debuff">Debuff that is applied</param>
         /// <param name="p_timer">Number of turns that the debuff will last</param>
         /// <param name="p_stats">Effects of the debuff</param>
-        public static void Debuff(CharacterTemplate p_character, Debuff p_debuff, int p_timer, List<StatsTemplate>? p_stats)
-            => p_character.ApplyDebuff(new DebuffsTemplate(p_debuff, p_timer, p_stats));
+        public static void Debuff(CharacterTemplate p_character, Debuff p_debuff, List<StatsTemplate>? p_stats)
+            => p_character.ApplyDebuff(new DebuffsTemplate(p_debuff, p_stats));
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
@@ -164,11 +164,11 @@ namespace HomeMadeEngine.Action
                         DamageType? types = p_damage.Element;
                         StatType stats = p_damage.Type;
                         p_listDmg.RemoveAt(index);
-                        p_listDmg.Add(new StatsTemplate(names, stats, types, flats, multis));
+                        p_listDmg.Add(new StatsTemplate(names, null, stats, types, flats, multis));
                     }
                     else
                     {
-                        p_listDmg.Add(new StatsTemplate(p_damage.Name, p_damage.Type, p_damage.Element, p_damage.Flat, p_damage.Multi));
+                        p_listDmg.Add(new StatsTemplate(p_damage.Name, p_damage.Timer, p_damage.Type, p_damage.Element, p_damage.Flat, p_damage.Multi));
                     }
                 }
             }

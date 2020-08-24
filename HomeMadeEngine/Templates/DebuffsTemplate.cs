@@ -11,7 +11,6 @@ namespace HomeMadeEngine.Templates
         // FIELDS
         //____________________________________________________________________________________________________________
         public Debuff Name { get; set; }
-        public int Timer { get; set; }
         public List<StatsTemplate>? Stat { get; set; }
 
         //------------------------------------------------------------------------------------------------------------
@@ -19,19 +18,28 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public DebuffsTemplate(Debuff p_name, int p_timer, List<StatsTemplate>? p_stat)
+        public DebuffsTemplate(Debuff p_name, List<StatsTemplate>? p_stat)
         {
             this.Name = p_name;
-            this.Timer = p_timer;
             this.Stat = p_stat;
         }
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public DebuffsTemplate(Debuff p_name, int p_timer):this(p_name, p_timer, null) { }
+        public DebuffsTemplate(Debuff p_name):this(p_name, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS
         //____________________________________________________________________________________________________________
+        public int FindHighestTimer()
+        {
+            int timer = 0;
+            if (this.Stat != null)
+                foreach (StatsTemplate stat in this.Stat)
+                    if (stat.Timer != null)
+                        if (timer < stat.Timer)
+                            timer = (int)stat.Timer;
+            return timer;
+        }
     }
 }

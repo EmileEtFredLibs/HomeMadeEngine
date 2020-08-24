@@ -91,20 +91,22 @@ namespace ConsoleGamePlayer.ConsoleInterface
             {
                 for(int i=0; i< Save.Player.Buffs.Count;i++)
                 {
+                    int buffTime = Save.Player.Buffs[i].FindHighestTimer();
                     if (Save.Player.Buffs.Count <= i)
-                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + Save.Player.Buffs[i].Timer + " turn" + ", ");
+                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + buffTime + " turn" + ", ");
                     else
-                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + Save.Player.Buffs[i].Timer + " turn");
+                        outty.Append(" " + Save.Player.Buffs[i].Name.ToString() + ": " + buffTime + " turn");
                 }
             }
             else
             {
                 for (int i = 0; i < Save.Player.Debuffs.Count; i++)
                 {
+                    int debuffTime = Save.Player.Debuffs[i].FindHighestTimer();
                     if (Save.Player.Debuffs.Count <= i)
-                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + Save.Player.Debuffs[i].Timer + " turn" + ", ");
+                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + debuffTime + " turn" + ", ");
                     else
-                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + Save.Player.Debuffs[i].Timer + " turn");
+                        outty.Append(" " + Save.Player.Debuffs[i].Name.ToString() + ": " + debuffTime + " turn");
                 }
             }
             return outty.ToString();

@@ -190,8 +190,9 @@ namespace HomeMadeEngine.Templates
         {
             List<StatsTemplate> placeHolder = new List<StatsTemplate>();
             for (int i = 0; i < StatNames.Length; i++)
-            {
+            { 
                 placeHolder.Add(new StatsTemplate(StatNames[i],
+                    null,
                     (StatType)(i % 2), 
                     (DamageType)(System.Math.Floor((decimal)i / 2)), 
                     (System.Math.Floor((decimal)i / 2) > 0) ? 0 : 1, 1));
@@ -300,19 +301,22 @@ namespace HomeMadeEngine.Templates
             bool isIn = false;
             foreach(BuffsTemplate buff in this.Buffs)
             {
-                if (buff.Name == Buff.Defend)
+                if (buff.Name == Buff.Defend && buff.Stat!=null)
                 {
-                    buff.Timer += 1;
-                    isIn = true;
+                    for (int i = 0; i < buff.Stat.Count; i++)
+                    {
+                        buff.Stat[i].Timer += 1;
+                        isIn = true;
+                    }
                 }
             }
             if (!isIn)
             {
-                this.Buffs.Add(new BuffsTemplate(Buff.Defend, 1, 
+                this.Buffs.Add(new BuffsTemplate(Buff.Defend,
                     new List<StatsTemplate> {
-                        new StatsTemplate("DEFEND MAGIC", StatType.Defense, DamageType.Magical, 1, 1.1),
-                        new StatsTemplate("DEFEND PSYCHOLOGICAL", StatType.Defense, DamageType.Psychological, 1, 1.1),
-                        new StatsTemplate("DEFEND PHYSICAL", StatType.Defense, DamageType.Physical, 1, 1.1)
+                        new StatsTemplate("DEFEND MAGIC", 1, StatType.Defense, DamageType.Magical, 1, 1.1),
+                        new StatsTemplate("DEFEND PSYCHOLOGICAL", 1, StatType.Defense, DamageType.Psychological, 1, 1.1),
+                        new StatsTemplate("DEFEND PHYSICAL", 1, StatType.Defense, DamageType.Physical, 1, 1.1)
                     }));
             }
         }
@@ -406,7 +410,7 @@ namespace HomeMadeEngine.Templates
         /// <returns>Cost of the action</returns>
         public int CostReturner(int p_index)
         {
-            StatsTemplate modifyer = new StatsTemplate("Manacost", StatType.Ressource, null, 0, 1);
+            StatsTemplate modifyer = new StatsTemplate("Manacost",null, StatType.Ressource, null, 0, 1);
             foreach(BuffsTemplate buff in Buffs)
             {
                 if (buff.Name == Buff.ManaCostDown)
@@ -534,27 +538,40 @@ namespace HomeMadeEngine.Templates
                 this.Shield = 0;
             for (int i = 0; i < Buffs.Count; i++)
             {
+
                 BuffsTemplate buff = this.Buffs[i];
-                if (buff.Timer > 0)
-                { 
-                    buff.Timer -= 1;
-                    this.Buffs.RemoveAt(i);
-                    this.Buffs.Add(buff);
+                if (buff.Stat != null)
+                {
+                    for (int j = 0; j < buff.Stat.Count; j++)
+                    {
+                        if (buff.Stat[j].Timer > 0)
+                        {
+                            buff.Stat[j].Timer -= 1;
+                            this.Buffs.RemoveAt(i);
+                            this.Buffs.Add(buff);
+                        }
+                        else
+                            this.Buffs.RemoveAt(i);
+                    }
                 }
-                else
-                    this.Buffs.RemoveAt(i);
             }
             for (int i = 0; i < Debuffs.Count; i++)
             {
                 DebuffsTemplate debuffs = this.Debuffs[i];
-                if (debuffs.Timer > 0)
+                if (debuffs.Stat != null)
                 {
-                    debuffs.Timer -= 1;
-                    this.Debuffs.RemoveAt(i);
-                    this.Debuffs.Add(debuffs);
+                    for (int j = 0; j < debuffs.Stat.Count; j++)
+                    {
+                        if (debuffs.Stat[j].Timer > 0)
+                        {
+                            debuffs.Stat[j].Timer -= 1;
+                            this.Debuffs.RemoveAt(i);
+                            this.Debuffs.Add(debuffs);
+                        }
+                        else
+                            this.Debuffs.RemoveAt(i);
+                    }
                 }
-                else
-                    this.Debuffs.RemoveAt(i);
             }
             UpdateVelocity();
         }
