@@ -213,14 +213,14 @@ namespace HomeMadeEngine.Math
             int nbInbetween;
             for(nbInbetween = 3; nbInbetween <= p_path.Count; nbInbetween++)
             {
-                if (p_path[p_path.Count - nbInbetween].Compare(p_actual)) break;
+                if (p_path[^nbInbetween].Compare(p_actual)) break;
             }
             if (nbInbetween >= p_path.Count) return p_path;
             for(int i=2; i<nbInbetween-1;i++)
             {
                 p_path.RemoveAt(p_path.Count - i); 
             }
-            return __Pathfinder__(p_path[p_path.Count - 1], p_actual, p_path, p_wrong, p_choice);
+            return __Pathfinder__(p_path[^1], p_actual, p_path, p_wrong, p_choice);
         }
         private List<HmVector> __ResetChoice__() => new List<HmVector>
         {
