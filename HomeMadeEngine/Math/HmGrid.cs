@@ -150,7 +150,6 @@ namespace HomeMadeEngine.Math
         }
         private List<HmVector> __Pathfinder__(HmVector p_actual, HmVector p_end, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choices)
         {
-
             List<HmVector> result = new List<HmVector>(p_path);
             List<HmVector> possibleRoute = p_choices;//__ObstacleFinder__(p_actual, p_choices, p_wrong); 
             result.Add(p_actual);
@@ -204,8 +203,8 @@ namespace HomeMadeEngine.Math
                 }
 
             }
-            else
-                result.Add(p_end); 
+            else if (result.FindIndex(r => r.Compare(p_end)) == -1)
+                result.Add(p_end);
             return result;
         }
         private List<HmVector> __Shortcut__(HmVector p_actual, List<HmVector> p_path, List<HmVector> p_wrong, List<HmVector> p_choice)
