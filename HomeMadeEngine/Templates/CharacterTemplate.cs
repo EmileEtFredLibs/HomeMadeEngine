@@ -37,7 +37,7 @@ namespace HomeMadeEngine.Templates
         public List<StatsTemplate> Stats { get; private set; }
         public List<ItemsTemplate> Inventory { get; private set; }
         public List<ActionsTemplate> Actions { get; private set; }
-        public List<TemporaryPassive> Passives { get; private set; }
+        public List<PassivesTemplate> Passives { get; private set; }
         public HmVector Position { get; private set; }
         public HmVector Velocity { get; private set; }
         public HmVector Acceleration { get; private set; }
@@ -74,7 +74,7 @@ namespace HomeMadeEngine.Templates
         /// <param name="p_zVector">Z vector of velocity</param>
         public CharacterTemplate(int p_lvl, decimal p_exp, int p_cHp, int p_maxHp, int p_shield, int p_shieldTimer, 
             RessourceTypes p_spellCost, int p_cRessource, int p_ressource, bool p_isDead, List<StatsTemplate>p_stat, 
-            List<ItemsTemplate>p_equip, List<ActionsTemplate> p_actions, List<TemporaryPassive> p_passives,  
+            List<ItemsTemplate>p_equip, List<ActionsTemplate> p_actions, List<PassivesTemplate> p_passives,  
             double p_xPox, double p_yPos, double p_zPos, double p_xVector, double p_yVector, double p_zVector)
         {
             if (p_maxHp < 0)
@@ -129,7 +129,7 @@ namespace HomeMadeEngine.Templates
             double p_xVect, double p_yVect, double p_zVect) :
             this(1, 0, p_cHp, p_maxHp, p_shield, p_shieldTimer, p_spellCost, p_cRessource, p_ressource, p_isDead,
                 __StatInitialiser__(), new List<ItemsTemplate>(), new List<ActionsTemplate>(), 
-                new List<TemporaryPassive>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
+                new List<PassivesTemplate>(), p_xPox, p_yPos, p_zPos, p_xVect, p_yVect, p_zVect) { }
         /// <summary>
         /// Constructor for a character
         /// </summary>
@@ -223,8 +223,8 @@ namespace HomeMadeEngine.Templates
         /// <summary>
         /// Change only the X and Y of the force of gravity
         /// </summary>
-        /// <param name="x">X of the vector of force</param>
-        public void ChangeGravity(double x) => this.Gravity = new HmVector(x, this.Gravity.Y);
+        /// <param name="p_x">X of the vector of force</param>
+        public void ChangeGravity(double p_x) => this.Gravity = new HmVector(p_x, this.Gravity.Y);
 
         // LEVEL AND EXPERIENCE
         //------------------------------------------------------------------------------------------------------------
@@ -296,7 +296,7 @@ namespace HomeMadeEngine.Templates
                     this.CurrentRessource += (int)(this.MaxRessource * 0.1);
             }
             bool isIn = false;
-            foreach(TemporaryPassive buff in this.Passives)
+            foreach(PassivesTemplate buff in this.Passives)
             {
                 if (buff.Name == PassiveName.Defend && buff.Stat!=null)
                 {
@@ -309,7 +309,7 @@ namespace HomeMadeEngine.Templates
             }
             if (!isIn)
             {
-                this.Passives.Add(new TemporaryPassive(PassiveType.Buff, PassiveName.Defend,
+                this.Passives.Add(new PassivesTemplate(PassiveType.Buff, PassiveName.Defend,
                     new List<StatsTemplate> {
                         new StatsTemplate("DEFEND MAGIC", 1, StatType.Defense, DamageType.Magical, 1, 1.1),
                         new StatsTemplate("DEFEND PSYCHOLOGICAL", 1, StatType.Defense, DamageType.Psychological, 1, 1.1),
@@ -408,7 +408,7 @@ namespace HomeMadeEngine.Templates
         public int CostReturner(int p_index)
         {
             StatsTemplate modifyer = new StatsTemplate("Manacost",null, StatType.Ressource, null, 0, 1);
-            foreach(TemporaryPassive passive in Passives)
+            foreach(PassivesTemplate passive in Passives)
             {
                 if (passive.Name == PassiveName.ManaCost)
                 {
@@ -458,7 +458,7 @@ namespace HomeMadeEngine.Templates
         /// Add a buff to the character
         /// </summary>
         /// <param name="p_buff">BuffsTemplate of the buff</param>
-        public void ApplyPassive(TemporaryPassive p_buff) {
+        public void ApplyPassive(PassivesTemplate p_buff) {
             if (Passives.Contains(p_buff))
             {
                 this.Passives.Remove(p_buff);
@@ -474,7 +474,7 @@ namespace HomeMadeEngine.Templates
         /// Remove a buff from the buffs list
         /// </summary>
         /// <param name="p_passive">BuffsTemplate of the buff</param>
-        public void RemovePassive(TemporaryPassive p_passive)=>Passives.RemoveAll((p) => p.Name == p_passive.Name);
+        public void RemovePassive(PassivesTemplate p_passive)=>Passives.RemoveAll((p) => p.Name == p_passive.Name);
         /// <summary>
         /// Remove a buff from the buffs list
         /// </summary>
@@ -496,7 +496,7 @@ namespace HomeMadeEngine.Templates
             for (int i = 0; i < Passives.Count; i++)
             {
 
-                TemporaryPassive buff = this.Passives[i];
+                PassivesTemplate buff = this.Passives[i];
                 if (buff.Stat != null)
                 {
                     for (int j = 0; j < buff.Stat.Count; j++)

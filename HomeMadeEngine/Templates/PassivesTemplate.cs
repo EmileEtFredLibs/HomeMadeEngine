@@ -5,7 +5,7 @@ using System.Text;
 namespace HomeMadeEngine.Templates
 {
     [Serializable]
-    public class TemporaryPassive
+    public class PassivesTemplate
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
@@ -19,7 +19,7 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public TemporaryPassive(PassiveType p_type, PassiveName p_name, List<StatsTemplate>? p_stat)
+        public PassivesTemplate(PassiveType p_type, PassiveName p_name, List<StatsTemplate>? p_stat)
         {
             this.Type = p_type;
             this.Name = p_name;
@@ -28,7 +28,7 @@ namespace HomeMadeEngine.Templates
 
         // SHORTCUT CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public TemporaryPassive(PassiveType p_type, PassiveName p_name) : this(p_type, p_name, null) { }
+        public PassivesTemplate(PassiveType p_type, PassiveName p_name) : this(p_type, p_name, null) { }
 
         //------------------------------------------------------------------------------------------------------------
         // FUNCTIONS

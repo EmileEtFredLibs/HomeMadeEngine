@@ -59,7 +59,7 @@ namespace HomeMadeEngine.Action
         /// <param name="p_timer">Number of turns that the buff will last</param>
         /// <param name="p_stats">Effects of the buff</param>
         public static void ApplyGenPassive(CharacterTemplate p_character, PassiveType p_type, PassiveName p_buff, List<StatsTemplate>? p_stats)
-            => p_character.ApplyPassive(new TemporaryPassive(p_type, p_buff, p_stats));
+            => p_character.ApplyPassive(new PassivesTemplate(p_type, p_buff, p_stats));
         //------------------------------------------------------------------------------------------------------------
         // DEFENSE AGAINST AN ATTACK
         //____________________________________________________________________________________________________________
@@ -80,7 +80,7 @@ namespace HomeMadeEngine.Action
             {
                  DamageTypeAdapter(ref charDamage, stats, p_type);
             }
-            foreach (TemporaryPassive passive in p_char.Passives)
+            foreach (PassivesTemplate passive in p_char.Passives)
             {
                 if (passive.Stat != null)
                 {
@@ -103,7 +103,7 @@ namespace HomeMadeEngine.Action
                     {
                             DamageTypeAdapter(ref charDamage, stats, p_type);
                     }
-                    foreach (TemporaryPassive buff in character.Passives)
+                    foreach (PassivesTemplate buff in character.Passives)
                     {
                         if (buff.Stat!=null)
                         {
