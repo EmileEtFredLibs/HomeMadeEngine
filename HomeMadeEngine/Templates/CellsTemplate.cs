@@ -4,7 +4,7 @@ using System.Text;
 
 namespace HomeMadeEngine.Templates
 {
-    public class SpaceTakersTemplate
+    public class CellsTemplate
     {
         //------------------------------------------------------------------------------------------------------------
         // FIELDS
@@ -18,19 +18,19 @@ namespace HomeMadeEngine.Templates
         //____________________________________________________________________________________________________________
         // MAIN CONSTRUCTORS
         //------------------------------------------------------------------------------------------------------------
-        public SpaceTakersTemplate(SpaceTaker p_type, CharacterTemplate p_character)
+        public CellsTemplate(SpaceTaker p_type, CharacterTemplate p_character)
         {
             this.Type = p_type;
             this.Character = p_character;
             this.Object = null;
         }
-        public SpaceTakersTemplate(SpaceTaker p_type, int p_obj)
+        public CellsTemplate(SpaceTaker p_type, int p_obj)
         {
             this.Type = p_type;
             this.Character = null;
             this.Object = p_obj;
         }
-        public SpaceTakersTemplate(SpaceTaker p_type)
+        public CellsTemplate(SpaceTaker p_type)
         {
             if ((int)p_type != 0) 
                 throw new ArgumentException("CAN'T CREATE A SPACETAKER NOT EMPTY WITHOUT THEIR ATTACHED");
@@ -38,7 +38,7 @@ namespace HomeMadeEngine.Templates
             this.Character = null;
             this.Object = null;
         }
-        public SpaceTakersTemplate(SpaceTakersTemplate p_spot)
+        public CellsTemplate(CellsTemplate p_spot)
         {
             this.Type = p_spot.Type;
             this.Character = p_spot.Character;

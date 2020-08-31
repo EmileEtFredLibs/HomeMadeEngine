@@ -13,7 +13,7 @@ namespace ConsoleGamePlayer
 {
     public class ConsoleGamePlayer
     {
-        public static HmGrid MainGrid = new HmGrid(10, 10, new SpaceTakersTemplate(SpaceTaker.Nothing));
+        public static HmGrid MainGrid = new HmGrid(10, 10, new CellsTemplate(SpaceTaker.Nothing));
         public static Dictionary<ConsoleKey, int> Options = new Dictionary<ConsoleKey, int>
         {
             [ConsoleKey.Escape] = 0
